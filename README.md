@@ -92,3 +92,46 @@
 - 统一了结果页面与导出图片的样式
 - 改进了图片导出速度和稳定性
 - 提升了整体界面美观度和用户体验
+
+## 部署说明
+
+### 阿里云OSS部署（推荐，适合中国大陆访问）
+
+我们提供了详细的阿里云OSS部署指南，请参考项目中的 [DEPLOYMENT_GUIDE.md](DEPLOYMENT_GUIDE.md) 文件，按照步骤操作即可快速部署。
+
+主要步骤包括：
+1. 创建阿里云OSS存储桶
+2. 上传网站文件
+3. 配置静态网站托管
+4. 测试访问
+
+### GitHub Pages部署（适合海外访问）
+
+1. Fork本仓库到您的GitHub账号
+2. 进入仓库设置(Settings)
+3. 导航到Pages选项
+4. 选择main分支作为源
+5. 保存设置，等待GitHub Pages建立
+
+## 技术架构
+
+- 纯前端实现，无需后端服务器
+- 使用HTML5, CSS3和原生JavaScript开发
+- 本地存储(localStorage)保存用户数据
+- 响应式设计，适配各种屏幕尺寸
+
+## 贡献指南
+
+1. Fork本仓库
+2. 创建您的特性分支 (`git checkout -b feature/amazing-feature`)
+3. 提交您的更改 (`git commit -m 'Add some amazing feature'`)
+4. 推送到分支 (`git push origin feature/amazing-feature`)
+5. 创建一个Pull Request
+
+## 许可证
+
+本项目采用MIT许可证 - 详情请参见LICENSE文件
+
+## 联系方式
+
+如有任何问题或建议，请通过Issues或Pull Requests联系我们。
