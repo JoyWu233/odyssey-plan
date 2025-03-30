@@ -266,7 +266,7 @@ function setupExportPDF() {
     document.getElementById('export-pdf').addEventListener('click', function() {
         // 显示加载提示
         const loadingMsg = document.createElement('div');
-        loadingMsg.textContent = '正在准备内容...';
+        loadingMsg.textContent = '正在生成图片...';
         loadingMsg.style.cssText = `
             position: fixed;
             top: 50%;
@@ -278,8 +278,6 @@ function setupExportPDF() {
             border-radius: 8px;
             z-index: 10000;
             font-size: 18px;
-            font-weight: bold;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         `;
         document.body.appendChild(loadingMsg);
         
@@ -295,183 +293,53 @@ function setupExportPDF() {
             // 使用HTML2Canvas直接渲染整个结果页面
             const resultsContainer = document.getElementById('results');
             
-            // 备份原始样式
-            const originalStyle = resultsContainer.getAttribute('style') || '';
-            const originalBackground = document.body.style.background;
-            
-            // 临时设置body背景为纯白
-            document.body.style.background = '#ffffff';
-            
-            // 临时隐藏按钮
+            // 隐藏按钮
             const buttons = resultsContainer.querySelectorAll('.btn-group');
             buttons.forEach(btn => btn.style.display = 'none');
             
-            // 临时调整结果容器样式以优化导出效果
-            resultsContainer.style.width = '800px';
-            resultsContainer.style.margin = '0 auto';
-            resultsContainer.style.padding = '40px';
-            resultsContainer.style.background = '#ffffff';
-            resultsContainer.style.boxShadow = 'none';
-            resultsContainer.style.color = '#333333';
-            
-            // 临时增强文本样式以提高清晰度
-            const cardElements = resultsContainer.querySelectorAll('.result-card');
-            const originalCardStyles = [];
-            cardElements.forEach((card, i) => {
-                originalCardStyles[i] = card.getAttribute('style') || '';
-                card.style.boxShadow = '0 2px 8px rgba(0,0,0,0.1)';
-                card.style.marginBottom = '30px';
-                card.style.backgroundColor = '#ffffff';
-                card.style.borderRadius = '8px';
-                card.style.padding = '25px';
-            });
-            
-            const headings = resultsContainer.querySelectorAll('h3');
-            const originalHeadingStyles = [];
-            headings.forEach((h, i) => {
-                originalHeadingStyles[i] = h.getAttribute('style') || '';
-                h.style.fontSize = '28px';
-                h.style.color = '#4361ee';
-                h.style.fontWeight = 'bold';
-                h.style.marginBottom = '20px';
-                h.style.borderBottom = '2px solid #4895ef';
-                h.style.paddingBottom = '10px';
-            });
-            
-            const subHeadings = resultsContainer.querySelectorAll('h4');
-            const originalSubHeadingStyles = [];
-            subHeadings.forEach((h, i) => {
-                originalSubHeadingStyles[i] = h.getAttribute('style') || '';
-                h.style.fontSize = '22px';
-                h.style.color = '#3f37c9';
-                h.style.fontWeight = 'bold';
-                h.style.marginBottom = '15px';
-            });
-            
-            const paragraphs = resultsContainer.querySelectorAll('p');
-            const originalParagraphStyles = [];
-            paragraphs.forEach((p, i) => {
-                originalParagraphStyles[i] = p.getAttribute('style') || '';
-                p.style.fontSize = '16px';
-                p.style.color = '#333333';
-                p.style.lineHeight = '1.8';
-                p.style.marginBottom = '12px';
-            });
-            
-            // 增加顶部标题
-            const titleDiv = document.createElement('div');
-            titleDiv.style.cssText = `
-                text-align: center;
-                margin-bottom: 30px;
-            `;
-            titleDiv.innerHTML = `
-                <h1 style="color: #4361ee; font-size: 32px; margin-bottom: 10px; font-weight: bold;">奥德赛计划</h1>
-                <p style="color: #666; font-size: 16px;">生成日期：${new Date().toLocaleDateString('zh-CN')}</p>
-            `;
-            resultsContainer.insertBefore(titleDiv, resultsContainer.firstChild);
-            
-            loadingMsg.textContent = '正在生成超清图片...';
-            
-            // 获取设备像素比
-            const pixelRatio = window.devicePixelRatio || 1;
-            const scale = Math.max(2.5, pixelRatio); // 适中的缩放
-            
+            // 等待DOM更新
             setTimeout(() => {
+                // 使用html2canvas捕获
                 html2canvas(resultsContainer, {
-                    scale: scale,
-                    useCORS: true,
-                    allowTaint: true,
+                    scale: 2, // 2倍缩放
                     backgroundColor: '#ffffff',
-                    logging: false,
-                    letterRendering: true,
-                    removeContainer: false
+                    useCORS: true
                 }).then(canvas => {
-                    loadingMsg.textContent = '正在保存图片...';
-                    
-                    // 处理图片并下载
-                    try {
-                        canvas.toBlob(function(blob) {
-                            if (blob) {
-                                const url = URL.createObjectURL(blob);
-                                const link = document.createElement('a');
-                                link.download = '我的奥德赛计划.png';
-                                link.href = url;
-                                link.click();
-                                URL.revokeObjectURL(url);
-                                
-                                loadingMsg.textContent = '导出成功！';
-                                setTimeout(() => loadingMsg.remove(), 1500);
-                            } else {
-                                throw new Error('Failed to create blob');
-                            }
-                        }, 'image/png', 1.0);
-                    } catch (e) {
-                        console.error('处理图片出错:', e);
+                    // 创建下载链接
+                    canvas.toBlob(function(blob) {
+                        const url = URL.createObjectURL(blob);
+                        const link = document.createElement('a');
+                        link.download = '我的奥德赛计划.png';
+                        link.href = url;
+                        link.click();
+                        URL.revokeObjectURL(url);
                         
-                        // 备用方案：尝试使用toDataURL
-                        try {
-                            const imgData = canvas.toDataURL('image/png');
-                            const link = document.createElement('a');
-                            link.download = '我的奥德赛计划.png';
-                            link.href = imgData;
-                            link.click();
-                            
-                            loadingMsg.textContent = '导出成功！';
-                            setTimeout(() => loadingMsg.remove(), 1500);
-                        } catch (innerError) {
-                            console.error('备用导出方法失败:', innerError);
-                            loadingMsg.textContent = '导出失败，请稍后重试';
-                            setTimeout(() => loadingMsg.remove(), 2000);
-                        }
-                    }
-                    
-                    // 移除临时添加的标题
-                    if (titleDiv && titleDiv.parentNode) {
-                        titleDiv.parentNode.removeChild(titleDiv);
-                    }
-                    
-                    // 恢复原始样式
-                    resultsContainer.setAttribute('style', originalStyle);
-                    document.body.style.background = originalBackground;
-                    
-                    // 恢复所有元素的原始样式
-                    cardElements.forEach((card, i) => card.setAttribute('style', originalCardStyles[i]));
-                    headings.forEach((h, i) => h.setAttribute('style', originalHeadingStyles[i]));
-                    subHeadings.forEach((h, i) => h.setAttribute('style', originalSubHeadingStyles[i]));
-                    paragraphs.forEach((p, i) => p.setAttribute('style', originalParagraphStyles[i]));
-                    buttons.forEach(btn => btn.style.display = '');
-                    
-                    // 恢复按钮
-                    exportBtn.disabled = false;
-                    exportBtn.textContent = '导出图片';
-                    
+                        // 恢复按钮显示
+                        buttons.forEach(btn => btn.style.display = '');
+                        
+                        // 移除加载提示
+                        loadingMsg.textContent = '导出成功！';
+                        setTimeout(() => loadingMsg.remove(), 1500);
+                        
+                        // 恢复按钮
+                        exportBtn.disabled = false;
+                        exportBtn.textContent = '导出图片';
+                    }, 'image/png', 1.0);
                 }).catch(err => {
                     console.error('生成图片出错:', err);
+                    
+                    // 恢复按钮显示
+                    buttons.forEach(btn => btn.style.display = '');
+                    
+                    // 修改加载提示
                     loadingMsg.textContent = '导出失败，请稍后重试';
                     setTimeout(() => loadingMsg.remove(), 2000);
-                    
-                    // 移除临时添加的标题
-                    if (titleDiv && titleDiv.parentNode) {
-                        titleDiv.parentNode.removeChild(titleDiv);
-                    }
-                    
-                    // 恢复原始样式
-                    resultsContainer.setAttribute('style', originalStyle);
-                    document.body.style.background = originalBackground;
-                    
-                    // 恢复所有元素的原始样式
-                    cardElements.forEach((card, i) => card.setAttribute('style', originalCardStyles[i]));
-                    headings.forEach((h, i) => h.setAttribute('style', originalHeadingStyles[i]));
-                    subHeadings.forEach((h, i) => h.setAttribute('style', originalSubHeadingStyles[i]));
-                    paragraphs.forEach((p, i) => p.setAttribute('style', originalParagraphStyles[i]));
-                    buttons.forEach(btn => btn.style.display = '');
                     
                     // 恢复按钮
                     exportBtn.disabled = false;
                     exportBtn.textContent = '导出图片';
                 });
-            }, 500);
-            
+            }, 300);
         } catch (error) {
             console.error('导出过程出错:', error);
             loadingMsg.textContent = '导出失败，请稍后重试';
