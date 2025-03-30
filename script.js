@@ -1,6 +1,7 @@
 // 存储所有表单元素的引用
 const formElements = {
     // 资源盘点
+    'user-name': document.getElementById('user-name'),
     'who-am-i': document.getElementById('who-am-i'),
     'what-i-have': document.getElementById('what-i-have'),
     'energizers': document.getElementById('energizers'),
@@ -40,6 +41,7 @@ const formElements = {
 
 // 存储所有状态元素的引用
 const statusElements = {
+    'user-name': document.getElementById('user-name-status'),
     'who-am-i': document.getElementById('who-am-i-status'),
     'what-i-have': document.getElementById('what-i-have-status'),
     'energizers': document.getElementById('energizers-status'),
@@ -308,6 +310,12 @@ function generateResults() {
     // 更新仪表盘
     updateResultGauges();
     
+    // 获取用户称呼
+    const userName = formElements['user-name'].value || '我';
+    
+    // 更新页面标题
+    document.querySelector('#results h2').textContent = `${userName}的奥德赛计划`;
+    
     // 更新资源盘点结果
     const whoAmI = formElements['who-am-i'].value || '【未填写】';
     const whatIHave = formElements['what-i-have'].value || '【未填写】';
@@ -503,6 +511,9 @@ function setupExportImage() {
         document.body.appendChild(container);
         
         try {
+            // 获取用户称呼
+            const userName = formElements['user-name'].value || '我';
+            
             // 获取内容文本
             const whoAmI = formElements['who-am-i'].value || '【未填写】';
             const whatIHave = formElements['what-i-have'].value || '【未填写】';
@@ -663,7 +674,7 @@ function setupExportImage() {
                 </style>
                 
                 <div class="page-header">
-                    <h1 class="main-title">我的奥德赛计划</h1>
+                    <h1 class="main-title">${userName}的奥德赛计划</h1>
                     <p class="date">生成日期: ${new Date().toLocaleDateString('zh-CN')}</p>
                 </div>
                 
@@ -824,10 +835,13 @@ function setupExportImage() {
                 }
             }).then(function(canvas) {
                 try {
+                    // 获取用户称呼用于文件名
+                    const userName = formElements['user-name'].value || '我';
+                    
                     // 导出为PNG图片
                     const dataUrl = canvas.toDataURL('image/png');
                     const link = document.createElement('a');
-                    link.download = '我的奥德赛计划.png';
+                    link.download = `${userName}的奥德赛计划.png`;
                     link.href = dataUrl;
                     link.click();
                     
