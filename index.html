@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>奥德赛计划 - 设计你的三种未来</title>
+    <style>
+        :root {
+            --primary: #4361ee;
+            --secondary: #3f37c9;
+            --accent: #4895ef;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --success: #4cc9f0;
+            --warning: #f72585;
+        }
+        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: var(--dark);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        
+        header {
+            text-align: center;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .tabs {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+        
+        .tab-btn {
+            padding: 0.8rem 1.5rem;
+            margin: 0 0.3rem;
+            background-color: white;
+            border: none;
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .tab-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+        }
+        
+        .tab-btn.active {
+            background-color: var(--primary);
+            color: white;
+        }
+        
+        .tab-content {
+            display: none;
+            background-color: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            animation: fadeIn 0.5s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        .form-group {
+            margin-bottom: 1.5rem;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: var(--secondary);
+        }
+        
+        input[type="text"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 1rem;
+            transition: border 0.3s;
+        }
+        
+        input[type="text"]:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--accent);
+            box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.2);
+        }
+        
+        textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        
+        .plan-cards {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+        
+        .plan-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 1.5rem;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+            border-top: 4px solid var(--primary);
+            transition: transform 0.3s;
+        }
+        
+        .plan-card:hover {
+            transform: translateY(-5px);
+        }
+        
+        .plan-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .plan-card.plan-b {
+            border-top-color: var(--success);
+        }
+        
+        .plan-card.plan-b h3 {
+            color: var(--success);
+        }
+        
+        .plan-card.plan-c {
+            border-top-color: var(--warning);
+        }
+        
+        .plan-card.plan-c h3 {
+            color: var(--warning);
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: 600;
+            transition: all 0.3s;
+            text-decoration: none;
+        }
+        
+        .btn:hover {
+            background-color: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-secondary {
+            background-color: #6c757d;
+        }
+        
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+        
+        .btn-group {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+        }
+        
+        .result-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .result-card h3 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+        
+        .result-card ul {
+            padding-left: 1.5rem;
+        }
+        
+        .result-card li {
+            margin-bottom: 0.5rem;
+        }
+        
+        .save-status {
+            text-align: right;
+            font-size: 0.9rem;
+            color: #6c757d;
+            margin-top: 0.5rem;
+        }
+        
+        @media (max-width: 768px) {
+            .plan-cards {
+                grid-template-columns: 1fr;
+            }
+            
+            .tab-btn {
+                padding: 0.6rem 1rem;
+                font-size: 0.9rem;
+                margin-bottom: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>奥德赛计划</h1>
+            <p class="subtitle">设计你的三种未来人生版本</p>
+        </header>
+        
+        <div class="tabs">
+            <button class="tab-btn active" data-tab="resources">1. 资源盘点</button>
+            <button class="tab-btn" data-tab="plans">2. 设计计划</button>
+            <button class="tab-btn" data-tab="evaluation">3. 评估选择</button>
+            <button class="tab-btn" data-tab="results">4. 生成结果</button>
+        </div>
+        
+        <div id="resources" class="tab-content active">
+            <h2>资源盘点</h2>
+            <p>在开始设计你的未来之前，先了解自己拥有的资源。</p>
+            
+            <div class="form-group">
+                <label for="who-am-i">我是谁？</label>
+                <textarea id="who-am-i" placeholder="你的价值观、兴趣、擅长技能、性格特点..."></textarea>
+                <div class="save-status" id="who-am-i-status"></div>
+            </div>
+            
+            <div class="form-group">
+                <label for="what-i-have">我拥有什么？</label>
+                <textarea id="what-i-have" placeholder="知识、人脉、物质资源（存款、工具等）..."></textarea>
+                <div class="save-status" id="what-i-have-status"></div>
+            </div>
+            
+            <div class="form-group">
+                <label for="energizers">哪些事能给我能量？</label>
+                <textarea id="energizers" placeholder="让你感到充实、有成就感的活动..."></textarea>
+                <div class="save-status" id="energizers-status"></div>
+            </div>
+            
+            <div class="btn-group">
+                <button class="btn" id="next-to-plans">下一步：设计计划</button>
+            </div>
+        </div>
+        
+        <div id="plans" class="tab-content">
+            <h2>设计三种5年计划</h2>
+            <p>为你的未来设计三种不同的可能性。</p>
+            
+            <div class="plan-cards">
+                <div class="plan-card">
+                    <h3>Plan A（最现实路径）</h3>
+                    <div class="form-group">
+                        <label for="plan-a-title">计划名称</label>
+                        <input type="text" id="plan-a-title" placeholder="例如：职场晋升计划">
+                        <div class="save-status" id="plan-a-title-status"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="plan-a-desc">5年后的状态</label>
+                        <textarea id="plan-a-desc" placeholder="工作、生活、人际关系..."></textarea>
+                        <div class="save-status" id="plan-a-desc-status"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="plan-a-milestones">关键里程碑</label>
+                        <textarea id="plan-a-milestones" placeholder="每年目标..."></textarea>
+                        <div class="save-status" id="plan-a-milestones-status"></div>
+                    </div>
+                </div>
+                
+                <div class="plan-card plan-b">
+                    <h3>Plan B（替代方案）</h3>
+                    <div class="form-group">
+                        <label for="plan-b-title">计划名称</label>
+                        <input type="text" id="plan-b-title" placeholder="例如：自由职业计划">
+                        <div class="save-status" id="plan-b-title-status"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="plan-b-desc">5年后的状态</label>
+                        <textarea id="plan-b-desc" placeholder="工作、生活、人际关系..."></textarea>
+                        <div class="save-status" id="plan-b-desc-status"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="plan-b-milestones">关键里程碑</label>
+                        <textarea id="plan-b-milestones" placeholder="每年目标..."></textarea>
+                        <div class="save-status" id="plan-b-milestones-status"></div>
+                    </div>
+                </div>
+                
+                <div class="plan-card plan-c">
+                    <h3>Plan C（理想生活）</h3>
+                    <div class="form-group">
+                        <label for="plan-c-title">计划名称</label>
+                        <input type="text" id="plan-c-title" placeholder="例如：数字游民计划">
+                        <div class="save-status" id="plan-c-title-status"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="plan-c-desc">5年后的状态</label>
+                        <textarea id="plan-c-desc" placeholder="工作、生活、人际关系..."></textarea>
+                        <div class="save-status" id="plan-c-desc-status"></div>
+                    </div>
+                    <div class="form-group">
+                        <label for="plan-c-milestones">关键里程碑</label>
+                        <textarea id="plan-c-milestones" placeholder="每年目标..."></textarea>
+                        <div class="save-status" id="plan-c-milestones-status"></div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="btn-group">
+                <button class="btn btn-secondary" id="back-to-resources">上一步</button>
+                <button class="btn" id="next-to-evaluation">下一步：评估选择</button>
+            </div>
+        </div>
+        
+        <div id="evaluation" class="tab-content">
+            <h2>评估与选择</h2>
+            <p>分析每个计划的可行性和吸引力。</p>
+            
+            <div class="form-group">
+                <label for="exciting-plan">哪个计划让你最兴奋？</label>
+                <select id="exciting-plan" class="form-control">
+                    <option value="">-- 请选择 --</option>
+                    <option value="plan-a">Plan A</option>
+                    <option value="plan-b">Plan B</option>
+                    <option value="plan-c">Plan C</option>
+                </select>
+                <div class="save-status" id="exciting-plan-status"></div>
+            </div>
+            
+            <div class="form-group">
+                <label for="feasibility">可行性分析</label>
+                <textarea id="feasibility" placeholder="每个计划需要哪些资源？可能的风险？如何应对？"></textarea>
+                <div class="save-status" id="feasibility-status"></div>
+            </div>
+            
+            <div class="form-group">
+                <label for="action-steps">接下来3个月可以采取的行动</label>
+                <textarea id="action-steps" placeholder="小步试错的行动步骤..."></textarea>
+                <div class="save-status" id="action-steps-status"></div>
+            </div>
+            
+            <div class="btn-group">
+                <button class="btn btn-secondary" id="back-to-plans">上一步</button>
+                <button class="btn" id="generate-results">生成我的奥德赛计划</button>
+            </div>
+        </div>
+        
+        <div id="results" class="tab-content">
+            <h2>你的奥德赛计划</h2>
+            <p>以下是为你生成的三种未来可能性。</p>
+            
+            <div class="result-card">
+                <h3>资源盘点</h3>
+                <div id="resources-result"></div>
+            </div>
+            
+            <div class="result-card">
+                <h3 id="plan-a-result-title">Plan A</h3>
+                <div id="plan-a-result"></div>
+            </div>
+            
+            <div class="result-card">
+                <h3 id="plan-b-result-title">Plan B</h3>
+                <div id="plan-b-result"></div>
+            </div>
+            
+            <div class="result-card">
+                <h3 id="plan-c-result-title">Plan C</h3>
+                <div id="plan-c-result"></div>
+            </div>
+            
+            <div class="result-card">
+                <h3>评估与行动计划</h3>
+                <div id="evaluation-result"></div>
+            </div>
+            
+            <div class="btn-group">
+                <button class="btn btn-secondary" id="back-to-evaluation">上一步</button>
+                <button class="btn" id="export-pdf">导出为PDF</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
