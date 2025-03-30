@@ -365,25 +365,33 @@ function generateResults() {
                 <div class="gauge-row">
                     <div class="gauge-label">资源:</div>
                     <div class="gauge-wrap">
-                        <div class="gauge-indicator" style="width: ${planAResources}%"><span>${planAResources}%</span></div>
+                        <div class="gauge-indicator" style="width: ${Math.max(planAResources, 10)}%;">
+                            <span style="position: relative; z-index: 2; padding: 0 5px; min-width: 40px;">${planAResources}%</span>
+                        </div>
                     </div>
                 </div>
                 <div class="gauge-row">
                     <div class="gauge-label">喜欢:</div>
                     <div class="gauge-wrap">
-                        <div class="gauge-indicator" style="width: ${planAExcitement}%"><span>${planAExcitement}%</span></div>
+                        <div class="gauge-indicator" style="width: ${Math.max(planAExcitement, 10)}%;">
+                            <span style="position: relative; z-index: 2; padding: 0 5px; min-width: 40px;">${planAExcitement}%</span>
+                        </div>
                     </div>
                 </div>
                 <div class="gauge-row">
                     <div class="gauge-label">自信:</div>
                     <div class="gauge-wrap">
-                        <div class="gauge-indicator" style="width: ${planAConfidence}%"><span>${planAConfidence}%</span></div>
+                        <div class="gauge-indicator" style="width: ${Math.max(planAConfidence, 10)}%;">
+                            <span style="position: relative; z-index: 2; padding: 0 5px; min-width: 40px;">${planAConfidence}%</span>
+                        </div>
                     </div>
                 </div>
                 <div class="gauge-row">
                     <div class="gauge-label">一致:</div>
                     <div class="gauge-wrap">
-                        <div class="gauge-indicator" style="width: ${planAAlignment}%"><span>${planAAlignment}%</span></div>
+                        <div class="gauge-indicator" style="width: ${Math.max(planAAlignment, 10)}%;">
+                            <span style="position: relative; z-index: 2; padding: 0 5px; min-width: 40px;">${planAAlignment}%</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -414,25 +422,33 @@ function generateResults() {
                 <div class="gauge-row">
                     <div class="gauge-label">资源:</div>
                     <div class="gauge-wrap">
-                        <div class="gauge-indicator" style="width: ${planBResources}%"><span>${planBResources}%</span></div>
+                        <div class="gauge-indicator" style="width: ${Math.max(planBResources, 10)}%;">
+                            <span style="position: relative; z-index: 2; padding: 0 5px; min-width: 40px;">${planBResources}%</span>
+                        </div>
                     </div>
                 </div>
                 <div class="gauge-row">
                     <div class="gauge-label">喜欢:</div>
                     <div class="gauge-wrap">
-                        <div class="gauge-indicator" style="width: ${planBExcitement}%"><span>${planBExcitement}%</span></div>
+                        <div class="gauge-indicator" style="width: ${Math.max(planBExcitement, 10)}%;">
+                            <span style="position: relative; z-index: 2; padding: 0 5px; min-width: 40px;">${planBExcitement}%</span>
+                        </div>
                     </div>
                 </div>
                 <div class="gauge-row">
                     <div class="gauge-label">自信:</div>
                     <div class="gauge-wrap">
-                        <div class="gauge-indicator" style="width: ${planBConfidence}%"><span>${planBConfidence}%</span></div>
+                        <div class="gauge-indicator" style="width: ${Math.max(planBConfidence, 10)}%;">
+                            <span style="position: relative; z-index: 2; padding: 0 5px; min-width: 40px;">${planBConfidence}%</span>
+                        </div>
                     </div>
                 </div>
                 <div class="gauge-row">
                     <div class="gauge-label">一致:</div>
                     <div class="gauge-wrap">
-                        <div class="gauge-indicator" style="width: ${planBAlignment}%"><span>${planBAlignment}%</span></div>
+                        <div class="gauge-indicator" style="width: ${Math.max(planBAlignment, 10)}%;">
+                            <span style="position: relative; z-index: 2; padding: 0 5px; min-width: 40px;">${planBAlignment}%</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -463,25 +479,33 @@ function generateResults() {
                 <div class="gauge-row">
                     <div class="gauge-label">资源:</div>
                     <div class="gauge-wrap">
-                        <div class="gauge-indicator" style="width: ${planCResources}%"><span>${planCResources}%</span></div>
+                        <div class="gauge-indicator" style="width: ${Math.max(planCResources, 10)}%;">
+                            <span style="position: relative; z-index: 2; padding: 0 5px; min-width: 40px;">${planCResources}%</span>
+                        </div>
                     </div>
                 </div>
                 <div class="gauge-row">
                     <div class="gauge-label">喜欢:</div>
                     <div class="gauge-wrap">
-                        <div class="gauge-indicator" style="width: ${planCExcitement}%"><span>${planCExcitement}%</span></div>
+                        <div class="gauge-indicator" style="width: ${Math.max(planCExcitement, 10)}%;">
+                            <span style="position: relative; z-index: 2; padding: 0 5px; min-width: 40px;">${planCExcitement}%</span>
+                        </div>
                     </div>
                 </div>
                 <div class="gauge-row">
                     <div class="gauge-label">自信:</div>
                     <div class="gauge-wrap">
-                        <div class="gauge-indicator" style="width: ${planCConfidence}%"><span>${planCConfidence}%</span></div>
+                        <div class="gauge-indicator" style="width: ${Math.max(planCConfidence, 10)}%;">
+                            <span style="position: relative; z-index: 2; padding: 0 5px; min-width: 40px;">${planCConfidence}%</span>
+                        </div>
                     </div>
                 </div>
                 <div class="gauge-row">
                     <div class="gauge-label">一致:</div>
                     <div class="gauge-wrap">
-                        <div class="gauge-indicator" style="width: ${planCAlignment}%"><span>${planCAlignment}%</span></div>
+                        <div class="gauge-indicator" style="width: ${Math.max(planCAlignment, 10)}%;">
+                            <span style="position: relative; z-index: 2; padding: 0 5px; min-width: 40px;">${planCAlignment}%</span>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -575,31 +599,49 @@ function setupExportImage() {
             
             // 临时隐藏按钮组
             const btnGroup = resultsContainer.querySelector('.btn-group');
-            const btnGroupDisplayStyle = btnGroup ? btnGroup.style.display : 'flex';
             if (btnGroup) btnGroup.style.display = 'none';
             
-            // 临时添加样式，确保标题居中
-            const titleElement = resultsContainer.querySelector('h2');
-            const originalTitleStyle = titleElement.style.cssText;
-            titleElement.style.cssText = `
-                text-align: center;
-                font-size: 24px;
-                margin-bottom: 20px;
-                color: #000;
-                font-weight: bold;
-            `;
+            // 添加临时样式使截图更美观
+            resultsContainer.style.backgroundColor = '#ffffff';
+            resultsContainer.style.padding = '40px';
+            resultsContainer.style.width = '800px';
+            resultsContainer.style.margin = '0 auto';
+            resultsContainer.style.boxSizing = 'border-box';
+            
+            // 优化仪表盘样式，确保小百分比指示器也能正确显示
+            const gaugeIndicators = resultsContainer.querySelectorAll('.gauge-indicator');
+            gaugeIndicators.forEach(indicator => {
+                const value = indicator.querySelector('span').textContent;
+                const numValue = parseInt(value);
+                if (numValue < 20) {
+                    // 确保小值也能正确显示
+                    indicator.style.minWidth = '40px';
+                    indicator.style.position = 'relative';
+                    
+                    const span = indicator.querySelector('span');
+                    span.style.position = 'relative';
+                    span.style.left = '0';
+                    span.style.right = '0';
+                    span.style.textAlign = 'center';
+                    span.style.background = '#4895ef';
+                    span.style.color = 'white';
+                    span.style.padding = '0 5px';
+                    span.style.borderRadius = '5px';
+                    span.style.display = 'inline-block';
+                    span.style.minWidth = '40px';
+                }
+            });
             
             // 添加日期
             const dateElement = document.createElement('p');
             dateElement.textContent = `生成日期: ${new Date().toLocaleDateString('zh-CN')}`;
-            dateElement.style.cssText = `
-                text-align: center;
-                font-size: 14px;
-                color: #666;
-                margin-top: 5px;
-                margin-bottom: 20px;
-            `;
-            titleElement.after(dateElement);
+            dateElement.style.textAlign = 'center';
+            dateElement.style.color = '#666';
+            dateElement.style.marginBottom = '20px';
+            resultsContainer.querySelector('h2').after(dateElement);
+            
+            // 获取用户称呼用于文件名
+            const userName = formElements['user-name'].value || '我';
             
             // 使用html2canvas截图
             html2canvas(resultsContainer, {
@@ -610,24 +652,12 @@ function setupExportImage() {
                 allowTaint: true
             }).then(function(canvas) {
                 try {
-                    // 获取用户称呼
-                    const userName = formElements['user-name'].value || '我';
-                    
                     // 导出为PNG图片
                     const dataUrl = canvas.toDataURL('image/png');
                     const link = document.createElement('a');
                     link.download = `${userName}的奥德赛计划.png`;
                     link.href = dataUrl;
                     link.click();
-                    
-                    // 移除临时日期元素
-                    if (dateElement.parentNode) {
-                        dateElement.parentNode.removeChild(dateElement);
-                    }
-                    
-                    // 恢复原始样式
-                    if (btnGroup) btnGroup.style.display = btnGroupDisplayStyle;
-                    titleElement.style.cssText = originalTitleStyle;
                     
                     // 显示成功消息
                     loadingMsg.textContent = '导出成功！';
@@ -639,20 +669,42 @@ function setupExportImage() {
                     loadingMsg.style.background = 'rgba(220, 53, 69, 0.8)';
                     setTimeout(() => loadingMsg.remove(), 2000);
                 } finally {
-                    // 移除临时日期元素
+                    // 恢复原始样式
+                    if (btnGroup) btnGroup.style.display = '';
+                    resultsContainer.style.backgroundColor = '';
+                    resultsContainer.style.padding = '';
+                    resultsContainer.style.width = '';
+                    resultsContainer.style.margin = '';
+                    resultsContainer.style.boxSizing = '';
+                    
+                    // 移除日期元素
                     if (dateElement.parentNode) {
                         dateElement.parentNode.removeChild(dateElement);
                     }
                     
-                    // 恢复按钮状态
+                    // 恢复仪表盘原始样式
+                    gaugeIndicators.forEach(indicator => {
+                        const span = indicator.querySelector('span');
+                        indicator.style.minWidth = '';
+                        indicator.style.position = '';
+                        span.style.position = '';
+                        span.style.left = '';
+                        span.style.right = '';
+                        span.style.textAlign = '';
+                        span.style.background = '';
+                        span.style.color = '';
+                        span.style.padding = '';
+                        span.style.borderRadius = '';
+                        span.style.display = '';
+                        span.style.minWidth = '';
+                    });
+                    
+                    // 恢复按钮
                     exportBtn.disabled = false;
                     exportBtn.textContent = '导出图片';
                 }
             }).catch(function(error) {
-                console.error('生成图片错误:', error);
-                loadingMsg.textContent = '导出失败，请稍后重试';
-                loadingMsg.style.background = 'rgba(220, 53, 69, 0.8)';
-                setTimeout(() => loadingMsg.remove(), 2000);
+                console.error('html2canvas错误:', error);
                 
                 // 移除临时日期元素
                 if (dateElement.parentNode) {
@@ -660,20 +712,48 @@ function setupExportImage() {
                 }
                 
                 // 恢复原始样式
-                if (btnGroup) btnGroup.style.display = btnGroupDisplayStyle;
-                titleElement.style.cssText = originalTitleStyle;
+                if (btnGroup) btnGroup.style.display = '';
+                resultsContainer.style.backgroundColor = '';
+                resultsContainer.style.padding = '';
+                resultsContainer.style.width = '';
+                resultsContainer.style.margin = '';
+                resultsContainer.style.boxSizing = '';
                 
-                // 恢复按钮状态
+                // 恢复仪表盘原始样式
+                gaugeIndicators.forEach(indicator => {
+                    const span = indicator.querySelector('span');
+                    indicator.style.minWidth = '';
+                    indicator.style.position = '';
+                    span.style.position = '';
+                    span.style.left = '';
+                    span.style.right = '';
+                    span.style.textAlign = '';
+                    span.style.background = '';
+                    span.style.color = '';
+                    span.style.padding = '';
+                    span.style.borderRadius = '';
+                    span.style.display = '';
+                    span.style.minWidth = '';
+                });
+                
+                // 显示错误消息
+                loadingMsg.textContent = '导出失败，请稍后重试';
+                loadingMsg.style.background = 'rgba(220, 53, 69, 0.8)';
+                setTimeout(() => loadingMsg.remove(), 2000);
+                
+                // 恢复按钮
                 exportBtn.disabled = false;
                 exportBtn.textContent = '导出图片';
             });
-        } catch (e) {
-            console.error('导出图片过程错误:', e);
+        } catch (error) {
+            console.error('导出过程出错:', error);
+            
+            // 显示错误消息
             loadingMsg.textContent = '导出失败，请稍后重试';
             loadingMsg.style.background = 'rgba(220, 53, 69, 0.8)';
             setTimeout(() => loadingMsg.remove(), 2000);
             
-            // 恢复按钮状态
+            // 恢复按钮
             exportBtn.disabled = false;
             exportBtn.textContent = '导出图片';
         }
