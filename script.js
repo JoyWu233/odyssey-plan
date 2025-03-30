@@ -369,6 +369,7 @@ function generateResults() {
     resourcesBar.className = 'progress-bar resource-progress-bar';
     resourcesBar.id = 'plan-a-resources-progress';
     resourcesBar.style.width = planAResources + '%';
+    resourcesBar.style.backgroundColor = '#4361ee'; // 直接设置A计划蓝色
     document.querySelector('.plan-a-metrics .resource-metric .progress').appendChild(resourcesBar);
 
     document.getElementById('plan-a-excitement-display').textContent = planAExcitement + '%';
@@ -378,6 +379,7 @@ function generateResults() {
     excitementBar.className = 'progress-bar excitement-progress-bar';
     excitementBar.id = 'plan-a-excitement-progress';
     excitementBar.style.width = planAExcitement + '%';
+    excitementBar.style.backgroundColor = '#4361ee'; // 直接设置A计划蓝色
     document.querySelector('.plan-a-metrics .excitement-metric .progress').appendChild(excitementBar);
 
     document.getElementById('plan-a-confidence-display').textContent = planAConfidence + '%';
@@ -387,6 +389,7 @@ function generateResults() {
     confidenceBar.className = 'progress-bar confidence-progress-bar';
     confidenceBar.id = 'plan-a-confidence-progress';
     confidenceBar.style.width = planAConfidence + '%';
+    confidenceBar.style.backgroundColor = '#4361ee'; // 直接设置A计划蓝色
     document.querySelector('.plan-a-metrics .confidence-metric .progress').appendChild(confidenceBar);
 
     document.getElementById('plan-a-alignment-display').textContent = planAAlignment + '%';
@@ -396,6 +399,7 @@ function generateResults() {
     alignmentBar.className = 'progress-bar alignment-progress-bar';
     alignmentBar.id = 'plan-a-alignment-progress';
     alignmentBar.style.width = planAAlignment + '%';
+    alignmentBar.style.backgroundColor = '#4361ee'; // 直接设置A计划蓝色
     document.querySelector('.plan-a-metrics .alignment-metric .progress').appendChild(alignmentBar);
     
     // 更新计划B结果
@@ -426,6 +430,7 @@ function generateResults() {
     resourcesBar.className = 'progress-bar resource-progress-bar';
     resourcesBar.id = 'plan-b-resources-progress';
     resourcesBar.style.width = planBResources + '%';
+    resourcesBar.style.backgroundColor = '#4895ef'; // 直接设置B计划青色
     document.querySelector('.plan-b-metrics .resource-metric .progress').appendChild(resourcesBar);
 
     document.getElementById('plan-b-excitement-display').textContent = planBExcitement + '%';
@@ -435,6 +440,7 @@ function generateResults() {
     excitementBar.className = 'progress-bar excitement-progress-bar';
     excitementBar.id = 'plan-b-excitement-progress';
     excitementBar.style.width = planBExcitement + '%';
+    excitementBar.style.backgroundColor = '#4895ef'; // 直接设置B计划青色
     document.querySelector('.plan-b-metrics .excitement-metric .progress').appendChild(excitementBar);
 
     document.getElementById('plan-b-confidence-display').textContent = planBConfidence + '%';
@@ -444,6 +450,7 @@ function generateResults() {
     confidenceBar.className = 'progress-bar confidence-progress-bar';
     confidenceBar.id = 'plan-b-confidence-progress';
     confidenceBar.style.width = planBConfidence + '%';
+    confidenceBar.style.backgroundColor = '#4895ef'; // 直接设置B计划青色
     document.querySelector('.plan-b-metrics .confidence-metric .progress').appendChild(confidenceBar);
 
     document.getElementById('plan-b-alignment-display').textContent = planBAlignment + '%';
@@ -453,6 +460,7 @@ function generateResults() {
     alignmentBar.className = 'progress-bar alignment-progress-bar';
     alignmentBar.id = 'plan-b-alignment-progress';
     alignmentBar.style.width = planBAlignment + '%';
+    alignmentBar.style.backgroundColor = '#4895ef'; // 直接设置B计划青色
     document.querySelector('.plan-b-metrics .alignment-metric .progress').appendChild(alignmentBar);
     
     // 更新计划C结果
@@ -483,6 +491,7 @@ function generateResults() {
     resourcesBar.className = 'progress-bar resource-progress-bar';
     resourcesBar.id = 'plan-c-resources-progress';
     resourcesBar.style.width = planCResources + '%';
+    resourcesBar.style.backgroundColor = '#f72585'; // 直接设置C计划粉色
     document.querySelector('.plan-c-metrics .resource-metric .progress').appendChild(resourcesBar);
 
     document.getElementById('plan-c-excitement-display').textContent = planCExcitement + '%';
@@ -492,6 +501,7 @@ function generateResults() {
     excitementBar.className = 'progress-bar excitement-progress-bar';
     excitementBar.id = 'plan-c-excitement-progress';
     excitementBar.style.width = planCExcitement + '%';
+    excitementBar.style.backgroundColor = '#f72585'; // 直接设置C计划粉色
     document.querySelector('.plan-c-metrics .excitement-metric .progress').appendChild(excitementBar);
 
     document.getElementById('plan-c-confidence-display').textContent = planCConfidence + '%';
@@ -501,6 +511,7 @@ function generateResults() {
     confidenceBar.className = 'progress-bar confidence-progress-bar';
     confidenceBar.id = 'plan-c-confidence-progress';
     confidenceBar.style.width = planCConfidence + '%';
+    confidenceBar.style.backgroundColor = '#f72585'; // 直接设置C计划粉色
     document.querySelector('.plan-c-metrics .confidence-metric .progress').appendChild(confidenceBar);
 
     document.getElementById('plan-c-alignment-display').textContent = planCAlignment + '%';
@@ -510,6 +521,7 @@ function generateResults() {
     alignmentBar.className = 'progress-bar alignment-progress-bar';
     alignmentBar.id = 'plan-c-alignment-progress';
     alignmentBar.style.width = planCAlignment + '%';
+    alignmentBar.style.backgroundColor = '#f72585'; // 直接设置C计划粉色
     document.querySelector('.plan-c-metrics .alignment-metric .progress').appendChild(alignmentBar);
     
     // 确定最令人兴奋的计划名称
@@ -1050,16 +1062,18 @@ function setupExportImage() {
 
 // 生成指标HTML
 function generateMetricHTML(label, value, planType) {
-    // 根据计划类型设置固定的主色调，不再使用不同指标不同颜色
-    let mainColor = '#4361ee'; // Plan A的蓝色
+    // 根据计划类型设置固定的颜色，确保与计划标题颜色一致
+    let mainColor;
     
-    if (planType === 'b') {
+    if (planType === 'a') {
+        mainColor = '#4361ee'; // Plan A的蓝色
+    } else if (planType === 'b') {
         mainColor = '#4895ef'; // Plan B的青色
     } else if (planType === 'c') {
         mainColor = '#f72585'; // Plan C的粉色
     }
     
-    // 使用水平进度条样式，标签和数值在同一行，统一使用计划的主色调
+    // 使用水平进度条样式，标签和数值在同一行，一律使用计划的标准颜色
     return `
         <div style="width: 23%; text-align: center;">
             <div style="

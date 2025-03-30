@@ -1062,6 +1062,83 @@
         .plan-c-metrics .metric-value {
             color: #f72585 !important;
         }
+        
+        /* 强制设置不同计划的进度条颜色 */
+        /* A计划使用蓝色系 */
+        .plan-a-metrics .progress-bar,
+        .plan-a-metrics .resource-metric .progress-bar,
+        .plan-a-metrics .excitement-metric .progress-bar,
+        .plan-a-metrics .confidence-metric .progress-bar,
+        .plan-a-metrics .alignment-metric .progress-bar,
+        .plan-a-metrics .resource-progress-bar,
+        .plan-a-metrics .excitement-progress-bar,
+        .plan-a-metrics .confidence-progress-bar,
+        .plan-a-metrics .alignment-progress-bar,
+        #plan-a-resources-progress,
+        #plan-a-excitement-progress,
+        #plan-a-confidence-progress,
+        #plan-a-alignment-progress {
+            background-color: #4361ee !important;
+        }
+        
+        /* B计划使用青色系 */
+        .plan-b-metrics .progress-bar,
+        .plan-b-metrics .resource-metric .progress-bar,
+        .plan-b-metrics .excitement-metric .progress-bar,
+        .plan-b-metrics .confidence-metric .progress-bar,
+        .plan-b-metrics .alignment-metric .progress-bar,
+        .plan-b-metrics .resource-progress-bar,
+        .plan-b-metrics .excitement-progress-bar,
+        .plan-b-metrics .confidence-progress-bar,
+        .plan-b-metrics .alignment-progress-bar,
+        #plan-b-resources-progress,
+        #plan-b-excitement-progress,
+        #plan-b-confidence-progress,
+        #plan-b-alignment-progress {
+            background-color: #4895ef !important;
+        }
+        
+        /* C计划使用粉色系 */
+        .plan-c-metrics .progress-bar,
+        .plan-c-metrics .resource-metric .progress-bar,
+        .plan-c-metrics .excitement-metric .progress-bar,
+        .plan-c-metrics .confidence-metric .progress-bar,
+        .plan-c-metrics .alignment-metric .progress-bar,
+        .plan-c-metrics .resource-progress-bar,
+        .plan-c-metrics .excitement-progress-bar,
+        .plan-c-metrics .confidence-progress-bar,
+        .plan-c-metrics .alignment-progress-bar,
+        #plan-c-resources-progress,
+        #plan-c-excitement-progress,
+        #plan-c-confidence-progress,
+        #plan-c-alignment-progress {
+            background-color: #f72585 !important;
+        }
+        
+        /* 强制设置各计划指标数值颜色 */
+        .plan-a-metrics .metric-value,
+        .plan-a-metrics .resource-metric .metric-value,
+        .plan-a-metrics .excitement-metric .metric-value,
+        .plan-a-metrics .confidence-metric .metric-value,
+        .plan-a-metrics .alignment-metric .metric-value {
+            color: #4361ee !important;
+        }
+        
+        .plan-b-metrics .metric-value,
+        .plan-b-metrics .resource-metric .metric-value,
+        .plan-b-metrics .excitement-metric .metric-value,
+        .plan-b-metrics .confidence-metric .metric-value,
+        .plan-b-metrics .alignment-metric .metric-value {
+            color: #4895ef !important;
+        }
+        
+        .plan-c-metrics .metric-value,
+        .plan-c-metrics .resource-metric .metric-value,
+        .plan-c-metrics .excitement-metric .metric-value,
+        .plan-c-metrics .confidence-metric .metric-value,
+        .plan-c-metrics .alignment-metric .metric-value {
+            color: #f72585 !important;
+        }
     </style>
 </head>
 <body>
@@ -1472,28 +1549,28 @@
                                 <div class="metric-label">资源</div>
                                 <div class="metric-value" id="plan-a-resources-display">50%</div>
                                 <div class="progress resource-progress">
-                                    <div class="progress-bar" id="plan-a-resources-progress"></div>
+                                    <div class="progress-bar" id="plan-a-resources-progress" style="width: 50%; background-color: #4361ee;"></div>
                                 </div>
                             </div>
                             <div class="result-metric excitement-metric">
                                 <div class="metric-label">喜欢</div>
                                 <div class="metric-value" id="plan-a-excitement-display">50%</div>
                                 <div class="progress excitement-progress">
-                                    <div class="progress-bar" id="plan-a-excitement-progress"></div>
+                                    <div class="progress-bar" id="plan-a-excitement-progress" style="width: 50%; background-color: #4361ee;"></div>
                                 </div>
                             </div>
                             <div class="result-metric confidence-metric">
                                 <div class="metric-label">自信</div>
                                 <div class="metric-value" id="plan-a-confidence-display">50%</div>
                                 <div class="progress confidence-progress">
-                                    <div class="progress-bar" id="plan-a-confidence-progress"></div>
+                                    <div class="progress-bar" id="plan-a-confidence-progress" style="width: 50%; background-color: #4361ee;"></div>
                                 </div>
                             </div>
                             <div class="result-metric alignment-metric">
                                 <div class="metric-label">一致</div>
                                 <div class="metric-value" id="plan-a-alignment-display">50%</div>
                                 <div class="progress alignment-progress">
-                                    <div class="progress-bar" id="plan-a-alignment-progress"></div>
+                                    <div class="progress-bar" id="plan-a-alignment-progress" style="width: 50%; background-color: #4361ee;"></div>
                                 </div>
                             </div>
                         </div>
@@ -1517,28 +1594,28 @@
                                 <div class="metric-label">资源</div>
                                 <div class="metric-value" id="plan-b-resources-display">50%</div>
                                 <div class="progress resource-progress">
-                                    <div class="progress-bar" id="plan-b-resources-progress"></div>
+                                    <div class="progress-bar" id="plan-b-resources-progress" style="width: 50%; background-color: #4895ef;"></div>
                                 </div>
                             </div>
                             <div class="result-metric excitement-metric">
                                 <div class="metric-label">喜欢</div>
                                 <div class="metric-value" id="plan-b-excitement-display">50%</div>
                                 <div class="progress excitement-progress">
-                                    <div class="progress-bar" id="plan-b-excitement-progress"></div>
+                                    <div class="progress-bar" id="plan-b-excitement-progress" style="width: 50%; background-color: #4895ef;"></div>
                                 </div>
                             </div>
                             <div class="result-metric confidence-metric">
                                 <div class="metric-label">自信</div>
                                 <div class="metric-value" id="plan-b-confidence-display">50%</div>
                                 <div class="progress confidence-progress">
-                                    <div class="progress-bar" id="plan-b-confidence-progress"></div>
+                                    <div class="progress-bar" id="plan-b-confidence-progress" style="width: 50%; background-color: #4895ef;"></div>
                                 </div>
                             </div>
                             <div class="result-metric alignment-metric">
                                 <div class="metric-label">一致</div>
                                 <div class="metric-value" id="plan-b-alignment-display">50%</div>
                                 <div class="progress alignment-progress">
-                                    <div class="progress-bar" id="plan-b-alignment-progress"></div>
+                                    <div class="progress-bar" id="plan-b-alignment-progress" style="width: 50%; background-color: #4895ef;"></div>
                                 </div>
                             </div>
                         </div>
@@ -1562,28 +1639,28 @@
                                 <div class="metric-label">资源</div>
                                 <div class="metric-value" id="plan-c-resources-display">50%</div>
                                 <div class="progress resource-progress">
-                                    <div class="progress-bar" id="plan-c-resources-progress"></div>
+                                    <div class="progress-bar" id="plan-c-resources-progress" style="width: 50%; background-color: #f72585;"></div>
                                 </div>
                             </div>
                             <div class="result-metric excitement-metric">
                                 <div class="metric-label">喜欢</div>
                                 <div class="metric-value" id="plan-c-excitement-display">50%</div>
                                 <div class="progress excitement-progress">
-                                    <div class="progress-bar" id="plan-c-excitement-progress"></div>
+                                    <div class="progress-bar" id="plan-c-excitement-progress" style="width: 50%; background-color: #f72585;"></div>
                                 </div>
                             </div>
                             <div class="result-metric confidence-metric">
                                 <div class="metric-label">自信</div>
                                 <div class="metric-value" id="plan-c-confidence-display">50%</div>
                                 <div class="progress confidence-progress">
-                                    <div class="progress-bar" id="plan-c-confidence-progress"></div>
+                                    <div class="progress-bar" id="plan-c-confidence-progress" style="width: 50%; background-color: #f72585;"></div>
                                 </div>
                             </div>
                             <div class="result-metric alignment-metric">
                                 <div class="metric-label">一致</div>
                                 <div class="metric-value" id="plan-c-alignment-display">50%</div>
                                 <div class="progress alignment-progress">
-                                    <div class="progress-bar" id="plan-c-alignment-progress"></div>
+                                    <div class="progress-bar" id="plan-c-alignment-progress" style="width: 50%; background-color: #f72585;"></div>
                                 </div>
                             </div>
                         </div>
