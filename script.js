@@ -225,9 +225,34 @@ function setupGauges() {
         // 初始化进度条
         updateProgressBar(slider, bar);
         
+        // 设置正确的颜色
+        if (bar) {
+            // 根据ID设置颜色
+            if (slider.id.startsWith('plan-a')) {
+                bar.style.backgroundColor = '#4361ee';
+            } else if (slider.id.startsWith('plan-b')) {
+                bar.style.backgroundColor = '#4895ef';
+            } else if (slider.id.startsWith('plan-c')) {
+                bar.style.backgroundColor = '#f72585';
+            }
+        }
+        
         // 添加事件监听器
         slider.addEventListener('input', function() {
             updateProgressBar(this, bar);
+            
+            // 确保颜色不变
+            if (bar) {
+                // 根据ID设置颜色
+                if (this.id.startsWith('plan-a')) {
+                    bar.style.backgroundColor = '#4361ee';
+                } else if (this.id.startsWith('plan-b')) {
+                    bar.style.backgroundColor = '#4895ef';
+                } else if (this.id.startsWith('plan-c')) {
+                    bar.style.backgroundColor = '#f72585';
+                }
+            }
+            
             saveData();
         });
     });
