@@ -342,141 +342,178 @@ function setupExportImage() {
         exportBtn.textContent = '生成中...';
         
         try {
-            // 深度克隆结果容器
+            // 获取结果容器
             const resultsContainer = document.getElementById('results');
-            const clone = resultsContainer.cloneNode(true);
             
-            // 设置克隆元素的样式
-            clone.style.position = 'absolute';
-            clone.style.left = '-9999px';
-            clone.style.backgroundColor = '#FFFFFF';
-            clone.style.width = '1000px';
-            clone.style.padding = '30px';
-            clone.style.boxSizing = 'border-box';
-            clone.style.margin = '0';
-            clone.style.border = 'none';
-            clone.style.color = '#000000';
+            // 创建一个临时的iframe
+            const iframe = document.createElement('iframe');
+            iframe.style.cssText = 'position:absolute; left:-9999px; top:-9999px; width:1000px; height:1px; border:none;';
+            document.body.appendChild(iframe);
             
-            // 移除按钮组
-            const btnGroup = clone.querySelector('.btn-group');
-            if (btnGroup) {
-                btnGroup.remove();
-            }
+            // 准备在iframe中写入HTML
+            const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+            iframeDoc.open();
             
-            // 添加标题
-            const titleDiv = document.createElement('div');
-            const date = new Date();
-            const dateStr = `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`;
+            // 写入基本HTML结构
+            iframeDoc.write(`
+                <!DOCTYPE html>
+                <html>
+                <head>
+                    <meta charset="UTF-8">
+                    <style>
+                        body {
+                            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+                            background: #FFFFFF;
+                            color: #000000;
+                            padding: 30px;
+                            margin: 0;
+                        }
+                        .report-container {
+                            max-width: 800px;
+                            margin: 0 auto;
+                            background: #FFFFFF;
+                        }
+                        .report-title {
+                            text-align: center;
+                            margin-bottom: 30px;
+                        }
+                        .report-title h1 {
+                            color: #000000;
+                            font-size: 32px;
+                            margin-bottom: 10px;
+                            font-weight: bold;
+                        }
+                        .report-title p {
+                            color: #000000;
+                            font-size: 16px;
+                        }
+                        .result-card {
+                            background: #FFFFFF;
+                            border: 1px solid #CCCCCC;
+                            border-radius: 10px;
+                            padding: 20px;
+                            margin-bottom: 30px;
+                            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+                        }
+                        .result-card h3 {
+                            color: #000000;
+                            font-size: 24px;
+                            font-weight: bold;
+                            margin-bottom: 15px;
+                            padding-bottom: 10px;
+                            border-bottom: 1px solid #CCCCCC;
+                        }
+                        .result-section {
+                            margin-bottom: 15px;
+                        }
+                        .result-section h4 {
+                            color: #000000;
+                            font-size: 18px;
+                            font-weight: bold;
+                            margin-bottom: 10px;
+                        }
+                        .result-section p {
+                            color: #000000;
+                            font-size: 16px;
+                            line-height: 1.5;
+                            margin-bottom: 8px;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <div class="report-container">
+                        <div class="report-title">
+                            <h1>我的奥德赛计划</h1>
+                            <p>生成日期: ${new Date().toLocaleDateString('zh-CN')}</p>
+                        </div>
+                        <!-- 内容将在这里插入 -->
+                    </div>
+                </body>
+                </html>
+            `);
             
-            titleDiv.innerHTML = `
-                <div style="text-align: center; margin-bottom: 30px;">
-                    <h1 style="color: #000000; font-size: 32px; margin-bottom: 10px; font-weight: bold;">我的奥德赛计划</h1>
-                    <p style="color: #000000; font-size: 16px;">生成日期: ${dateStr}</p>
-                </div>
-            `;
+            // 准备内容
+            const reportContainer = iframeDoc.querySelector('.report-container');
             
-            clone.insertBefore(titleDiv, clone.firstChild);
+            // 复制资源盘点卡片
+            const resourcesCard = resultsContainer.querySelector('#resources-card').cloneNode(true);
+            // 移除按钮
+            const resourcesButtons = resourcesCard.querySelectorAll('button');
+            resourcesButtons.forEach(btn => btn.remove());
+            reportContainer.appendChild(resourcesCard);
             
-            // 强制设置文本颜色
-            const allHeadings = clone.querySelectorAll('h1, h2, h3, h4, h5, h6');
-            allHeadings.forEach(h => {
-                h.style.color = '#000000';
-                h.style.fontWeight = 'bold';
-            });
+            // 复制计划A卡片
+            const planACard = resultsContainer.querySelector('#plan-a-card').cloneNode(true);
+            // 移除按钮
+            const planAButtons = planACard.querySelectorAll('button');
+            planAButtons.forEach(btn => btn.remove());
+            reportContainer.appendChild(planACard);
             
-            const allParagraphs = clone.querySelectorAll('p');
-            allParagraphs.forEach(p => {
-                p.style.color = '#000000';
-            });
+            // 复制计划B卡片
+            const planBCard = resultsContainer.querySelector('#plan-b-card').cloneNode(true);
+            // 移除按钮
+            const planBButtons = planBCard.querySelectorAll('button');
+            planBButtons.forEach(btn => btn.remove());
+            reportContainer.appendChild(planBCard);
             
-            // 设置卡片样式
-            const cards = clone.querySelectorAll('.result-card');
-            cards.forEach(card => {
-                card.style.backgroundColor = '#FFFFFF';
-                card.style.border = '1px solid #CCCCCC';
-                card.style.borderRadius = '10px';
-                card.style.padding = '20px';
-                card.style.margin = '0 0 30px 0';
-                card.style.boxShadow = '0 2px 5px rgba(0,0,0,0.1)';
-            });
+            // 复制计划C卡片
+            const planCCard = resultsContainer.querySelector('#plan-c-card').cloneNode(true);
+            // 移除按钮
+            const planCButtons = planCCard.querySelectorAll('button');
+            planCButtons.forEach(btn => btn.remove());
+            reportContainer.appendChild(planCCard);
             
-            // 将克隆添加到文档
-            document.body.appendChild(clone);
+            // 复制评估卡片
+            const evaluationCard = resultsContainer.querySelector('#evaluation-card').cloneNode(true);
+            // 移除按钮
+            const evaluationButtons = evaluationCard.querySelectorAll('button');
+            evaluationButtons.forEach(btn => btn.remove());
+            reportContainer.appendChild(evaluationCard);
             
-            // 创建canvas
-            const canvas = document.createElement('canvas');
-            const ctx = canvas.getContext('2d');
-            const width = clone.offsetWidth;
-            const height = clone.offsetHeight;
+            iframeDoc.close();
             
-            // 设置canvas大小和像素比
-            const scale = 2; // 提高清晰度
-            canvas.width = width * scale;
-            canvas.height = height * scale;
-            canvas.style.width = width + 'px';
-            canvas.style.height = height + 'px';
-            ctx.scale(scale, scale);
-            
-            // 绘制白色背景
-            ctx.fillStyle = '#FFFFFF';
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
-            
-            // 使用html2canvas进行渲染
-            html2canvas(clone, {
-                canvas: canvas,
-                backgroundColor: '#FFFFFF',
-                scale: scale,
-                useCORS: true,
-                allowTaint: true,
-                logging: false
-            }).then(function(renderedCanvas) {
-                try {
-                    // 导出为图片
-                    const imgData = renderedCanvas.toDataURL('image/png');
+            // 等待iframe加载完成
+            setTimeout(() => {
+                html2canvas(iframe.contentDocument.body, {
+                    backgroundColor: '#FFFFFF',
+                    allowTaint: true,
+                    useCORS: true,
+                    scale: 2,
+                    logging: false
+                }).then(canvas => {
+                    // 创建下载链接
                     const link = document.createElement('a');
                     link.download = '我的奥德赛计划.png';
-                    link.href = imgData;
+                    link.href = canvas.toDataURL('image/png');
                     link.click();
                     
-                    // 清理和恢复
-                    document.body.removeChild(clone);
+                    // 清理
+                    document.body.removeChild(iframe);
                     
                     // 显示成功消息
                     loadingMsg.textContent = '导出成功！';
                     loadingMsg.style.background = 'rgba(40, 167, 69, 0.8)';
                     setTimeout(() => loadingMsg.remove(), 1500);
-                } catch (err) {
-                    console.error('图片导出错误:', err);
-                    loadingMsg.textContent = '导出失败，请稍后重试';
-                    loadingMsg.style.background = 'rgba(220, 53, 69, 0.8)';
-                    setTimeout(() => loadingMsg.remove(), 2000);
-                } finally {
+                    
                     // 恢复按钮
                     exportBtn.disabled = false;
                     exportBtn.textContent = '导出图片';
+                }).catch(error => {
+                    console.error('导出图片出错:', error);
                     
-                    // 确保清理
-                    if (document.body.contains(clone)) {
-                        document.body.removeChild(clone);
-                    }
-                }
-            }).catch(function(error) {
-                console.error('html2canvas错误:', error);
-                
-                // 清理
-                if (document.body.contains(clone)) {
-                    document.body.removeChild(clone);
-                }
-                
-                // 显示错误消息
-                loadingMsg.textContent = '导出失败，请稍后重试';
-                loadingMsg.style.background = 'rgba(220, 53, 69, 0.8)';
-                setTimeout(() => loadingMsg.remove(), 2000);
-                
-                // 恢复按钮
-                exportBtn.disabled = false;
-                exportBtn.textContent = '导出图片';
-            });
+                    // 清理
+                    document.body.removeChild(iframe);
+                    
+                    // 显示错误消息
+                    loadingMsg.textContent = '导出失败，请稍后重试';
+                    loadingMsg.style.background = 'rgba(220, 53, 69, 0.8)';
+                    setTimeout(() => loadingMsg.remove(), 2000);
+                    
+                    // 恢复按钮
+                    exportBtn.disabled = false;
+                    exportBtn.textContent = '导出图片';
+                });
+            }, 500);
         } catch (error) {
             console.error('准备导出过程出错:', error);
             
