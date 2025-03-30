@@ -263,10 +263,11 @@ function updatePlanGauges(plan, resources, excitement, confidence, alignment) {
     const confidenceGauge = document.getElementById(`plan-${plan}-confidence-gauge`);
     const alignmentGauge = document.getElementById(`plan-${plan}-alignment-gauge`);
     
-    if (resourcesGauge) resourcesGauge.src = `https://quickchart.io/gauge?value=${resources}&max=100&theme=dark&width=120&height=60&label=资源`;
-    if (excitementGauge) excitementGauge.src = `https://quickchart.io/gauge?value=${excitement}&max=100&theme=dark&width=120&height=60&label=喜欢程度`;
-    if (confidenceGauge) confidenceGauge.src = `https://quickchart.io/gauge?value=${confidence}&max=100&theme=dark&width=120&height=60&label=自信心`;
-    if (alignmentGauge) alignmentGauge.src = `https://quickchart.io/gauge?value=${alignment}&max=100&theme=dark&width=120&height=60&label=一致性`;
+    // 使用正确的URL格式，确保仪表盘图像显示
+    if (resourcesGauge) resourcesGauge.src = `https://quickchart.io/gauge?value=${resources}&max=100&theme=light&width=120&height=80&label=资源`;
+    if (excitementGauge) excitementGauge.src = `https://quickchart.io/gauge?value=${excitement}&max=100&theme=light&width=120&height=80&label=喜欢程度`;
+    if (confidenceGauge) confidenceGauge.src = `https://quickchart.io/gauge?value=${confidence}&max=100&theme=light&width=120&height=80&label=自信心`;
+    if (alignmentGauge) alignmentGauge.src = `https://quickchart.io/gauge?value=${alignment}&max=100&theme=light&width=120&height=80&label=一致性`;
     
     // 更新仪表盘文本值
     const resourcesValue = document.getElementById(`plan-${plan}-resources-value`);
@@ -544,8 +545,8 @@ function setupExportImage() {
             const feasibility = formElements['feasibility'].value || '【未填写】';
             const actionSteps = formElements['action-steps'].value || '【未填写】';
             
-            // 获取仪表盘图像URL
-            const smallGaugeTemplate = 'https://quickchart.io/gauge?value=${value}&max=100&theme=dark&width=120&height=60&label=${label}';
+            // 获取仪表盘图像URL - 修改为正确的格式
+            const smallGaugeTemplate = 'https://quickchart.io/gauge?value=${value}&max=100&theme=light&width=120&height=80&label=${label}';
             
             // 构建HTML内容
             container.innerHTML = `
