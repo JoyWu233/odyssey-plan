@@ -565,44 +565,47 @@ function setupExportImage() {
                     margin-bottom: 30px;
                     background-color: #FFFFFF;
                     border-radius: 8px;
-                    padding: 20px;
+                    padding: 0;
                     box-shadow: 0 2px 5px rgba(0,0,0,0.05);
                     border: 1px solid #E0E0E0;
                 ">
                     <h3 style="
                         font-size: 22px;
                         font-weight: bold;
-                        color: #333;
-                        margin-bottom: 15px;
-                        padding-bottom: 8px;
-                        border-bottom: 2px solid #3a0ca3;
+                        color: #ffffff;
+                        margin: 0 0 15px 0;
+                        padding: 15px 20px;
+                        background-color: #4361ee;
+                        border-radius: 8px 8px 0 0;
                     ">资源盘点</h3>
                     
-                    <div style="margin-bottom: 15px;">
-                        <h4 style="
-                            font-size: 18px;
-                            color: #000;
-                            margin-bottom: 10px;
-                        ">我是谁？</h4>
-                        ${formatTextContentWithStyle(whoAmI)}
-                    </div>
-                    
-                    <div style="margin-bottom: 15px;">
-                        <h4 style="
-                            font-size: 18px;
-                            color: #000;
-                            margin-bottom: 10px;
-                        ">我拥有什么？</h4>
-                        ${formatTextContentWithStyle(whatIHave)}
-                    </div>
-                    
-                    <div>
-                        <h4 style="
-                            font-size: 18px;
-                            color: #000;
-                            margin-bottom: 10px;
-                        ">能量来源</h4>
-                        ${formatTextContentWithStyle(energizers)}
+                    <div style="padding: 0 20px 20px 20px;">
+                        <div style="margin-bottom: 15px;">
+                            <h4 style="
+                                font-size: 18px;
+                                color: #4361ee;
+                                margin-bottom: 10px;
+                            ">我是谁？</h4>
+                            ${formatTextContentWithStyle(whoAmI)}
+                        </div>
+                        
+                        <div style="margin-bottom: 15px;">
+                            <h4 style="
+                                font-size: 18px;
+                                color: #4361ee;
+                                margin-bottom: 10px;
+                            ">我拥有什么？</h4>
+                            ${formatTextContentWithStyle(whatIHave)}
+                        </div>
+                        
+                        <div>
+                            <h4 style="
+                                font-size: 18px;
+                                color: #4361ee;
+                                margin-bottom: 10px;
+                            ">能量来源</h4>
+                            ${formatTextContentWithStyle(energizers)}
+                        </div>
                     </div>
                 </div>
             `;
@@ -621,57 +624,57 @@ function setupExportImage() {
                     margin-bottom: 30px;
                     background-color: #FFFFFF;
                     border-radius: 8px;
-                    padding: 20px;
+                    padding: 0;
                     box-shadow: 0 2px 5px rgba(0,0,0,0.05);
                     border: 1px solid #E0E0E0;
-                    border-left: 4px solid #4895ef;
                 ">
                     <h3 style="
                         font-size: 22px;
                         font-weight: bold;
-                        color: #4895ef;
-                        margin-bottom: 15px;
-                        padding-bottom: 8px;
-                        border-bottom: 2px solid #4895ef;
+                        color: #ffffff;
+                        margin: 0 0 15px 0;
+                        padding: 15px 20px;
+                        background-color: #4361ee;
+                        border-radius: 8px 8px 0 0;
                     ">Plan A - ${planATitle}</h3>
                     
-                    <div style="margin-bottom: 15px;">
-                        <h4 style="
-                            font-size: 18px;
-                            color: #000;
-                            margin-bottom: 10px;
-                        ">5年后的状态</h4>
-                        ${formatTextContentWithStyle(planADesc)}
-                    </div>
-                    
-                    <div style="margin-bottom: 15px;">
-                        <h4 style="
-                            font-size: 18px;
-                            color: #000;
-                            margin-bottom: 10px;
-                        ">关键里程碑</h4>
-                        ${formatTextContentWithStyle(planAMilestones)}
-                    </div>
-                    
-                    <div>
-                        <h4 style="
-                            font-size: 18px;
-                            color: #000;
-                            margin-bottom: 10px;
-                        ">计划评估</h4>
-                        <div style="
-                            display: flex;
-                            justify-content: space-between;
-                            background-color: #f8f9fa;
-                            border-radius: 8px;
-                            padding: 15px;
-                            border: 1px solid #e0e0e0;
-                            border-left: 4px solid #4895ef;
-                        ">
-                            ${generateMetricHTML('资源充足度', planAResources)}
-                            ${generateMetricHTML('喜欢程度', planAExcitement)}
-                            ${generateMetricHTML('自信心', planAConfidence)}
-                            ${generateMetricHTML('一致性', planAAlignment)}
+                    <div style="padding: 0 20px 20px 20px;">
+                        <div style="margin-bottom: 15px;">
+                            <h4 style="
+                                font-size: 18px;
+                                color: #4361ee;
+                                margin-bottom: 10px;
+                            ">5年后的状态</h4>
+                            ${formatTextContentWithStyle(planADesc)}
+                        </div>
+                        
+                        <div style="margin-bottom: 15px;">
+                            <h4 style="
+                                font-size: 18px;
+                                color: #4361ee;
+                                margin-bottom: 10px;
+                            ">关键里程碑</h4>
+                            ${formatTextContentWithStyle(planAMilestones)}
+                        </div>
+                        
+                        <div>
+                            <h4 style="
+                                font-size: 18px;
+                                color: #4361ee;
+                                margin-bottom: 10px;
+                            ">计划评估</h4>
+                            <div style="
+                                display: flex;
+                                justify-content: space-between;
+                                background-color: #f8f9fa;
+                                border-radius: 8px;
+                                padding: 15px;
+                            ">
+                                ${generateMetricHTML('资源', planAResources, 'a')}
+                                ${generateMetricHTML('喜欢', planAExcitement, 'a')}
+                                ${generateMetricHTML('自信', planAConfidence, 'a')}
+                                ${generateMetricHTML('一致', planAAlignment, 'a')}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -691,57 +694,57 @@ function setupExportImage() {
                     margin-bottom: 30px;
                     background-color: #FFFFFF;
                     border-radius: 8px;
-                    padding: 20px;
+                    padding: 0;
                     box-shadow: 0 2px 5px rgba(0,0,0,0.05);
                     border: 1px solid #E0E0E0;
-                    border-left: 4px solid #4cc9f0;
                 ">
                     <h3 style="
                         font-size: 22px;
                         font-weight: bold;
-                        color: #4cc9f0;
-                        margin-bottom: 15px;
-                        padding-bottom: 8px;
-                        border-bottom: 2px solid #4cc9f0;
+                        color: #ffffff;
+                        margin: 0 0 15px 0;
+                        padding: 15px 20px;
+                        background-color: #4895ef;
+                        border-radius: 8px 8px 0 0;
                     ">Plan B - ${planBTitle}</h3>
                     
-                    <div style="margin-bottom: 15px;">
-                        <h4 style="
-                            font-size: 18px;
-                            color: #000;
-                            margin-bottom: 10px;
-                        ">5年后的状态</h4>
-                        ${formatTextContentWithStyle(planBDesc)}
-                    </div>
-                    
-                    <div style="margin-bottom: 15px;">
-                        <h4 style="
-                            font-size: 18px;
-                            color: #000;
-                            margin-bottom: 10px;
-                        ">关键里程碑</h4>
-                        ${formatTextContentWithStyle(planBMilestones)}
-                    </div>
-                    
-                    <div>
-                        <h4 style="
-                            font-size: 18px;
-                            color: #000;
-                            margin-bottom: 10px;
-                        ">计划评估</h4>
-                        <div style="
-                            display: flex;
-                            justify-content: space-between;
-                            background-color: #f8f9fa;
-                            border-radius: 8px;
-                            padding: 15px;
-                            border: 1px solid #e0e0e0;
-                            border-left: 4px solid #4cc9f0;
-                        ">
-                            ${generateMetricHTML('资源充足度', planBResources)}
-                            ${generateMetricHTML('喜欢程度', planBExcitement)}
-                            ${generateMetricHTML('自信心', planBConfidence)}
-                            ${generateMetricHTML('一致性', planBAlignment)}
+                    <div style="padding: 0 20px 20px 20px;">
+                        <div style="margin-bottom: 15px;">
+                            <h4 style="
+                                font-size: 18px;
+                                color: #4895ef;
+                                margin-bottom: 10px;
+                            ">5年后的状态</h4>
+                            ${formatTextContentWithStyle(planBDesc)}
+                        </div>
+                        
+                        <div style="margin-bottom: 15px;">
+                            <h4 style="
+                                font-size: 18px;
+                                color: #4895ef;
+                                margin-bottom: 10px;
+                            ">关键里程碑</h4>
+                            ${formatTextContentWithStyle(planBMilestones)}
+                        </div>
+                        
+                        <div>
+                            <h4 style="
+                                font-size: 18px;
+                                color: #4895ef;
+                                margin-bottom: 10px;
+                            ">计划评估</h4>
+                            <div style="
+                                display: flex;
+                                justify-content: space-between;
+                                background-color: #f8f9fa;
+                                border-radius: 8px;
+                                padding: 15px;
+                            ">
+                                ${generateMetricHTML('资源', planBResources, 'b')}
+                                ${generateMetricHTML('喜欢', planBExcitement, 'b')}
+                                ${generateMetricHTML('自信', planBConfidence, 'b')}
+                                ${generateMetricHTML('一致', planBAlignment, 'b')}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -761,57 +764,57 @@ function setupExportImage() {
                     margin-bottom: 30px;
                     background-color: #FFFFFF;
                     border-radius: 8px;
-                    padding: 20px;
+                    padding: 0;
                     box-shadow: 0 2px 5px rgba(0,0,0,0.05);
                     border: 1px solid #E0E0E0;
-                    border-left: 4px solid #3a0ca3;
                 ">
                     <h3 style="
                         font-size: 22px;
                         font-weight: bold;
-                        color: #3a0ca3;
-                        margin-bottom: 15px;
-                        padding-bottom: 8px;
-                        border-bottom: 2px solid #3a0ca3;
+                        color: #ffffff;
+                        margin: 0 0 15px 0;
+                        padding: 15px 20px;
+                        background-color: #f72585;
+                        border-radius: 8px 8px 0 0;
                     ">Plan C - ${planCTitle}</h3>
                     
-                    <div style="margin-bottom: 15px;">
-                        <h4 style="
-                            font-size: 18px;
-                            color: #000;
-                            margin-bottom: 10px;
-                        ">5年后的状态</h4>
-                        ${formatTextContentWithStyle(planCDesc)}
-                    </div>
-                    
-                    <div style="margin-bottom: 15px;">
-                        <h4 style="
-                            font-size: 18px;
-                            color: #000;
-                            margin-bottom: 10px;
-                        ">关键里程碑</h4>
-                        ${formatTextContentWithStyle(planCMilestones)}
-                    </div>
-                    
-                    <div>
-                        <h4 style="
-                            font-size: 18px;
-                            color: #000;
-                            margin-bottom: 10px;
-                        ">计划评估</h4>
-                        <div style="
-                            display: flex;
-                            justify-content: space-between;
-                            background-color: #f8f9fa;
-                            border-radius: 8px;
-                            padding: 15px;
-                            border: 1px solid #e0e0e0;
-                            border-left: 4px solid #3a0ca3;
-                        ">
-                            ${generateMetricHTML('资源充足度', planCResources)}
-                            ${generateMetricHTML('喜欢程度', planCExcitement)}
-                            ${generateMetricHTML('自信心', planCConfidence)}
-                            ${generateMetricHTML('一致性', planCAlignment)}
+                    <div style="padding: 0 20px 20px 20px;">
+                        <div style="margin-bottom: 15px;">
+                            <h4 style="
+                                font-size: 18px;
+                                color: #f72585;
+                                margin-bottom: 10px;
+                            ">5年后的状态</h4>
+                            ${formatTextContentWithStyle(planCDesc)}
+                        </div>
+                        
+                        <div style="margin-bottom: 15px;">
+                            <h4 style="
+                                font-size: 18px;
+                                color: #f72585;
+                                margin-bottom: 10px;
+                            ">关键里程碑</h4>
+                            ${formatTextContentWithStyle(planCMilestones)}
+                        </div>
+                        
+                        <div>
+                            <h4 style="
+                                font-size: 18px;
+                                color: #f72585;
+                                margin-bottom: 10px;
+                            ">计划评估</h4>
+                            <div style="
+                                display: flex;
+                                justify-content: space-between;
+                                background-color: #f8f9fa;
+                                border-radius: 8px;
+                                padding: 15px;
+                            ">
+                                ${generateMetricHTML('资源', planCResources, 'c')}
+                                ${generateMetricHTML('喜欢', planCExcitement, 'c')}
+                                ${generateMetricHTML('自信', planCConfidence, 'c')}
+                                ${generateMetricHTML('一致', planCAlignment, 'c')}
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -834,49 +837,51 @@ function setupExportImage() {
                 <div style="
                     background-color: #FFFFFF;
                     border-radius: 8px;
-                    padding: 20px;
+                    padding: 0;
                     box-shadow: 0 2px 5px rgba(0,0,0,0.05);
                     border: 1px solid #E0E0E0;
-                    border-left: 4px solid #4361ee;
                 ">
                     <h3 style="
                         font-size: 22px;
                         font-weight: bold;
-                        color: #4361ee;
-                        margin-bottom: 15px;
-                        padding-bottom: 8px;
-                        border-bottom: 2px solid #4361ee;
+                        color: #ffffff;
+                        margin: 0 0 15px 0;
+                        padding: 15px 20px;
+                        background-color: #4361ee;
+                        border-radius: 8px 8px 0 0;
                     ">评估与行动计划</h3>
                     
-                    <div style="margin-bottom: 15px;">
-                        <h4 style="
-                            font-size: 18px;
-                            color: #000;
-                            margin-bottom: 10px;
-                        ">最令人兴奋的计划</h4>
-                        <p style="
-                            margin: 0;
-                            line-height: 1.6;
-                            color: #333;
-                        ">${excitingPlanName}</p>
-                    </div>
-                    
-                    <div style="margin-bottom: 15px;">
-                        <h4 style="
-                            font-size: 18px;
-                            color: #000;
-                            margin-bottom: 10px;
-                        ">可行性分析</h4>
-                        ${formatTextContentWithStyle(feasibility)}
-                    </div>
-                    
-                    <div>
-                        <h4 style="
-                            font-size: 18px;
-                            color: #000;
-                            margin-bottom: 10px;
-                        ">行动计划</h4>
-                        ${formatTextContentWithStyle(actionSteps)}
+                    <div style="padding: 0 20px 20px 20px;">
+                        <div style="margin-bottom: 15px;">
+                            <h4 style="
+                                font-size: 18px;
+                                color: #4361ee;
+                                margin-bottom: 10px;
+                            ">最令人兴奋的计划</h4>
+                            <p style="
+                                margin: 0;
+                                line-height: 1.6;
+                                color: #333;
+                            ">${excitingPlanName}</p>
+                        </div>
+                        
+                        <div style="margin-bottom: 15px;">
+                            <h4 style="
+                                font-size: 18px;
+                                color: #4361ee;
+                                margin-bottom: 10px;
+                            ">可行性分析</h4>
+                            ${formatTextContentWithStyle(feasibility)}
+                        </div>
+                        
+                        <div>
+                            <h4 style="
+                                font-size: 18px;
+                                color: #4361ee;
+                                margin-bottom: 10px;
+                            ">行动计划</h4>
+                            ${formatTextContentWithStyle(actionSteps)}
+                        </div>
                     </div>
                 </div>
             `;
@@ -963,27 +968,36 @@ function setupExportImage() {
 }
 
 // 生成指标HTML
-function generateMetricHTML(label, value) {
-    // 根据标签获取颜色
-    let barColor = '#4895ef'; // 默认蓝色
-    if (label === '资源充足度') {
-        barColor = '#4895ef'; // 蓝色
-    } else if (label === '喜欢程度') {
-        barColor = '#4cc9f0'; // 浅蓝色
-    } else if (label === '自信心') {
-        barColor = '#3f37c9'; // 深蓝色
-    } else if (label === '一致性') {
-        barColor = '#4361ee'; // 靛蓝色
+function generateMetricHTML(label, value, planType) {
+    // 根据计划类型设置主色调
+    let mainColor = '#4361ee'; // 默认Plan A的蓝色
+    
+    if (planType === 'b') {
+        mainColor = '#4895ef'; // Plan B的青色
+    } else if (planType === 'c') {
+        mainColor = '#f72585'; // Plan C的粉色
     }
     
+    // 使用水平进度条样式，标签和数值在同一行，统一使用计划的主色调
     return `
         <div style="width: 23%; text-align: center;">
             <div style="
-                font-size: 14px;
-                font-weight: bold;
-                margin-bottom: 8px;
-                color: #333;
-            ">${label}</div>
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                margin-bottom: 5px;
+            ">
+                <div style="
+                    font-size: 14px;
+                    font-weight: bold;
+                    color: #333;
+                ">${label}</div>
+                <div style="
+                    font-size: 16px;
+                    font-weight: bold;
+                    color: ${mainColor};
+                ">${value}%</div>
+            </div>
             <div style="
                 background: #e9ecef;
                 border-radius: 20px;
@@ -993,27 +1007,12 @@ function generateMetricHTML(label, value) {
                 box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
             ">
                 <div style="
-                    background: ${barColor};
+                    background: ${mainColor};
                     width: ${value}%;
                     height: 100%;
                     border-radius: 20px;
-                    background-image: linear-gradient(45deg, 
-                        rgba(255,255,255,.15) 25%, 
-                        transparent 25%, 
-                        transparent 50%, 
-                        rgba(255,255,255,.15) 50%, 
-                        rgba(255,255,255,.15) 75%, 
-                        transparent 75%, 
-                        transparent);
-                    background-size: 20px 20px;
                 "></div>
             </div>
-            <div style="
-                font-size: 16px;
-                font-weight: bold;
-                color: ${barColor};
-                margin-top: 5px;
-            ">${value}%</div>
         </div>
     `;
 }

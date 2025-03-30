@@ -228,13 +228,13 @@
         
         .result-card h3 {
             color: var(--primary);
-            margin-bottom: 1.5rem;
+            margin-bottom: 1rem;
             padding-bottom: 0.5rem;
             border-bottom: 2px solid var(--accent);
         }
         
         .result-section {
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.2rem;
         }
         
         .result-section:last-child {
@@ -243,7 +243,7 @@
         
         .result-section h4 {
             color: var(--secondary);
-            margin-bottom: 0.8rem;
+            margin-bottom: 0.5rem;
             font-size: 1.1rem;
         }
         
@@ -610,61 +610,73 @@
             box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
         
-        /* 结果页面指标展示 */
+        /* 结果页面指标展示 - 优化后的水平紧凑版 */
         .result-metrics {
             display: flex;
-            flex-wrap: wrap;
+            flex-wrap: nowrap;
             justify-content: space-between;
             background-color: #f8f9fa;
             border-radius: 10px;
-            padding: 15px;
+            padding: 15px 10px;
             margin: 15px 0;
             box-shadow: inset 0 0 5px rgba(0,0,0,0.05);
+            position: relative;
+            border: 1px solid #e0e0e0;
+            border-left: 4px solid var(--primary);
+            margin-top: 0.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .result-metrics-title {
+            color: var(--secondary);
+            font-size: 1.1rem;
+            margin-bottom: 15px;
+            font-weight: 600;
+            position: static;
+            padding: 0;
+            border: none;
+        }
+        
+        .result-section h4, .result-metrics-title {
+            color: #000000;
+            font-size: 18px;
+            margin-bottom: 10px;
+            font-weight: bold;
         }
         
         .result-metric {
-            flex: 1;
-            min-width: 120px;
-            margin: 8px;
-            text-align: center;
-            position: relative;
+            width: 23%;
         }
         
-        .result-metric-label {
-            font-weight: 600;
-            color: #555;
+        .metric-label {
             font-size: 14px;
             margin-bottom: 5px;
+            color: #333;
+            float: left;
         }
         
-        .result-metric-value {
-            background-color: var(--primary);
-            color: white;
-            font-weight: bold;
-            padding: 5px 12px;
-            border-radius: 20px;
-            display: inline-block;
-            min-width: 70px;
+        .metric-value {
             font-size: 16px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+            font-weight: bold;
+            text-align: right;
+            margin-bottom: 5px;
+            float: right;
         }
         
-        .result-metric-bar {
-            height: 8px;
+        .progress {
+            height: 10px;
             background-color: #e9ecef;
-            border-radius: 4px;
-            margin-top: 8px;
+            border-radius: 20px;
             overflow: hidden;
-            box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+            margin-bottom: 0;
+            clear: both;
         }
         
-        .result-metric-progress {
-            height: 100%;
-            background: linear-gradient(90deg, var(--primary), var(--accent));
-            border-radius: 4px;
-            transition: width 0.3s ease;
+        .progress-bar {
+            border-radius: 20px;
         }
         
+        /* 针对各个计划的颜色 */
         .plan-a-card .result-metric-value,
         .plan-a-card .result-metric-progress {
             background: linear-gradient(90deg, var(--primary), var(--accent));
@@ -678,6 +690,40 @@
         .plan-c-card .result-metric-value,
         .plan-c-card .result-metric-progress {
             background: linear-gradient(90deg, var(--warning), #ff9e80);
+        }
+        
+        .summary-metrics {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 10px;
+            margin-bottom: 15px;
+        }
+        
+        .summary-metric {
+            display: flex;
+            align-items: center;
+            min-width: 120px;
+            margin: 5px 10px;
+        }
+        
+        .summary-metric-label {
+            font-size: 13px;
+            color: #666;
+            margin-right: 8px;
+        }
+        
+        .summary-metric-value {
+            font-weight: bold;
+            background-color: var(--primary);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 15px;
+            font-size: 13px;
+            min-width: 45px;
+            text-align: center;
         }
         
         /* 结果页面样式 */
@@ -860,6 +906,145 @@
         
         .floating-contact .wechat-id {
             font-weight: 500;
+        }
+        
+        /* 针对各个计划的颜色 */
+        .plan-a-card .result-metrics {
+            border-left: 4px solid var(--primary);
+        }
+        
+        .plan-a-card .result-metrics-title {
+            border-bottom: 2px solid var(--primary);
+        }
+        
+        .plan-b-card .result-metrics {
+            border-left: 4px solid var(--accent);
+        }
+        
+        .plan-b-card .result-metrics-title {
+            border-bottom: 2px solid var(--accent);
+        }
+        
+        .plan-c-card .result-metrics {
+            border-left: 4px solid var(--warning);
+        }
+        
+        .plan-c-card .result-metrics-title {
+            border-bottom: 2px solid var(--warning);
+        }
+        
+        /* 调整结果页面布局 */
+        #plan-a-result, #plan-b-result, #plan-c-result {
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+        
+        /* 计划评估部分调整 */
+        .result-card .result-section:last-of-type {
+            margin-bottom: 0.5rem;
+        }
+        
+        /* 计划评估与上面内容的间距 */
+        .plan-a-card .result-section:first-of-type,
+        .plan-b-card .result-section:first-of-type,
+        .plan-c-card .result-section:first-of-type {
+            margin-top: -0.5rem;
+        }
+        
+        /* 更新进度条样式，确保与导出图片一致 */
+        .result-card {
+            background-color: #ffffff;
+            border-radius: 8px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            border: 1px solid #E0E0E0;
+            overflow: hidden;
+        }
+        
+        .result-metrics {
+            display: flex;
+            flex-wrap: nowrap;
+            justify-content: space-between;
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+        }
+        
+        .result-metric {
+            width: 23%;
+        }
+        
+        .metric-label {
+            font-size: 14px;
+            margin-bottom: 5px;
+            color: #333;
+            float: left;
+        }
+        
+        .metric-value {
+            font-size: 16px;
+            font-weight: bold;
+            text-align: right;
+            margin-bottom: 5px;
+            float: right;
+        }
+        
+        .progress {
+            height: 10px;
+            background-color: #e9ecef;
+            border-radius: 20px;
+            overflow: hidden;
+            margin-bottom: 0;
+            clear: both;
+        }
+        
+        .progress-bar {
+            border-radius: 20px;
+        }
+        
+        /* 调整标题样式 */
+        h4 {
+            color: inherit;
+            font-size: 18px;
+            margin-bottom: 15px;
+        }
+        
+        /* Plan A 标题颜色 */
+        #plan-a-result-title + div h4 {
+            color: #4361ee;
+        }
+        
+        /* Plan B 标题颜色 */
+        #plan-b-result-title + div h4 {
+            color: #4895ef;
+        }
+        
+        /* Plan C 标题颜色 */
+        #plan-c-result-title + div h4 {
+            color: #f72585;
+        }
+        
+        .plan-a-metrics .progress-bar {
+            background-color: #4361ee;
+        }
+        
+        .plan-b-metrics .progress-bar {
+            background-color: #4895ef;
+        }
+        
+        .plan-c-metrics .progress-bar {
+            background-color: #f72585;
+        }
+        
+        .plan-a-metrics .metric-value {
+            color: #4361ee;
+        }
+        
+        .plan-b-metrics .metric-value {
+            color: #4895ef;
+        }
+        
+        .plan-c-metrics .metric-value {
+            color: #f72585;
         }
     </style>
 </head>
@@ -1245,133 +1430,162 @@
         </div>
         
         <div id="results" class="tab-content">
-            <h2>你的奥德赛计划</h2>
-            <p>以下是为你生成的三种未来可能性。</p>
+            <h2 class="text-center mb-4">我的奥德赛计划</h2>
             
-            <div class="result-card">
-                <h3>资源盘点</h3>
-                <div id="resources-result"></div>
+            <!-- 资源盘点结果 -->
+            <div class="result-card mb-4" id="resources-result-wrapper">
+                <h3 class="result-card-title" style="background-color: #4361ee; color: white; padding: 15px 20px; margin: 0; border-radius: 8px 8px 0 0;">资源盘点</h3>
+                <div class="p-4" id="resources-result">
+                    <!-- 动态生成内容 -->
+                </div>
             </div>
             
-            <div class="result-card plan-a-card">
-                <h3 id="plan-a-result-title">Plan A</h3>
-                <div id="plan-a-result"></div>
-                
-                <!-- 使用新的结果指标布局替换仪表盘 -->
-                <div class="result-metrics">
-                    <div class="result-metric">
-                        <div class="result-metric-label">资源充足度</div>
-                        <div class="result-metric-value" id="plan-a-resources-display">50%</div>
-                        <div class="result-metric-bar">
-                            <div class="result-metric-progress" id="plan-a-resources-progress" style="width: 50%"></div>
-                        </div>
+            <!-- 计划A结果 -->
+            <div class="result-card mb-4">
+                <h3 class="result-card-title" id="plan-a-result-title" style="background-color: #4361ee; color: white; padding: 15px 20px; margin: 0; border-radius: 8px 8px 0 0;">Plan A</h3>
+                <div class="p-4">
+                    <div id="plan-a-result">
+                        <!-- 动态生成内容 -->
                     </div>
-                    <div class="result-metric">
-                        <div class="result-metric-label">喜欢程度</div>
-                        <div class="result-metric-value" id="plan-a-excitement-display">50%</div>
-                        <div class="result-metric-bar">
-                            <div class="result-metric-progress" id="plan-a-excitement-progress" style="width: 50%"></div>
-                        </div>
-                    </div>
-                    <div class="result-metric">
-                        <div class="result-metric-label">自信心</div>
-                        <div class="result-metric-value" id="plan-a-confidence-display">50%</div>
-                        <div class="result-metric-bar">
-                            <div class="result-metric-progress" id="plan-a-confidence-progress" style="width: 50%"></div>
-                        </div>
-                    </div>
-                    <div class="result-metric">
-                        <div class="result-metric-label">一致性</div>
-                        <div class="result-metric-value" id="plan-a-alignment-display">50%</div>
-                        <div class="result-metric-bar">
-                            <div class="result-metric-progress" id="plan-a-alignment-progress" style="width: 50%"></div>
+                    
+                    <!-- 计划A评估仪表盘 -->
+                    <div class="mt-4">
+                        <h4>计划评估</h4>
+                        <div class="result-metrics plan-a-metrics">
+                            <div class="result-metric resource-metric">
+                                <div class="metric-label">资源</div>
+                                <div class="metric-value" id="plan-a-resources-display">50%</div>
+                                <div class="progress resource-progress">
+                                    <div class="progress-bar" id="plan-a-resources-progress" style="width: 50%;"></div>
+                                </div>
+                            </div>
+                            <div class="result-metric excitement-metric">
+                                <div class="metric-label">喜欢</div>
+                                <div class="metric-value" id="plan-a-excitement-display">50%</div>
+                                <div class="progress excitement-progress">
+                                    <div class="progress-bar" id="plan-a-excitement-progress" style="width: 50%;"></div>
+                                </div>
+                            </div>
+                            <div class="result-metric confidence-metric">
+                                <div class="metric-label">自信</div>
+                                <div class="metric-value" id="plan-a-confidence-display">50%</div>
+                                <div class="progress confidence-progress">
+                                    <div class="progress-bar" id="plan-a-confidence-progress" style="width: 50%;"></div>
+                                </div>
+                            </div>
+                            <div class="result-metric alignment-metric">
+                                <div class="metric-label">一致</div>
+                                <div class="metric-value" id="plan-a-alignment-display">50%</div>
+                                <div class="progress alignment-progress">
+                                    <div class="progress-bar" id="plan-a-alignment-progress" style="width: 50%;"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
             
-            <div class="result-card plan-b-card">
-                <h3 id="plan-b-result-title">Plan B</h3>
-                <div id="plan-b-result"></div>
-                
-                <!-- 使用新的结果指标布局替换仪表盘 -->
-                <div class="result-metrics">
-                    <div class="result-metric">
-                        <div class="result-metric-label">资源充足度</div>
-                        <div class="result-metric-value" id="plan-b-resources-display">50%</div>
-                        <div class="result-metric-bar">
-                            <div class="result-metric-progress" id="plan-b-resources-progress" style="width: 50%"></div>
-                        </div>
+            <!-- 计划B结果 -->
+            <div class="result-card mb-4">
+                <h3 class="result-card-title" id="plan-b-result-title" style="background-color: #4895ef; color: white; padding: 15px 20px; margin: 0; border-radius: 8px 8px 0 0;">Plan B</h3>
+                <div class="p-4">
+                    <div id="plan-b-result">
+                        <!-- 动态生成内容 -->
                     </div>
-                    <div class="result-metric">
-                        <div class="result-metric-label">喜欢程度</div>
-                        <div class="result-metric-value" id="plan-b-excitement-display">50%</div>
-                        <div class="result-metric-bar">
-                            <div class="result-metric-progress" id="plan-b-excitement-progress" style="width: 50%"></div>
-                        </div>
-                    </div>
-                    <div class="result-metric">
-                        <div class="result-metric-label">自信心</div>
-                        <div class="result-metric-value" id="plan-b-confidence-display">50%</div>
-                        <div class="result-metric-bar">
-                            <div class="result-metric-progress" id="plan-b-confidence-progress" style="width: 50%"></div>
-                        </div>
-                    </div>
-                    <div class="result-metric">
-                        <div class="result-metric-label">一致性</div>
-                        <div class="result-metric-value" id="plan-b-alignment-display">50%</div>
-                        <div class="result-metric-bar">
-                            <div class="result-metric-progress" id="plan-b-alignment-progress" style="width: 50%"></div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="result-card plan-c-card">
-                <h3 id="plan-c-result-title">Plan C</h3>
-                <div id="plan-c-result"></div>
-                
-                <!-- 使用新的结果指标布局替换仪表盘 -->
-                <div class="result-metrics">
-                    <div class="result-metric">
-                        <div class="result-metric-label">资源充足度</div>
-                        <div class="result-metric-value" id="plan-c-resources-display">50%</div>
-                        <div class="result-metric-bar">
-                            <div class="result-metric-progress" id="plan-c-resources-progress" style="width: 50%"></div>
-                        </div>
-                    </div>
-                    <div class="result-metric">
-                        <div class="result-metric-label">喜欢程度</div>
-                        <div class="result-metric-value" id="plan-c-excitement-display">50%</div>
-                        <div class="result-metric-bar">
-                            <div class="result-metric-progress" id="plan-c-excitement-progress" style="width: 50%"></div>
-                        </div>
-                    </div>
-                    <div class="result-metric">
-                        <div class="result-metric-label">自信心</div>
-                        <div class="result-metric-value" id="plan-c-confidence-display">50%</div>
-                        <div class="result-metric-bar">
-                            <div class="result-metric-progress" id="plan-c-confidence-progress" style="width: 50%"></div>
-                        </div>
-                    </div>
-                    <div class="result-metric">
-                        <div class="result-metric-label">一致性</div>
-                        <div class="result-metric-value" id="plan-c-alignment-display">50%</div>
-                        <div class="result-metric-bar">
-                            <div class="result-metric-progress" id="plan-c-alignment-progress" style="width: 50%"></div>
+                    
+                    <!-- 计划B评估仪表盘 -->
+                    <div class="mt-4">
+                        <h4>计划评估</h4>
+                        <div class="result-metrics plan-b-metrics">
+                            <div class="result-metric resource-metric">
+                                <div class="metric-label">资源</div>
+                                <div class="metric-value" id="plan-b-resources-display">50%</div>
+                                <div class="progress resource-progress">
+                                    <div class="progress-bar" id="plan-b-resources-progress" style="width: 50%;"></div>
+                                </div>
+                            </div>
+                            <div class="result-metric excitement-metric">
+                                <div class="metric-label">喜欢</div>
+                                <div class="metric-value" id="plan-b-excitement-display">50%</div>
+                                <div class="progress excitement-progress">
+                                    <div class="progress-bar" id="plan-b-excitement-progress" style="width: 50%;"></div>
+                                </div>
+                            </div>
+                            <div class="result-metric confidence-metric">
+                                <div class="metric-label">自信</div>
+                                <div class="metric-value" id="plan-b-confidence-display">50%</div>
+                                <div class="progress confidence-progress">
+                                    <div class="progress-bar" id="plan-b-confidence-progress" style="width: 50%;"></div>
+                                </div>
+                            </div>
+                            <div class="result-metric alignment-metric">
+                                <div class="metric-label">一致</div>
+                                <div class="metric-value" id="plan-b-alignment-display">50%</div>
+                                <div class="progress alignment-progress">
+                                    <div class="progress-bar" id="plan-b-alignment-progress" style="width: 50%;"></div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
             
-            <div class="result-card">
-                <h3>评估与行动计划</h3>
-                <div id="evaluation-result"></div>
+            <!-- 计划C结果 -->
+            <div class="result-card mb-4">
+                <h3 class="result-card-title" id="plan-c-result-title" style="background-color: #f72585; color: white; padding: 15px 20px; margin: 0; border-radius: 8px 8px 0 0;">Plan C</h3>
+                <div class="p-4">
+                    <div id="plan-c-result">
+                        <!-- 动态生成内容 -->
+                    </div>
+                    
+                    <!-- 计划C评估仪表盘 -->
+                    <div class="mt-4">
+                        <h4>计划评估</h4>
+                        <div class="result-metrics plan-c-metrics">
+                            <div class="result-metric resource-metric">
+                                <div class="metric-label">资源</div>
+                                <div class="metric-value" id="plan-c-resources-display">50%</div>
+                                <div class="progress resource-progress">
+                                    <div class="progress-bar" id="plan-c-resources-progress" style="width: 50%;"></div>
+                                </div>
+                            </div>
+                            <div class="result-metric excitement-metric">
+                                <div class="metric-label">喜欢</div>
+                                <div class="metric-value" id="plan-c-excitement-display">50%</div>
+                                <div class="progress excitement-progress">
+                                    <div class="progress-bar" id="plan-c-excitement-progress" style="width: 50%;"></div>
+                                </div>
+                            </div>
+                            <div class="result-metric confidence-metric">
+                                <div class="metric-label">自信</div>
+                                <div class="metric-value" id="plan-c-confidence-display">50%</div>
+                                <div class="progress confidence-progress">
+                                    <div class="progress-bar" id="plan-c-confidence-progress" style="width: 50%;"></div>
+                                </div>
+                            </div>
+                            <div class="result-metric alignment-metric">
+                                <div class="metric-label">一致</div>
+                                <div class="metric-value" id="plan-c-alignment-display">50%</div>
+                                <div class="progress alignment-progress">
+                                    <div class="progress-bar" id="plan-c-alignment-progress" style="width: 50%;"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
             
-            <div class="btn-group">
-                <button class="btn btn-secondary" id="back-to-evaluation">上一步</button>
-                <button class="btn" id="export-pdf">导出图片</button>
+            <!-- 评估结果 -->
+            <div class="result-card mb-4">
+                <h3 class="result-card-title" style="background-color: #4361ee; color: white; padding: 15px 20px; margin: 0; border-radius: 8px 8px 0 0;">评估与行动计划</h3>
+                <div class="p-4" id="evaluation-result">
+                    <!-- 动态生成内容 -->
+                </div>
+            </div>
+            
+            <div class="text-center mb-4">
+                <button id="export-pdf" class="btn btn-primary">导出PDF</button>
+                <button id="back-to-evaluation" class="btn btn-secondary ml-2">返回上一步</button>
             </div>
             
             <!-- 添加联系方式区域 -->
@@ -1389,7 +1603,7 @@
             </div>
         </div>
     </div>
-    
+
     <!-- 浮动联系方式 -->
     <div class="floating-contact">
         <span class="wechat-label">微信咨询：</span>
@@ -1511,6 +1725,31 @@
                 const metricDisplay = document.getElementById(sliderId + '-display');
                 if (metricDisplay) {
                     metricDisplay.textContent = value + '%';
+                    
+                    // 添加点击交互功能
+                    if (!metricDisplay.hasAttribute('data-interactive')) {
+                        metricDisplay.setAttribute('data-interactive', 'true');
+                        metricDisplay.style.cursor = 'pointer';
+                        metricDisplay.addEventListener('click', function() {
+                            const currentValue = parseInt(value);
+                            const newValue = prompt('请输入一个0到100之间的数值:', currentValue);
+                            
+                            if (newValue !== null && !isNaN(newValue)) {
+                                // 确保输入的值在0-100之间
+                                const validValue = Math.min(100, Math.max(0, parseInt(newValue)));
+                                
+                                // 更新对应滑块值
+                                const slider = document.getElementById(sliderId);
+                                if (slider) {
+                                    slider.value = validValue;
+                                    
+                                    // 触发滑块的input事件以执行相关更新
+                                    const event = new Event('input');
+                                    slider.dispatchEvent(event);
+                                }
+                            }
+                        });
+                    }
                 }
                 
                 // 更新结果页中的新进度条
