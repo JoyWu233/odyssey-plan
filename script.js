@@ -349,13 +349,23 @@ function setupExportImage() {
             // 获取结果容器
             const resultsContainer = document.getElementById('results');
             
-            // 记录原始样式
-            const originalBackground = resultsContainer.style.background;
-            const originalColor = resultsContainer.style.color;
+            // 记录body原始样式
+            const originalBodyBg = document.body.style.background;
+            const originalBodyColor = document.body.style.color;
             
-            // 设置背景为白色
+            // 记录结果容器原始样式
+            const originalBg = resultsContainer.style.background;
+            const originalColor = resultsContainer.style.color;
+            const originalPadding = resultsContainer.style.padding;
+            
+            // 设置body为纯白色背景
+            document.body.style.background = '#ffffff';
+            document.body.style.color = '#000000';
+            
+            // 设置结果容器样式
             resultsContainer.style.background = '#ffffff';
-            resultsContainer.style.color = '#333333';
+            resultsContainer.style.color = '#000000';
+            resultsContainer.style.padding = '20px';
             
             // 查找并暂时隐藏按钮
             const btnGroup = resultsContainer.querySelector('.btn-group');
@@ -368,36 +378,41 @@ function setupExportImage() {
             const dateStr = `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`;
             
             titleHeader.innerHTML = `
-                <div style="text-align: center; margin-bottom: 20px; padding-top: 20px;">
-                    <h2 style="color: #4361ee; font-size: 28px; margin-bottom: 5px;">我的奥德赛计划</h2>
-                    <p style="color: #666666; font-size: 14px;">生成日期: ${dateStr}</p>
+                <div style="text-align: center; margin-bottom: 30px; padding-top: 20px;">
+                    <h2 style="color: #4361ee; font-size: 32px; margin-bottom: 8px; font-weight: bold;">我的奥德赛计划</h2>
+                    <p style="color: #222222; font-size: 16px;">生成日期: ${dateStr}</p>
                 </div>
             `;
             
             resultsContainer.insertBefore(titleHeader, resultsContainer.firstChild);
             
-            // 强制设置所有文本颜色
+            // 强制设置所有文本颜色，使用更深的颜色
             const allTextElements = resultsContainer.querySelectorAll('p, h2, h3, h4');
             const originalStyles = [];
             
             allTextElements.forEach(el => {
                 originalStyles.push({
                     element: el,
-                    color: el.style.color
+                    color: el.style.color,
+                    fontWeight: el.style.fontWeight
                 });
                 
                 if (el.tagName === 'H2') {
-                    el.style.color = '#4361ee';
+                    el.style.color = '#1a46e5'; // 更深的蓝色
+                    el.style.fontWeight = 'bold';
                 } else if (el.tagName === 'H3') {
-                    el.style.color = '#4361ee';
+                    el.style.color = '#1a46e5'; // 更深的蓝色
+                    el.style.fontWeight = 'bold';
                 } else if (el.tagName === 'H4') {
-                    el.style.color = '#3f37c9';
+                    el.style.color = '#202b8d'; // 深蓝色
+                    el.style.fontWeight = 'bold';
                 } else if (el.tagName === 'P') {
-                    el.style.color = '#333333';
+                    el.style.color = '#000000'; // 纯黑色
+                    el.style.fontWeight = '500'; // 稍微加粗
                 }
             });
             
-            // 设置所有卡片背景
+            // 设置所有卡片背景和边框
             const allCards = resultsContainer.querySelectorAll('.result-card');
             const originalCardStyles = [];
             
@@ -405,49 +420,71 @@ function setupExportImage() {
                 originalCardStyles.push({
                     element: card,
                     background: card.style.background,
-                    boxShadow: card.style.boxShadow
+                    boxShadow: card.style.boxShadow,
+                    border: card.style.border
                 });
                 
                 card.style.background = '#ffffff';
-                card.style.boxShadow = '0 2px 8px rgba(0,0,0,0.1)';
+                card.style.boxShadow = '0 3px 12px rgba(0,0,0,0.12)';
+                card.style.border = '1px solid #e0e0e0';
+                card.style.borderRadius = '10px';
+                card.style.marginBottom = '25px';
+                card.style.padding = '20px';
             });
             
             // 使用简单配置进行转换
             setTimeout(() => {
                 html2canvas(resultsContainer, {
                     backgroundColor: '#ffffff',
-                    scale: 2,  // 使用2倍缩放获得更清晰的图像
+                    scale: 3, // 使用3倍缩放获得更清晰的图像
                     useCORS: true,
                     allowTaint: true,
+                    logging: false,
                     scrollX: 0,
                     scrollY: 0,
                     windowWidth: document.documentElement.offsetWidth,
                     windowHeight: document.documentElement.offsetHeight,
                     onclone: function(clonedDoc) {
+                        // 设置克隆文档的body为白色
+                        clonedDoc.body.style.background = '#ffffff';
+                        clonedDoc.body.style.margin = '0';
+                        clonedDoc.body.style.padding = '0';
+                        
                         const clonedResults = clonedDoc.getElementById('results');
-                        clonedResults.style.background = '#ffffff';
-                        clonedResults.style.padding = '20px';
-                        
-                        // 确保克隆中的所有文本颜色正确
-                        const clonedTexts = clonedResults.querySelectorAll('p, h2, h3, h4');
-                        clonedTexts.forEach(el => {
-                            if (el.tagName === 'H2') {
-                                el.style.color = '#4361ee';
-                            } else if (el.tagName === 'H3') {
-                                el.style.color = '#4361ee';
-                            } else if (el.tagName === 'H4') {
-                                el.style.color = '#3f37c9';
-                            } else if (el.tagName === 'P') {
-                                el.style.color = '#333333';
-                            }
-                        });
-                        
-                        // 确保克隆中的所有卡片背景正确
-                        const clonedCards = clonedResults.querySelectorAll('.result-card');
-                        clonedCards.forEach(card => {
-                            card.style.background = '#ffffff';
-                            card.style.boxShadow = '0 2px 8px rgba(0,0,0,0.1)';
-                        });
+                        if (clonedResults) {
+                            clonedResults.style.background = '#ffffff';
+                            clonedResults.style.padding = '20px';
+                            clonedResults.style.margin = '0';
+                            
+                            // 确保克隆中的所有文本颜色正确
+                            const clonedTexts = clonedResults.querySelectorAll('p, h2, h3, h4');
+                            clonedTexts.forEach(el => {
+                                if (el.tagName === 'H2') {
+                                    el.style.color = '#1a46e5';
+                                    el.style.fontWeight = 'bold';
+                                } else if (el.tagName === 'H3') {
+                                    el.style.color = '#1a46e5';
+                                    el.style.fontWeight = 'bold';
+                                } else if (el.tagName === 'H4') {
+                                    el.style.color = '#202b8d';
+                                    el.style.fontWeight = 'bold';
+                                } else if (el.tagName === 'P') {
+                                    el.style.color = '#000000';
+                                    el.style.fontWeight = '500';
+                                }
+                            });
+                            
+                            // 确保克隆中的所有卡片背景正确
+                            const clonedCards = clonedResults.querySelectorAll('.result-card');
+                            clonedCards.forEach(card => {
+                                card.style.background = '#ffffff';
+                                card.style.boxShadow = '0 3px 12px rgba(0,0,0,0.12)';
+                                card.style.border = '1px solid #e0e0e0';
+                                card.style.borderRadius = '10px';
+                                card.style.marginBottom = '25px';
+                                card.style.padding = '20px';
+                            });
+                        }
                     }
                 }).then(canvas => {
                     // 创建下载链接
@@ -459,22 +496,30 @@ function setupExportImage() {
                         link.click();
                         URL.revokeObjectURL(url);
                         
-                        // 恢复原始样式
-                        resultsContainer.style.background = originalBackground;
-                        resultsContainer.style.color = originalColor;
+                        // 恢复body原始样式
+                        document.body.style.background = originalBodyBg;
+                        document.body.style.color = originalBodyColor;
                         
+                        // 恢复结果容器原始样式
+                        resultsContainer.style.background = originalBg;
+                        resultsContainer.style.color = originalColor;
+                        resultsContainer.style.padding = originalPadding;
+                        
+                        // 恢复按钮显示
                         btnGroup.style.display = btnGroupDisplay;
                         resultsContainer.removeChild(titleHeader);
                         
-                        // 恢复所有文本元素的原始颜色
+                        // 恢复所有文本元素的原始样式
                         originalStyles.forEach(item => {
                             item.element.style.color = item.color;
+                            item.element.style.fontWeight = item.fontWeight;
                         });
                         
                         // 恢复所有卡片的原始样式
                         originalCardStyles.forEach(item => {
                             item.element.style.background = item.background;
                             item.element.style.boxShadow = item.boxShadow;
+                            item.element.style.border = item.border;
                         });
                         
                         // 显示成功消息
@@ -489,24 +534,32 @@ function setupExportImage() {
                 }).catch(err => {
                     console.error('生成图片出错:', err);
                     
-                    // 恢复原始样式
-                    resultsContainer.style.background = originalBackground;
-                    resultsContainer.style.color = originalColor;
+                    // 恢复body原始样式
+                    document.body.style.background = originalBodyBg;
+                    document.body.style.color = originalBodyColor;
                     
+                    // 恢复结果容器原始样式
+                    resultsContainer.style.background = originalBg;
+                    resultsContainer.style.color = originalColor;
+                    resultsContainer.style.padding = originalPadding;
+                    
+                    // 恢复按钮显示
                     btnGroup.style.display = btnGroupDisplay;
                     if (resultsContainer.contains(titleHeader)) {
                         resultsContainer.removeChild(titleHeader);
                     }
                     
-                    // 恢复所有文本元素的原始颜色
+                    // 恢复所有文本元素的原始样式
                     originalStyles.forEach(item => {
                         item.element.style.color = item.color;
+                        item.element.style.fontWeight = item.fontWeight;
                     });
                     
                     // 恢复所有卡片的原始样式
                     originalCardStyles.forEach(item => {
                         item.element.style.background = item.background;
                         item.element.style.boxShadow = item.boxShadow;
+                        item.element.style.border = item.border;
                     });
                     
                     // 显示错误消息
