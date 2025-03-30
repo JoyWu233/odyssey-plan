@@ -514,79 +514,394 @@ function setupExportImage() {
         exportBtn.textContent = '生成中...';
         
         try {
-            // 创建一个用于导出的克隆元素
-            const resultsContainer = document.getElementById('results').cloneNode(true);
+            // 创建一个全新的导出容器
+            const exportContainer = document.createElement('div');
+            exportContainer.style.cssText = `
+                position: absolute;
+                left: -9999px; 
+                top: 0;
+                width: 800px;
+                padding: 40px;
+                background-color: #FFFFFF;
+                font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+                color: #333333;
+                box-sizing: border-box;
+                z-index: -1;
+            `;
             
-            // 修改克隆元素样式 - 设置纯白背景解决灰蒙蒙问题
-            resultsContainer.style.backgroundColor = '#ffffff';
-            resultsContainer.style.padding = '40px';
-            resultsContainer.style.width = '800px';
-            resultsContainer.style.margin = '0 auto';
-            resultsContainer.style.boxSizing = 'border-box';
-            resultsContainer.style.border = 'none';
-            resultsContainer.style.boxShadow = 'none';
-            
-            // 移除不需要的元素：按钮组和联系方式区域
-            const btnGroup = resultsContainer.querySelector('.btn-group');
-            if (btnGroup) btnGroup.remove();
-            
-            const contactSection = resultsContainer.querySelector('.contact-section');
-            if (contactSection) contactSection.remove();
-            
-            // 将标题居中
-            const titleElem = resultsContainer.querySelector('h2');
-            if (titleElem) {
-                titleElem.style.textAlign = 'center';
-                titleElem.style.marginBottom = '30px';
-                titleElem.style.fontSize = '28px';
-                titleElem.style.fontWeight = 'bold';
-                titleElem.style.color = '#000';
-            }
-            
-            // 使副标题也居中
-            const subtitleElem = resultsContainer.querySelector('p');
-            if (subtitleElem) {
-                subtitleElem.style.textAlign = 'center';
-                subtitleElem.style.marginBottom = '30px';
-                subtitleElem.style.fontSize = '16px';
-                subtitleElem.style.color = '#666';
-            }
-            
-            // 确保所有结果卡片背景为白色
-            const resultCards = resultsContainer.querySelectorAll('.result-card');
-            resultCards.forEach(card => {
-                card.style.backgroundColor = '#ffffff';
-                card.style.border = '1px solid #e0e0e0';
-                card.style.boxShadow = '0 2px 5px rgba(0,0,0,0.05)';
-            });
-            
-            // 添加日期
-            const dateElement = document.createElement('p');
-            dateElement.textContent = `生成日期: ${new Date().toLocaleDateString('zh-CN')}`;
-            dateElement.style.textAlign = 'center';
-            dateElement.style.color = '#666';
-            dateElement.style.marginBottom = '20px';
-            
-            // 将日期添加到标题下方
-            if (subtitleElem && subtitleElem.parentNode) {
-                subtitleElem.parentNode.insertBefore(dateElement, subtitleElem.nextSibling);
-            }
-            
-            // 临时添加克隆元素到文档以便截图
-            resultsContainer.style.position = 'absolute';
-            resultsContainer.style.left = '-9999px';
-            document.body.appendChild(resultsContainer);
-            
-            // 获取用户称呼用于文件名
+            // 获取数据内容
             const userName = formElements['user-name'].value || '我';
             
+            // 创建标题和副标题
+            const titleHTML = `
+                <h2 style="
+                    text-align: center;
+                    font-size: 28px;
+                    font-weight: bold;
+                    margin-bottom: 20px;
+                    color: #000000;
+                ">${userName}的奥德赛计划</h2>
+                <p style="
+                    text-align: center;
+                    font-size: 16px;
+                    color: #666666;
+                    margin-bottom: 30px;
+                ">以下是为你生成的三种未来可能性。</p>
+                <p style="
+                    text-align: center;
+                    font-size: 14px;
+                    color: #666666;
+                    margin-bottom: 30px;
+                ">生成日期: ${new Date().toLocaleDateString('zh-CN')}</p>
+            `;
+            
+            // 获取资源盘点内容
+            const whoAmI = formElements['who-am-i'].value || '【未填写】';
+            const whatIHave = formElements['what-i-have'].value || '【未填写】';
+            const energizers = formElements['energizers'].value || '【未填写】';
+            
+            const resourcesHTML = `
+                <div style="
+                    margin-bottom: 30px;
+                    background-color: #FFFFFF;
+                    border-radius: 8px;
+                    padding: 20px;
+                    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+                    border: 1px solid #E0E0E0;
+                ">
+                    <h3 style="
+                        font-size: 22px;
+                        font-weight: bold;
+                        color: #333;
+                        margin-bottom: 15px;
+                        padding-bottom: 8px;
+                        border-bottom: 2px solid #3a0ca3;
+                    ">资源盘点</h3>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <h4 style="
+                            font-size: 18px;
+                            color: #000;
+                            margin-bottom: 10px;
+                        ">我是谁？</h4>
+                        ${formatTextContentWithStyle(whoAmI)}
+                    </div>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <h4 style="
+                            font-size: 18px;
+                            color: #000;
+                            margin-bottom: 10px;
+                        ">我拥有什么？</h4>
+                        ${formatTextContentWithStyle(whatIHave)}
+                    </div>
+                    
+                    <div>
+                        <h4 style="
+                            font-size: 18px;
+                            color: #000;
+                            margin-bottom: 10px;
+                        ">能量来源</h4>
+                        ${formatTextContentWithStyle(energizers)}
+                    </div>
+                </div>
+            `;
+            
+            // 获取计划A内容
+            const planATitle = formElements['plan-a-title'].value || '最现实路径';
+            const planADesc = formElements['plan-a-desc'].value || '【未填写】';
+            const planAMilestones = formElements['plan-a-milestones'].value || '【未填写】';
+            const planAResources = formElements['plan-a-resources'].value || 50;
+            const planAExcitement = formElements['plan-a-excitement'].value || 50;
+            const planAConfidence = formElements['plan-a-confidence'].value || 50;
+            const planAAlignment = formElements['plan-a-alignment'].value || 50;
+            
+            const planAHTML = `
+                <div style="
+                    margin-bottom: 30px;
+                    background-color: #FFFFFF;
+                    border-radius: 8px;
+                    padding: 20px;
+                    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+                    border: 1px solid #E0E0E0;
+                    border-left: 4px solid #4895ef;
+                ">
+                    <h3 style="
+                        font-size: 22px;
+                        font-weight: bold;
+                        color: #4895ef;
+                        margin-bottom: 15px;
+                        padding-bottom: 8px;
+                        border-bottom: 2px solid #4895ef;
+                    ">Plan A - ${planATitle}</h3>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <h4 style="
+                            font-size: 18px;
+                            color: #000;
+                            margin-bottom: 10px;
+                        ">5年后的状态</h4>
+                        ${formatTextContentWithStyle(planADesc)}
+                    </div>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <h4 style="
+                            font-size: 18px;
+                            color: #000;
+                            margin-bottom: 10px;
+                        ">关键里程碑</h4>
+                        ${formatTextContentWithStyle(planAMilestones)}
+                    </div>
+                    
+                    <div>
+                        <h4 style="
+                            font-size: 18px;
+                            color: #000;
+                            margin-bottom: 10px;
+                        ">计划评估</h4>
+                        <div style="
+                            display: flex;
+                            justify-content: space-between;
+                            background-color: #f8f9fa;
+                            border-radius: 8px;
+                            padding: 15px;
+                            border: 1px solid #e0e0e0;
+                            border-left: 4px solid #4895ef;
+                        ">
+                            ${generateMetricHTML('资源充足度', planAResources)}
+                            ${generateMetricHTML('喜欢程度', planAExcitement)}
+                            ${generateMetricHTML('自信心', planAConfidence)}
+                            ${generateMetricHTML('一致性', planAAlignment)}
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // 获取计划B内容
+            const planBTitle = formElements['plan-b-title'].value || '替代方案';
+            const planBDesc = formElements['plan-b-desc'].value || '【未填写】';
+            const planBMilestones = formElements['plan-b-milestones'].value || '【未填写】';
+            const planBResources = formElements['plan-b-resources'].value || 50;
+            const planBExcitement = formElements['plan-b-excitement'].value || 50;
+            const planBConfidence = formElements['plan-b-confidence'].value || 50;
+            const planBAlignment = formElements['plan-b-alignment'].value || 50;
+            
+            const planBHTML = `
+                <div style="
+                    margin-bottom: 30px;
+                    background-color: #FFFFFF;
+                    border-radius: 8px;
+                    padding: 20px;
+                    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+                    border: 1px solid #E0E0E0;
+                    border-left: 4px solid #4cc9f0;
+                ">
+                    <h3 style="
+                        font-size: 22px;
+                        font-weight: bold;
+                        color: #4cc9f0;
+                        margin-bottom: 15px;
+                        padding-bottom: 8px;
+                        border-bottom: 2px solid #4cc9f0;
+                    ">Plan B - ${planBTitle}</h3>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <h4 style="
+                            font-size: 18px;
+                            color: #000;
+                            margin-bottom: 10px;
+                        ">5年后的状态</h4>
+                        ${formatTextContentWithStyle(planBDesc)}
+                    </div>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <h4 style="
+                            font-size: 18px;
+                            color: #000;
+                            margin-bottom: 10px;
+                        ">关键里程碑</h4>
+                        ${formatTextContentWithStyle(planBMilestones)}
+                    </div>
+                    
+                    <div>
+                        <h4 style="
+                            font-size: 18px;
+                            color: #000;
+                            margin-bottom: 10px;
+                        ">计划评估</h4>
+                        <div style="
+                            display: flex;
+                            justify-content: space-between;
+                            background-color: #f8f9fa;
+                            border-radius: 8px;
+                            padding: 15px;
+                            border: 1px solid #e0e0e0;
+                            border-left: 4px solid #4cc9f0;
+                        ">
+                            ${generateMetricHTML('资源充足度', planBResources)}
+                            ${generateMetricHTML('喜欢程度', planBExcitement)}
+                            ${generateMetricHTML('自信心', planBConfidence)}
+                            ${generateMetricHTML('一致性', planBAlignment)}
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // 获取计划C内容
+            const planCTitle = formElements['plan-c-title'].value || '理想生活';
+            const planCDesc = formElements['plan-c-desc'].value || '【未填写】';
+            const planCMilestones = formElements['plan-c-milestones'].value || '【未填写】';
+            const planCResources = formElements['plan-c-resources'].value || 50;
+            const planCExcitement = formElements['plan-c-excitement'].value || 50;
+            const planCConfidence = formElements['plan-c-confidence'].value || 50;
+            const planCAlignment = formElements['plan-c-alignment'].value || 50;
+            
+            const planCHTML = `
+                <div style="
+                    margin-bottom: 30px;
+                    background-color: #FFFFFF;
+                    border-radius: 8px;
+                    padding: 20px;
+                    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+                    border: 1px solid #E0E0E0;
+                    border-left: 4px solid #3a0ca3;
+                ">
+                    <h3 style="
+                        font-size: 22px;
+                        font-weight: bold;
+                        color: #3a0ca3;
+                        margin-bottom: 15px;
+                        padding-bottom: 8px;
+                        border-bottom: 2px solid #3a0ca3;
+                    ">Plan C - ${planCTitle}</h3>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <h4 style="
+                            font-size: 18px;
+                            color: #000;
+                            margin-bottom: 10px;
+                        ">5年后的状态</h4>
+                        ${formatTextContentWithStyle(planCDesc)}
+                    </div>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <h4 style="
+                            font-size: 18px;
+                            color: #000;
+                            margin-bottom: 10px;
+                        ">关键里程碑</h4>
+                        ${formatTextContentWithStyle(planCMilestones)}
+                    </div>
+                    
+                    <div>
+                        <h4 style="
+                            font-size: 18px;
+                            color: #000;
+                            margin-bottom: 10px;
+                        ">计划评估</h4>
+                        <div style="
+                            display: flex;
+                            justify-content: space-between;
+                            background-color: #f8f9fa;
+                            border-radius: 8px;
+                            padding: 15px;
+                            border: 1px solid #e0e0e0;
+                            border-left: 4px solid #3a0ca3;
+                        ">
+                            ${generateMetricHTML('资源充足度', planCResources)}
+                            ${generateMetricHTML('喜欢程度', planCExcitement)}
+                            ${generateMetricHTML('自信心', planCConfidence)}
+                            ${generateMetricHTML('一致性', planCAlignment)}
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // 获取评估与行动计划内容
+            let excitingPlanName = '【未选择】';
+            if (formElements['exciting-plan'].value === 'plan-a') {
+                excitingPlanName = `Plan A - ${planATitle}`;
+            } else if (formElements['exciting-plan'].value === 'plan-b') {
+                excitingPlanName = `Plan B - ${planBTitle}`;
+            } else if (formElements['exciting-plan'].value === 'plan-c') {
+                excitingPlanName = `Plan C - ${planCTitle}`;
+            }
+            
+            const feasibility = formElements['feasibility'].value || '【未填写】';
+            const actionSteps = formElements['action-steps'].value || '【未填写】';
+            
+            const evaluationHTML = `
+                <div style="
+                    background-color: #FFFFFF;
+                    border-radius: 8px;
+                    padding: 20px;
+                    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+                    border: 1px solid #E0E0E0;
+                    border-left: 4px solid #4361ee;
+                ">
+                    <h3 style="
+                        font-size: 22px;
+                        font-weight: bold;
+                        color: #4361ee;
+                        margin-bottom: 15px;
+                        padding-bottom: 8px;
+                        border-bottom: 2px solid #4361ee;
+                    ">评估与行动计划</h3>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <h4 style="
+                            font-size: 18px;
+                            color: #000;
+                            margin-bottom: 10px;
+                        ">最令人兴奋的计划</h4>
+                        <p style="
+                            margin: 0;
+                            line-height: 1.6;
+                            color: #333;
+                        ">${excitingPlanName}</p>
+                    </div>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <h4 style="
+                            font-size: 18px;
+                            color: #000;
+                            margin-bottom: 10px;
+                        ">可行性分析</h4>
+                        ${formatTextContentWithStyle(feasibility)}
+                    </div>
+                    
+                    <div>
+                        <h4 style="
+                            font-size: 18px;
+                            color: #000;
+                            margin-bottom: 10px;
+                        ">行动计划</h4>
+                        ${formatTextContentWithStyle(actionSteps)}
+                    </div>
+                </div>
+            `;
+            
+            // 组合所有内容
+            exportContainer.innerHTML = `
+                ${titleHTML}
+                ${resourcesHTML}
+                ${planAHTML}
+                ${planBHTML}
+                ${planCHTML}
+                ${evaluationHTML}
+            `;
+            
+            // 添加到文档以便截图
+            document.body.appendChild(exportContainer);
+            
             // 使用html2canvas截图
-            html2canvas(resultsContainer, {
+            html2canvas(exportContainer, {
                 scale: 2, // 提高清晰度
                 backgroundColor: '#FFFFFF',
                 logging: false,
                 useCORS: true,
-                allowTaint: true
+                allowTaint: true,
+                width: 800
             }).then(function(canvas) {
                 try {
                     // 导出为PNG图片
@@ -607,8 +922,8 @@ function setupExportImage() {
                     setTimeout(() => loadingMsg.remove(), 2000);
                 } finally {
                     // 移除临时元素
-                    if (resultsContainer.parentNode) {
-                        resultsContainer.parentNode.removeChild(resultsContainer);
+                    if (exportContainer.parentNode) {
+                        exportContainer.parentNode.removeChild(exportContainer);
                     }
                     
                     // 恢复按钮
@@ -619,8 +934,8 @@ function setupExportImage() {
                 console.error('html2canvas错误:', error);
                 
                 // 移除临时元素
-                if (resultsContainer.parentNode) {
-                    resultsContainer.parentNode.removeChild(resultsContainer);
+                if (exportContainer.parentNode) {
+                    exportContainer.parentNode.removeChild(exportContainer);
                 }
                 
                 // 显示错误消息
@@ -645,6 +960,77 @@ function setupExportImage() {
             exportBtn.textContent = '导出图片';
         }
     });
+}
+
+// 生成指标HTML
+function generateMetricHTML(label, value) {
+    // 根据标签获取颜色
+    let barColor = '#4895ef'; // 默认蓝色
+    if (label === '资源充足度') {
+        barColor = '#4895ef'; // 蓝色
+    } else if (label === '喜欢程度') {
+        barColor = '#4cc9f0'; // 浅蓝色
+    } else if (label === '自信心') {
+        barColor = '#3f37c9'; // 深蓝色
+    } else if (label === '一致性') {
+        barColor = '#4361ee'; // 靛蓝色
+    }
+    
+    return `
+        <div style="width: 23%; text-align: center;">
+            <div style="
+                font-size: 14px;
+                font-weight: bold;
+                margin-bottom: 8px;
+                color: #333;
+            ">${label}</div>
+            <div style="
+                background: #e9ecef;
+                border-radius: 20px;
+                height: 16px;
+                position: relative;
+                overflow: hidden;
+                box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+            ">
+                <div style="
+                    background: ${barColor};
+                    width: ${value}%;
+                    height: 100%;
+                    border-radius: 20px;
+                    background-image: linear-gradient(45deg, 
+                        rgba(255,255,255,.15) 25%, 
+                        transparent 25%, 
+                        transparent 50%, 
+                        rgba(255,255,255,.15) 50%, 
+                        rgba(255,255,255,.15) 75%, 
+                        transparent 75%, 
+                        transparent);
+                    background-size: 20px 20px;
+                "></div>
+            </div>
+            <div style="
+                font-size: 16px;
+                font-weight: bold;
+                color: ${barColor};
+                margin-top: 5px;
+            ">${value}%</div>
+        </div>
+    `;
+}
+
+// 格式化文本内容带样式
+function formatTextContentWithStyle(text) {
+    if (!text || text === '【未填写】') {
+        return '<p style="margin: 0 0 8px 0; line-height: 1.6; color: #888;">【未填写】</p>';
+    }
+    
+    // 处理换行符并去除空行
+    const lines = text.split('\n').filter(line => line.trim() !== '');
+    if (lines.length === 0) {
+        return '<p style="margin: 0 0 8px 0; line-height: 1.6; color: #888;">【未填写】</p>';
+    }
+    
+    return lines.map(line => `<p style="margin: 0 0 8px 0; line-height: 1.6; color: #333;">${line}</p>`).join('');
 }
 
 // 页面加载完成后初始化
