@@ -266,18 +266,20 @@ function setupExportPDF() {
     document.getElementById('export-pdf').addEventListener('click', function() {
         // 显示加载提示
         const loadingMsg = document.createElement('div');
-        loadingMsg.textContent = '正在生成超清图片...';
+        loadingMsg.textContent = '正在准备内容...';
         loadingMsg.style.cssText = `
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.8);
             color: white;
-            padding: 15px 30px;
-            border-radius: 5px;
+            padding: 20px 40px;
+            border-radius: 8px;
             z-index: 10000;
-            font-size: 16px;
+            font-size: 18px;
+            font-weight: bold;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         `;
         document.body.appendChild(loadingMsg);
         
@@ -289,135 +291,162 @@ function setupExportPDF() {
         // 确保切换到结果页面
         switchTab('results');
         
-        // 获取结果容器
-        const resultsContainer = document.getElementById('results');
-        
-        // 创建临时增强版容器
-        const tempContainer = document.createElement('div');
-        tempContainer.innerHTML = resultsContainer.innerHTML;
-        tempContainer.style.cssText = `
-            position: absolute;
-            left: -9999px;
-            width: 1200px;
-            background: white;
-            padding: 40px;
-            box-sizing: border-box;
-            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
-        `;
-        
-        // 增强临时容器中的文本样式
-        tempContainer.querySelectorAll('h3').forEach(h => {
-            h.style.cssText = `
-                color: #3f37c9;
-                font-size: 26px;
-                margin-bottom: 16px;
-                font-weight: bold;
-                padding-bottom: 8px;
-                border-bottom: 2px solid #4361ee;
-            `;
-        });
-        
-        tempContainer.querySelectorAll('h4').forEach(h => {
-            h.style.cssText = `
-                color: #4361ee;
-                font-size: 20px;
-                margin-bottom: 12px;
-                font-weight: bold;
-            `;
-        });
-        
-        tempContainer.querySelectorAll('p').forEach(p => {
-            p.style.cssText = `
-                font-size: 16px;
-                line-height: 1.8;
-                margin-bottom: 10px;
-                color: #333;
-                text-rendering: optimizeLegibility;
-                -webkit-font-smoothing: antialiased;
-            `;
-        });
-        
-        tempContainer.querySelectorAll('.result-card').forEach(card => {
-            card.style.cssText = `
-                margin-bottom: 30px;
-                background: white;
-                border-radius: 8px;
-                box-shadow: 0 2px 10px rgba(0,0,0,0.05);
-                padding: 25px;
-            `;
-        });
-        
-        tempContainer.querySelectorAll('.result-section').forEach(section => {
-            section.style.cssText = `
-                margin-bottom: 20px;
-                padding-bottom: 15px;
-            `;
-        });
-        
-        // 隐藏按钮
-        tempContainer.querySelectorAll('.btn-group').forEach(btn => {
-            btn.style.display = 'none';
-        });
-        
-        // 添加到页面
-        document.body.appendChild(tempContainer);
-        
-        // 获取设备像素比
-        const pixelRatio = window.devicePixelRatio || 1;
-        const scale = Math.max(3, pixelRatio); // 提高到至少3倍缩放比例
-        
-        loadingMsg.textContent = `正在生成超清图片 (${scale}x 缩放)...`;
-        
-        // 延时确保DOM渲染
-        setTimeout(function() {
-            // 使用dom-to-image生成图片
-            domtoimage.toPng(tempContainer, {
-                bgcolor: '#ffffff',
-                quality: 1.0,
-                width: tempContainer.offsetWidth,
-                height: tempContainer.offsetHeight,
-                style: {
-                    'transform': 'none'
-                },
-                scale: scale // 使用更高的缩放比例
-            })
-            .then(function(dataUrl) {
-                // 创建下载链接
-                const link = document.createElement('a');
-                link.download = '我的奥德赛计划.png';
-                link.href = dataUrl;
-                link.click();
-                
-                // 移除临时容器
-                tempContainer.remove();
-                
-                // 移除加载提示
-                loadingMsg.textContent = '导出成功！';
-                setTimeout(function() {
-                    loadingMsg.remove();
-                }, 1500);
-                
-                // 恢复按钮
-                exportBtn.disabled = false;
-                exportBtn.textContent = '导出图片';
-            })
-            .catch(function(error) {
-                console.error('图片生成失败:', error);
-                
-                // 移除临时容器
-                tempContainer.remove();
-                
-                // 修改加载提示
-                loadingMsg.textContent = '导出失败，请稍后重试';
-                setTimeout(function() {
-                    loadingMsg.remove();
-                }, 2000);
-                
-                // 恢复按钮
-                exportBtn.disabled = false;
-                exportBtn.textContent = '导出图片';
+        try {
+            // 使用HTML2Canvas直接渲染整个结果页面
+            const resultsContainer = document.getElementById('results');
+            
+            // 备份原始样式
+            const originalStyle = resultsContainer.getAttribute('style') || '';
+            const originalWidth = resultsContainer.style.width;
+            
+            // 临时隐藏按钮
+            const buttons = resultsContainer.querySelectorAll('.btn-group');
+            buttons.forEach(btn => btn.style.display = 'none');
+            
+            // 临时调整结果容器样式以优化导出效果
+            resultsContainer.style.width = '800px';
+            resultsContainer.style.margin = '0 auto';
+            resultsContainer.style.padding = '40px';
+            resultsContainer.style.background = 'white';
+            resultsContainer.style.boxShadow = 'none';
+            
+            // 临时增强文本样式以提高清晰度
+            const headings = resultsContainer.querySelectorAll('h3');
+            const originalHeadingStyles = [];
+            headings.forEach((h, i) => {
+                originalHeadingStyles[i] = h.getAttribute('style') || '';
+                h.style.fontSize = '28px';
+                h.style.color = '#3f37c9';
+                h.style.fontWeight = 'bold';
+                h.style.marginBottom = '20px';
+                h.style.borderBottom = '2px solid #4361ee';
+                h.style.paddingBottom = '10px';
             });
-        }, 500); // 增加更长的延时
+            
+            const subHeadings = resultsContainer.querySelectorAll('h4');
+            const originalSubHeadingStyles = [];
+            subHeadings.forEach((h, i) => {
+                originalSubHeadingStyles[i] = h.getAttribute('style') || '';
+                h.style.fontSize = '22px';
+                h.style.color = '#4361ee';
+                h.style.fontWeight = 'bold';
+                h.style.marginBottom = '15px';
+            });
+            
+            const paragraphs = resultsContainer.querySelectorAll('p');
+            const originalParagraphStyles = [];
+            paragraphs.forEach((p, i) => {
+                originalParagraphStyles[i] = p.getAttribute('style') || '';
+                p.style.fontSize = '16px';
+                p.style.color = '#333';
+                p.style.lineHeight = '1.8';
+                p.style.marginBottom = '12px';
+            });
+            
+            loadingMsg.textContent = '正在生成超清图片...';
+            
+            // 获取设备像素比
+            const pixelRatio = window.devicePixelRatio || 1;
+            const scale = Math.max(3, pixelRatio); // 至少3倍缩放
+            
+            setTimeout(() => {
+                html2canvas(resultsContainer, {
+                    scale: scale,
+                    useCORS: true,
+                    allowTaint: true,
+                    backgroundColor: '#ffffff',
+                    logging: false,
+                    onclone: function(documentClone) {
+                        const clonedElement = documentClone.getElementById('results');
+                        if (clonedElement) {
+                            clonedElement.style.transform = 'none';
+                            clonedElement.style.width = '800px';
+                            const clonedButtons = clonedElement.querySelectorAll('.btn-group');
+                            clonedButtons.forEach(btn => btn.style.display = 'none');
+                        }
+                    }
+                }).then(canvas => {
+                    loadingMsg.textContent = '正在保存图片...';
+                    
+                    // 处理图片并下载
+                    try {
+                        canvas.toBlob(function(blob) {
+                            if (blob) {
+                                const url = URL.createObjectURL(blob);
+                                const link = document.createElement('a');
+                                link.download = '我的奥德赛计划.png';
+                                link.href = url;
+                                link.click();
+                                URL.revokeObjectURL(url);
+                                
+                                loadingMsg.textContent = '导出成功！';
+                                setTimeout(() => loadingMsg.remove(), 1500);
+                            } else {
+                                throw new Error('Failed to create blob');
+                            }
+                        }, 'image/png', 1.0);
+                    } catch (e) {
+                        console.error('处理图片出错:', e);
+                        
+                        // 备用方案：尝试使用toDataURL
+                        try {
+                            const imgData = canvas.toDataURL('image/png');
+                            const link = document.createElement('a');
+                            link.download = '我的奥德赛计划.png';
+                            link.href = imgData;
+                            link.click();
+                            
+                            loadingMsg.textContent = '导出成功！';
+                            setTimeout(() => loadingMsg.remove(), 1500);
+                        } catch (innerError) {
+                            console.error('备用导出方法失败:', innerError);
+                            loadingMsg.textContent = '导出失败，请稍后重试';
+                            setTimeout(() => loadingMsg.remove(), 2000);
+                        }
+                    }
+                    
+                    // 恢复原始样式
+                    resultsContainer.setAttribute('style', originalStyle);
+                    resultsContainer.style.width = originalWidth;
+                    
+                    headings.forEach((h, i) => h.setAttribute('style', originalHeadingStyles[i]));
+                    subHeadings.forEach((h, i) => h.setAttribute('style', originalSubHeadingStyles[i]));
+                    paragraphs.forEach((p, i) => p.setAttribute('style', originalParagraphStyles[i]));
+                    buttons.forEach(btn => btn.style.display = '');
+                    
+                    // 恢复按钮
+                    exportBtn.disabled = false;
+                    exportBtn.textContent = '导出图片';
+                    
+                }).catch(err => {
+                    console.error('生成图片出错:', err);
+                    loadingMsg.textContent = '导出失败，请稍后重试';
+                    setTimeout(() => loadingMsg.remove(), 2000);
+                    
+                    // 恢复原始样式
+                    resultsContainer.setAttribute('style', originalStyle);
+                    resultsContainer.style.width = originalWidth;
+                    
+                    headings.forEach((h, i) => h.setAttribute('style', originalHeadingStyles[i]));
+                    subHeadings.forEach((h, i) => h.setAttribute('style', originalSubHeadingStyles[i]));
+                    paragraphs.forEach((p, i) => p.setAttribute('style', originalParagraphStyles[i]));
+                    buttons.forEach(btn => btn.style.display = '');
+                    
+                    // 恢复按钮
+                    exportBtn.disabled = false;
+                    exportBtn.textContent = '导出图片';
+                });
+            }, 500);
+            
+        } catch (error) {
+            console.error('导出过程出错:', error);
+            loadingMsg.textContent = '导出失败，请稍后重试';
+            setTimeout(() => loadingMsg.remove(), 2000);
+            
+            // 恢复按钮
+            exportBtn.disabled = false;
+            exportBtn.textContent = '导出图片';
+        }
     });
 }
 
