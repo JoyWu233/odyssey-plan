@@ -363,13 +363,40 @@ function generateResults() {
     
     // 更新计划A的水平仪表盘
     document.getElementById('plan-a-resources-display').textContent = planAResources + '%';
-    document.getElementById('plan-a-resources-progress').style.width = planAResources + '%';
+    let resourcesBar = document.getElementById('plan-a-resources-progress');
+    resourcesBar.parentNode.removeChild(resourcesBar);
+    resourcesBar = document.createElement('div');
+    resourcesBar.className = 'progress-bar';
+    resourcesBar.id = 'plan-a-resources-progress';
+    resourcesBar.style.width = planAResources + '%';
+    document.querySelector('.plan-a-metrics .resource-metric .progress').appendChild(resourcesBar);
+
     document.getElementById('plan-a-excitement-display').textContent = planAExcitement + '%';
-    document.getElementById('plan-a-excitement-progress').style.width = planAExcitement + '%';
+    let excitementBar = document.getElementById('plan-a-excitement-progress');
+    excitementBar.parentNode.removeChild(excitementBar);
+    excitementBar = document.createElement('div');
+    excitementBar.className = 'progress-bar';
+    excitementBar.id = 'plan-a-excitement-progress';
+    excitementBar.style.width = planAExcitement + '%';
+    document.querySelector('.plan-a-metrics .excitement-metric .progress').appendChild(excitementBar);
+
     document.getElementById('plan-a-confidence-display').textContent = planAConfidence + '%';
-    document.getElementById('plan-a-confidence-progress').style.width = planAConfidence + '%';
+    let confidenceBar = document.getElementById('plan-a-confidence-progress');
+    confidenceBar.parentNode.removeChild(confidenceBar);
+    confidenceBar = document.createElement('div');
+    confidenceBar.className = 'progress-bar';
+    confidenceBar.id = 'plan-a-confidence-progress';
+    confidenceBar.style.width = planAConfidence + '%';
+    document.querySelector('.plan-a-metrics .confidence-metric .progress').appendChild(confidenceBar);
+
     document.getElementById('plan-a-alignment-display').textContent = planAAlignment + '%';
-    document.getElementById('plan-a-alignment-progress').style.width = planAAlignment + '%';
+    let alignmentBar = document.getElementById('plan-a-alignment-progress');
+    alignmentBar.parentNode.removeChild(alignmentBar);
+    alignmentBar = document.createElement('div');
+    alignmentBar.className = 'progress-bar';
+    alignmentBar.id = 'plan-a-alignment-progress';
+    alignmentBar.style.width = planAAlignment + '%';
+    document.querySelector('.plan-a-metrics .alignment-metric .progress').appendChild(alignmentBar);
     
     // 更新计划B结果
     const planBDesc = formElements['plan-b-desc'].value || '【未填写】';
@@ -393,13 +420,40 @@ function generateResults() {
     
     // 更新计划B的水平仪表盘
     document.getElementById('plan-b-resources-display').textContent = planBResources + '%';
-    document.getElementById('plan-b-resources-progress').style.width = planBResources + '%';
+    resourcesBar = document.getElementById('plan-b-resources-progress');
+    resourcesBar.parentNode.removeChild(resourcesBar);
+    resourcesBar = document.createElement('div');
+    resourcesBar.className = 'progress-bar';
+    resourcesBar.id = 'plan-b-resources-progress';
+    resourcesBar.style.width = planBResources + '%';
+    document.querySelector('.plan-b-metrics .resource-metric .progress').appendChild(resourcesBar);
+
     document.getElementById('plan-b-excitement-display').textContent = planBExcitement + '%';
-    document.getElementById('plan-b-excitement-progress').style.width = planBExcitement + '%';
+    excitementBar = document.getElementById('plan-b-excitement-progress');
+    excitementBar.parentNode.removeChild(excitementBar);
+    excitementBar = document.createElement('div');
+    excitementBar.className = 'progress-bar';
+    excitementBar.id = 'plan-b-excitement-progress';
+    excitementBar.style.width = planBExcitement + '%';
+    document.querySelector('.plan-b-metrics .excitement-metric .progress').appendChild(excitementBar);
+
     document.getElementById('plan-b-confidence-display').textContent = planBConfidence + '%';
-    document.getElementById('plan-b-confidence-progress').style.width = planBConfidence + '%';
+    confidenceBar = document.getElementById('plan-b-confidence-progress');
+    confidenceBar.parentNode.removeChild(confidenceBar);
+    confidenceBar = document.createElement('div');
+    confidenceBar.className = 'progress-bar';
+    confidenceBar.id = 'plan-b-confidence-progress';
+    confidenceBar.style.width = planBConfidence + '%';
+    document.querySelector('.plan-b-metrics .confidence-metric .progress').appendChild(confidenceBar);
+
     document.getElementById('plan-b-alignment-display').textContent = planBAlignment + '%';
-    document.getElementById('plan-b-alignment-progress').style.width = planBAlignment + '%';
+    alignmentBar = document.getElementById('plan-b-alignment-progress');
+    alignmentBar.parentNode.removeChild(alignmentBar);
+    alignmentBar = document.createElement('div');
+    alignmentBar.className = 'progress-bar';
+    alignmentBar.id = 'plan-b-alignment-progress';
+    alignmentBar.style.width = planBAlignment + '%';
+    document.querySelector('.plan-b-metrics .alignment-metric .progress').appendChild(alignmentBar);
     
     // 更新计划C结果
     const planCDesc = formElements['plan-c-desc'].value || '【未填写】';
@@ -423,13 +477,40 @@ function generateResults() {
     
     // 更新计划C的水平仪表盘
     document.getElementById('plan-c-resources-display').textContent = planCResources + '%';
-    document.getElementById('plan-c-resources-progress').style.width = planCResources + '%';
+    resourcesBar = document.getElementById('plan-c-resources-progress');
+    resourcesBar.parentNode.removeChild(resourcesBar);
+    resourcesBar = document.createElement('div');
+    resourcesBar.className = 'progress-bar';
+    resourcesBar.id = 'plan-c-resources-progress';
+    resourcesBar.style.width = planCResources + '%';
+    document.querySelector('.plan-c-metrics .resource-metric .progress').appendChild(resourcesBar);
+
     document.getElementById('plan-c-excitement-display').textContent = planCExcitement + '%';
-    document.getElementById('plan-c-excitement-progress').style.width = planCExcitement + '%';
+    excitementBar = document.getElementById('plan-c-excitement-progress');
+    excitementBar.parentNode.removeChild(excitementBar);
+    excitementBar = document.createElement('div');
+    excitementBar.className = 'progress-bar';
+    excitementBar.id = 'plan-c-excitement-progress';
+    excitementBar.style.width = planCExcitement + '%';
+    document.querySelector('.plan-c-metrics .excitement-metric .progress').appendChild(excitementBar);
+
     document.getElementById('plan-c-confidence-display').textContent = planCConfidence + '%';
-    document.getElementById('plan-c-confidence-progress').style.width = planCConfidence + '%';
+    confidenceBar = document.getElementById('plan-c-confidence-progress');
+    confidenceBar.parentNode.removeChild(confidenceBar);
+    confidenceBar = document.createElement('div');
+    confidenceBar.className = 'progress-bar';
+    confidenceBar.id = 'plan-c-confidence-progress';
+    confidenceBar.style.width = planCConfidence + '%';
+    document.querySelector('.plan-c-metrics .confidence-metric .progress').appendChild(confidenceBar);
+
     document.getElementById('plan-c-alignment-display').textContent = planCAlignment + '%';
-    document.getElementById('plan-c-alignment-progress').style.width = planCAlignment + '%';
+    alignmentBar = document.getElementById('plan-c-alignment-progress');
+    alignmentBar.parentNode.removeChild(alignmentBar);
+    alignmentBar = document.createElement('div');
+    alignmentBar.className = 'progress-bar';
+    alignmentBar.id = 'plan-c-alignment-progress';
+    alignmentBar.style.width = planCAlignment + '%';
+    document.querySelector('.plan-c-metrics .alignment-metric .progress').appendChild(alignmentBar);
     
     // 确定最令人兴奋的计划名称
     let excitingPlanName = '【未选择】';
