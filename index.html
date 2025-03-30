@@ -472,6 +472,7 @@
             position: relative;
             height: 25px;
             overflow: hidden;
+            cursor: pointer;
         }
         
         .progress-bar {
@@ -489,6 +490,69 @@
             color: white;
             font-weight: bold;
             font-size: 0.85rem;
+        }
+        
+        /* 增强滑块的易用性 */
+        input[type="range"] {
+            -webkit-appearance: none;
+            width: 100%;
+            height: 10px;
+            border-radius: 5px;
+            background: #f1f1f1;
+            outline: none;
+            cursor: pointer;
+            margin: 0.5rem 0;
+        }
+        
+        input[type="range"]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+            border: 2px solid white;
+            box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
+        }
+        
+        input[type="range"]::-moz-range-thumb {
+            width: 25px;
+            height: 25px;
+            border-radius: 50%;
+            background: var(--primary);
+            cursor: pointer;
+            border: 2px solid white;
+            box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
+        }
+        
+        /* 滑块焦点样式 */
+        input[type="range"]:focus {
+            box-shadow: 0 0 0 2px rgba(67, 97, 238, 0.3);
+        }
+        
+        /* 可交互的标签和百分比显示 */
+        .slider-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.3rem;
+        }
+        
+        .slider-label label {
+            margin-bottom: 0;
+        }
+        
+        .slider-value {
+            font-weight: bold;
+            background-color: var(--primary);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 15px;
+            font-size: 0.8rem;
+            min-width: 45px;
+            text-align: center;
+            cursor: pointer;
         }
         
         /* 单个计划的仪表盘评估 */
@@ -798,12 +862,15 @@
                     <!-- 为Plan A添加评估仪表盘 -->
                     <div class="form-group">
                         <label>计划评估</label>
-                        <p class="form-hint">拖动滑块评估此计划的各个方面（0-100）</p>
+                        <p class="form-hint">拖动滑块或直接点击进度条调整各项评估值（0-100）</p>
                         
                         <div class="form-group">
-                            <label for="plan-a-resources">资源充足度</label>
+                            <div class="slider-label">
+                                <label for="plan-a-resources">资源充足度</label>
+                                <div class="slider-value" id="plan-a-resources-value">50%</div>
+                            </div>
                             <input type="range" id="plan-a-resources" min="0" max="100" value="50" class="slider">
-                            <div class="progress-container">
+                            <div class="progress-container" data-slider="plan-a-resources">
                                 <div class="progress-bar" id="plan-a-resources-bar" style="width: 50%">
                                     <span class="progress-text">50%</span>
                                 </div>
@@ -811,9 +878,12 @@
                         </div>
                         
                         <div class="form-group">
-                            <label for="plan-a-excitement">喜欢程度</label>
+                            <div class="slider-label">
+                                <label for="plan-a-excitement">喜欢程度</label>
+                                <div class="slider-value" id="plan-a-excitement-value">50%</div>
+                            </div>
                             <input type="range" id="plan-a-excitement" min="0" max="100" value="50" class="slider">
-                            <div class="progress-container">
+                            <div class="progress-container" data-slider="plan-a-excitement">
                                 <div class="progress-bar" id="plan-a-excitement-bar" style="width: 50%">
                                     <span class="progress-text">50%</span>
                                 </div>
@@ -821,9 +891,12 @@
                         </div>
                         
                         <div class="form-group">
-                            <label for="plan-a-confidence">自信心</label>
+                            <div class="slider-label">
+                                <label for="plan-a-confidence">自信心</label>
+                                <div class="slider-value" id="plan-a-confidence-value">50%</div>
+                            </div>
                             <input type="range" id="plan-a-confidence" min="0" max="100" value="50" class="slider">
-                            <div class="progress-container">
+                            <div class="progress-container" data-slider="plan-a-confidence">
                                 <div class="progress-bar" id="plan-a-confidence-bar" style="width: 50%">
                                     <span class="progress-text">50%</span>
                                 </div>
@@ -831,9 +904,12 @@
                         </div>
                         
                         <div class="form-group">
-                            <label for="plan-a-alignment">一致性</label>
+                            <div class="slider-label">
+                                <label for="plan-a-alignment">一致性</label>
+                                <div class="slider-value" id="plan-a-alignment-value">50%</div>
+                            </div>
                             <input type="range" id="plan-a-alignment" min="0" max="100" value="50" class="slider">
-                            <div class="progress-container">
+                            <div class="progress-container" data-slider="plan-a-alignment">
                                 <div class="progress-bar" id="plan-a-alignment-bar" style="width: 50%">
                                     <span class="progress-text">50%</span>
                                 </div>
@@ -866,12 +942,15 @@
                     <!-- 为Plan B添加评估仪表盘 -->
                     <div class="form-group">
                         <label>计划评估</label>
-                        <p class="form-hint">拖动滑块评估此计划的各个方面（0-100）</p>
+                        <p class="form-hint">拖动滑块或直接点击进度条调整各项评估值（0-100）</p>
                         
                         <div class="form-group">
-                            <label for="plan-b-resources">资源充足度</label>
+                            <div class="slider-label">
+                                <label for="plan-b-resources">资源充足度</label>
+                                <div class="slider-value" id="plan-b-resources-value">50%</div>
+                            </div>
                             <input type="range" id="plan-b-resources" min="0" max="100" value="50" class="slider">
-                            <div class="progress-container">
+                            <div class="progress-container" data-slider="plan-b-resources">
                                 <div class="progress-bar" id="plan-b-resources-bar" style="width: 50%">
                                     <span class="progress-text">50%</span>
                                 </div>
@@ -879,9 +958,12 @@
                         </div>
                         
                         <div class="form-group">
-                            <label for="plan-b-excitement">喜欢程度</label>
+                            <div class="slider-label">
+                                <label for="plan-b-excitement">喜欢程度</label>
+                                <div class="slider-value" id="plan-b-excitement-value">50%</div>
+                            </div>
                             <input type="range" id="plan-b-excitement" min="0" max="100" value="50" class="slider">
-                            <div class="progress-container">
+                            <div class="progress-container" data-slider="plan-b-excitement">
                                 <div class="progress-bar" id="plan-b-excitement-bar" style="width: 50%">
                                     <span class="progress-text">50%</span>
                                 </div>
@@ -889,9 +971,12 @@
                         </div>
                         
                         <div class="form-group">
-                            <label for="plan-b-confidence">自信心</label>
+                            <div class="slider-label">
+                                <label for="plan-b-confidence">自信心</label>
+                                <div class="slider-value" id="plan-b-confidence-value">50%</div>
+                            </div>
                             <input type="range" id="plan-b-confidence" min="0" max="100" value="50" class="slider">
-                            <div class="progress-container">
+                            <div class="progress-container" data-slider="plan-b-confidence">
                                 <div class="progress-bar" id="plan-b-confidence-bar" style="width: 50%">
                                     <span class="progress-text">50%</span>
                                 </div>
@@ -899,9 +984,12 @@
                         </div>
                         
                         <div class="form-group">
-                            <label for="plan-b-alignment">一致性</label>
+                            <div class="slider-label">
+                                <label for="plan-b-alignment">一致性</label>
+                                <div class="slider-value" id="plan-b-alignment-value">50%</div>
+                            </div>
                             <input type="range" id="plan-b-alignment" min="0" max="100" value="50" class="slider">
-                            <div class="progress-container">
+                            <div class="progress-container" data-slider="plan-b-alignment">
                                 <div class="progress-bar" id="plan-b-alignment-bar" style="width: 50%">
                                     <span class="progress-text">50%</span>
                                 </div>
@@ -934,12 +1022,15 @@
                     <!-- 为Plan C添加评估仪表盘 -->
                     <div class="form-group">
                         <label>计划评估</label>
-                        <p class="form-hint">拖动滑块评估此计划的各个方面（0-100）</p>
+                        <p class="form-hint">拖动滑块或直接点击进度条调整各项评估值（0-100）</p>
                         
                         <div class="form-group">
-                            <label for="plan-c-resources">资源充足度</label>
+                            <div class="slider-label">
+                                <label for="plan-c-resources">资源充足度</label>
+                                <div class="slider-value" id="plan-c-resources-value">50%</div>
+                            </div>
                             <input type="range" id="plan-c-resources" min="0" max="100" value="50" class="slider">
-                            <div class="progress-container">
+                            <div class="progress-container" data-slider="plan-c-resources">
                                 <div class="progress-bar" id="plan-c-resources-bar" style="width: 50%">
                                     <span class="progress-text">50%</span>
                                 </div>
@@ -947,9 +1038,12 @@
                         </div>
                         
                         <div class="form-group">
-                            <label for="plan-c-excitement">喜欢程度</label>
+                            <div class="slider-label">
+                                <label for="plan-c-excitement">喜欢程度</label>
+                                <div class="slider-value" id="plan-c-excitement-value">50%</div>
+                            </div>
                             <input type="range" id="plan-c-excitement" min="0" max="100" value="50" class="slider">
-                            <div class="progress-container">
+                            <div class="progress-container" data-slider="plan-c-excitement">
                                 <div class="progress-bar" id="plan-c-excitement-bar" style="width: 50%">
                                     <span class="progress-text">50%</span>
                                 </div>
@@ -957,9 +1051,12 @@
                         </div>
                         
                         <div class="form-group">
-                            <label for="plan-c-confidence">自信心</label>
+                            <div class="slider-label">
+                                <label for="plan-c-confidence">自信心</label>
+                                <div class="slider-value" id="plan-c-confidence-value">50%</div>
+                            </div>
                             <input type="range" id="plan-c-confidence" min="0" max="100" value="50" class="slider">
-                            <div class="progress-container">
+                            <div class="progress-container" data-slider="plan-c-confidence">
                                 <div class="progress-bar" id="plan-c-confidence-bar" style="width: 50%">
                                     <span class="progress-text">50%</span>
                                 </div>
@@ -967,9 +1064,12 @@
                         </div>
                         
                         <div class="form-group">
-                            <label for="plan-c-alignment">一致性</label>
+                            <div class="slider-label">
+                                <label for="plan-c-alignment">一致性</label>
+                                <div class="slider-value" id="plan-c-alignment-value">50%</div>
+                            </div>
                             <input type="range" id="plan-c-alignment" min="0" max="100" value="50" class="slider">
-                            <div class="progress-container">
+                            <div class="progress-container" data-slider="plan-c-alignment">
                                 <div class="progress-bar" id="plan-c-alignment-bar" style="width: 50%">
                                     <span class="progress-text">50%</span>
                                 </div>
@@ -1202,6 +1302,52 @@
                 setTimeout(() => {
                     this.innerHTML = originalText;
                 }, 2000);
+            });
+            
+            // 增强仪表盘的交互性
+            // 点击进度条更新进度值
+            document.querySelectorAll('.progress-container').forEach(container => {
+                container.addEventListener('click', function(e) {
+                    const sliderId = this.getAttribute('data-slider');
+                    const slider = document.getElementById(sliderId);
+                    
+                    // 计算点击位置对应的百分比
+                    const rect = this.getBoundingClientRect();
+                    const offsetX = e.clientX - rect.left;
+                    const percentage = Math.round((offsetX / rect.width) * 100);
+                    
+                    // 更新滑块值
+                    slider.value = percentage;
+                    
+                    // 触发滑块的input事件以执行相关更新
+                    const event = new Event('input');
+                    slider.dispatchEvent(event);
+                });
+            });
+            
+            // 点击百分比标签跳转到设定值
+            document.querySelectorAll('.slider-value').forEach(label => {
+                label.addEventListener('click', function() {
+                    // 获取相关的滑块ID
+                    const sliderId = this.id.replace('-value', '');
+                    const slider = document.getElementById(sliderId);
+                    
+                    // 弹出一个输入框让用户输入百分比
+                    const currentValue = parseInt(slider.value);
+                    const newValue = prompt('请输入一个0到100之间的数值:', currentValue);
+                    
+                    if (newValue !== null && !isNaN(newValue)) {
+                        // 确保输入的值在0-100之间
+                        const validValue = Math.min(100, Math.max(0, parseInt(newValue)));
+                        
+                        // 更新滑块值
+                        slider.value = validValue;
+                        
+                        // 触发滑块的input事件以执行相关更新
+                        const event = new Event('input');
+                        slider.dispatchEvent(event);
+                    }
+                });
             });
         });
     </script>
