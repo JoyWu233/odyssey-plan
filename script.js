@@ -342,65 +342,130 @@ function setupExportImage() {
         exportBtn.textContent = '生成中...';
         
         try {
-            // 获取结果容器
+            // 深度克隆结果容器
             const resultsContainer = document.getElementById('results');
+            const clone = resultsContainer.cloneNode(true);
             
-            // 隐藏按钮组
-            const btnGroup = resultsContainer.querySelector('.btn-group');
-            const btnGroupDisplay = btnGroup.style.display;
-            btnGroup.style.display = 'none';
+            // 设置克隆元素的样式
+            clone.style.position = 'absolute';
+            clone.style.left = '-9999px';
+            clone.style.backgroundColor = '#FFFFFF';
+            clone.style.width = '1000px';
+            clone.style.padding = '30px';
+            clone.style.boxSizing = 'border-box';
+            clone.style.margin = '0';
+            clone.style.border = 'none';
+            clone.style.color = '#000000';
             
-            // 添加临时标题
-            const title = document.createElement('div');
+            // 移除按钮组
+            const btnGroup = clone.querySelector('.btn-group');
+            if (btnGroup) {
+                btnGroup.remove();
+            }
+            
+            // 添加标题
+            const titleDiv = document.createElement('div');
             const date = new Date();
             const dateStr = `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`;
             
-            title.innerHTML = `
-                <div style="text-align: center; margin-bottom: 20px;">
-                    <h2 style="color: #000; font-size: 28px; margin-bottom: 8px; font-weight: bold;">我的奥德赛计划</h2>
-                    <p style="color: #333; font-size: 16px;">生成日期: ${dateStr}</p>
+            titleDiv.innerHTML = `
+                <div style="text-align: center; margin-bottom: 30px;">
+                    <h1 style="color: #000000; font-size: 32px; margin-bottom: 10px; font-weight: bold;">我的奥德赛计划</h1>
+                    <p style="color: #000000; font-size: 16px;">生成日期: ${dateStr}</p>
                 </div>
             `;
             
-            resultsContainer.insertBefore(title, resultsContainer.firstChild);
+            clone.insertBefore(titleDiv, clone.firstChild);
             
-            // 直接截图结果页面，不做任何额外样式修改
-            html2canvas(resultsContainer, {
-                scale: 2,
-                backgroundColor: '#ffffff',
-                logging: false,
+            // 强制设置文本颜色
+            const allHeadings = clone.querySelectorAll('h1, h2, h3, h4, h5, h6');
+            allHeadings.forEach(h => {
+                h.style.color = '#000000';
+                h.style.fontWeight = 'bold';
+            });
+            
+            const allParagraphs = clone.querySelectorAll('p');
+            allParagraphs.forEach(p => {
+                p.style.color = '#000000';
+            });
+            
+            // 设置卡片样式
+            const cards = clone.querySelectorAll('.result-card');
+            cards.forEach(card => {
+                card.style.backgroundColor = '#FFFFFF';
+                card.style.border = '1px solid #CCCCCC';
+                card.style.borderRadius = '10px';
+                card.style.padding = '20px';
+                card.style.margin = '0 0 30px 0';
+                card.style.boxShadow = '0 2px 5px rgba(0,0,0,0.1)';
+            });
+            
+            // 将克隆添加到文档
+            document.body.appendChild(clone);
+            
+            // 创建canvas
+            const canvas = document.createElement('canvas');
+            const ctx = canvas.getContext('2d');
+            const width = clone.offsetWidth;
+            const height = clone.offsetHeight;
+            
+            // 设置canvas大小和像素比
+            const scale = 2; // 提高清晰度
+            canvas.width = width * scale;
+            canvas.height = height * scale;
+            canvas.style.width = width + 'px';
+            canvas.style.height = height + 'px';
+            ctx.scale(scale, scale);
+            
+            // 绘制白色背景
+            ctx.fillStyle = '#FFFFFF';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // 使用html2canvas进行渲染
+            html2canvas(clone, {
+                canvas: canvas,
+                backgroundColor: '#FFFFFF',
+                scale: scale,
                 useCORS: true,
-                allowTaint: true
-            }).then(function(canvas) {
-                // 创建下载链接
-                canvas.toBlob(function(blob) {
-                    const url = URL.createObjectURL(blob);
+                allowTaint: true,
+                logging: false
+            }).then(function(renderedCanvas) {
+                try {
+                    // 导出为图片
+                    const imgData = renderedCanvas.toDataURL('image/png');
                     const link = document.createElement('a');
                     link.download = '我的奥德赛计划.png';
-                    link.href = url;
+                    link.href = imgData;
                     link.click();
-                    URL.revokeObjectURL(url);
                     
-                    // 恢复原始状态
-                    btnGroup.style.display = btnGroupDisplay;
-                    resultsContainer.removeChild(title);
+                    // 清理和恢复
+                    document.body.removeChild(clone);
                     
                     // 显示成功消息
                     loadingMsg.textContent = '导出成功！';
                     loadingMsg.style.background = 'rgba(40, 167, 69, 0.8)';
                     setTimeout(() => loadingMsg.remove(), 1500);
-                    
+                } catch (err) {
+                    console.error('图片导出错误:', err);
+                    loadingMsg.textContent = '导出失败，请稍后重试';
+                    loadingMsg.style.background = 'rgba(220, 53, 69, 0.8)';
+                    setTimeout(() => loadingMsg.remove(), 2000);
+                } finally {
                     // 恢复按钮
                     exportBtn.disabled = false;
                     exportBtn.textContent = '导出图片';
-                }, 'image/png', 1.0);
+                    
+                    // 确保清理
+                    if (document.body.contains(clone)) {
+                        document.body.removeChild(clone);
+                    }
+                }
             }).catch(function(error) {
-                console.error('导出图片出错:', error);
+                console.error('html2canvas错误:', error);
                 
-                // 恢复原始状态
-                btnGroup.style.display = btnGroupDisplay;
-                if (resultsContainer.contains(title)) {
-                    resultsContainer.removeChild(title);
+                // 清理
+                if (document.body.contains(clone)) {
+                    document.body.removeChild(clone);
                 }
                 
                 // 显示错误消息
@@ -413,7 +478,7 @@ function setupExportImage() {
                 exportBtn.textContent = '导出图片';
             });
         } catch (error) {
-            console.error('导出过程出错:', error);
+            console.error('准备导出过程出错:', error);
             
             // 显示错误消息
             loadingMsg.textContent = '导出失败，请稍后重试';
