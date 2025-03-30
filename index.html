@@ -547,12 +547,26 @@
             font-weight: bold;
             background-color: var(--primary);
             color: white;
-            padding: 2px 8px;
+            padding: 4px 10px;
             border-radius: 15px;
-            font-size: 0.8rem;
-            min-width: 45px;
+            font-size: 0.9rem;
+            min-width: 60px;
             text-align: center;
             cursor: pointer;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+            display: inline-block;
+            border: 1px solid rgba(255,255,255,0.3);
+            transition: all 0.2s ease;
+        }
+        
+        .slider-value:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 3px 5px rgba(0,0,0,0.2);
+        }
+        
+        .slider-value:active {
+            transform: translateY(0);
+            box-shadow: 0 1px 2px rgba(0,0,0,0.2);
         }
         
         /* 单个计划的仪表盘评估 */
@@ -1348,6 +1362,48 @@
                         slider.dispatchEvent(event);
                     }
                 });
+            });
+            
+            // 确保滑块值更新时同步所有显示该值的元素
+            function updateSliderValues(sliderId, value) {
+                // 更新滑块值标签
+                const valueLabel = document.getElementById(sliderId + '-value');
+                if (valueLabel) {
+                    valueLabel.textContent = value + '%';
+                }
+                
+                // 更新进度条宽度
+                const progressBar = document.getElementById(sliderId + '-bar');
+                if (progressBar) {
+                    progressBar.style.width = value + '%';
+                }
+                
+                // 更新进度条内的文字
+                const progressText = progressBar ? progressBar.querySelector('.progress-text') : null;
+                if (progressText) {
+                    progressText.textContent = value + '%';
+                }
+                
+                // 如果在结果页中也有对应的仪表盘，也更新它
+                const resultGauge = document.getElementById(sliderId + '-gauge');
+                if (resultGauge && resultGauge.src) {
+                    resultGauge.src = `https://quickchart.io/gauge?value=${value}&max=100&theme=light&width=120&height=80&label=${encodeURIComponent(sliderId.split('-')[1])}`;
+                }
+                
+                const resultGaugeTitle = document.getElementById(sliderId + '-value');
+                if (resultGaugeTitle && resultGaugeTitle.classList.contains('plan-gauge-title')) {
+                    resultGaugeTitle.textContent = sliderId.split('-')[1] + ': ' + value + '%';
+                }
+            }
+            
+            // 为所有滑块添加统一的input事件处理
+            document.querySelectorAll('input[type="range"]').forEach(slider => {
+                slider.addEventListener('input', function() {
+                    updateSliderValues(this.id, this.value);
+                });
+                
+                // 初始化一次以确保显示一致
+                updateSliderValues(slider.id, slider.value);
             });
         });
     </script>
