@@ -359,13 +359,26 @@ function generateResults() {
             <h4>关键里程碑</h4>
             ${formatTextContent(planAMilestones)}
         </div>
+        <div class="result-section">
+            <h4>计划评估</h4>
+            <div class="gauge-row">
+                <div class="gauge-label">资源:</div>
+                <div class="gauge-indicator" style="width: ${planAResources}%"><span>${planAResources}%</span></div>
+            </div>
+            <div class="gauge-row">
+                <div class="gauge-label">喜欢:</div>
+                <div class="gauge-indicator" style="width: ${planAExcitement}%"><span>${planAExcitement}%</span></div>
+            </div>
+            <div class="gauge-row">
+                <div class="gauge-label">自信:</div>
+                <div class="gauge-indicator" style="width: ${planAConfidence}%"><span>${planAConfidence}%</span></div>
+            </div>
+            <div class="gauge-row">
+                <div class="gauge-label">一致:</div>
+                <div class="gauge-indicator" style="width: ${planAAlignment}%"><span>${planAAlignment}%</span></div>
+            </div>
+        </div>
     `;
-    
-    // 展示Plan A的评估数据
-    document.getElementById('plan-a-resources-value').textContent = `资源: ${planAResources}%`;
-    document.getElementById('plan-a-excitement-value').textContent = `喜欢: ${planAExcitement}%`;
-    document.getElementById('plan-a-confidence-value').textContent = `自信: ${planAConfidence}%`;
-    document.getElementById('plan-a-alignment-value').textContent = `一致: ${planAAlignment}%`;
     
     // 更新计划B结果
     const planBDesc = formElements['plan-b-desc'].value || '【未填写】';
@@ -385,13 +398,26 @@ function generateResults() {
             <h4>关键里程碑</h4>
             ${formatTextContent(planBMilestones)}
         </div>
+        <div class="result-section">
+            <h4>计划评估</h4>
+            <div class="gauge-row">
+                <div class="gauge-label">资源:</div>
+                <div class="gauge-indicator" style="width: ${planBResources}%"><span>${planBResources}%</span></div>
+            </div>
+            <div class="gauge-row">
+                <div class="gauge-label">喜欢:</div>
+                <div class="gauge-indicator" style="width: ${planBExcitement}%"><span>${planBExcitement}%</span></div>
+            </div>
+            <div class="gauge-row">
+                <div class="gauge-label">自信:</div>
+                <div class="gauge-indicator" style="width: ${planBConfidence}%"><span>${planBConfidence}%</span></div>
+            </div>
+            <div class="gauge-row">
+                <div class="gauge-label">一致:</div>
+                <div class="gauge-indicator" style="width: ${planBAlignment}%"><span>${planBAlignment}%</span></div>
+            </div>
+        </div>
     `;
-    
-    // 展示Plan B的评估数据
-    document.getElementById('plan-b-resources-value').textContent = `资源: ${planBResources}%`;
-    document.getElementById('plan-b-excitement-value').textContent = `喜欢: ${planBExcitement}%`;
-    document.getElementById('plan-b-confidence-value').textContent = `自信: ${planBConfidence}%`;
-    document.getElementById('plan-b-alignment-value').textContent = `一致: ${planBAlignment}%`;
     
     // 更新计划C结果
     const planCDesc = formElements['plan-c-desc'].value || '【未填写】';
@@ -411,13 +437,26 @@ function generateResults() {
             <h4>关键里程碑</h4>
             ${formatTextContent(planCMilestones)}
         </div>
+        <div class="result-section">
+            <h4>计划评估</h4>
+            <div class="gauge-row">
+                <div class="gauge-label">资源:</div>
+                <div class="gauge-indicator" style="width: ${planCResources}%"><span>${planCResources}%</span></div>
+            </div>
+            <div class="gauge-row">
+                <div class="gauge-label">喜欢:</div>
+                <div class="gauge-indicator" style="width: ${planCExcitement}%"><span>${planCExcitement}%</span></div>
+            </div>
+            <div class="gauge-row">
+                <div class="gauge-label">自信:</div>
+                <div class="gauge-indicator" style="width: ${planCConfidence}%"><span>${planCConfidence}%</span></div>
+            </div>
+            <div class="gauge-row">
+                <div class="gauge-label">一致:</div>
+                <div class="gauge-indicator" style="width: ${planCAlignment}%"><span>${planCAlignment}%</span></div>
+            </div>
+        </div>
     `;
-    
-    // 展示Plan C的评估数据
-    document.getElementById('plan-c-resources-value').textContent = `资源: ${planCResources}%`;
-    document.getElementById('plan-c-excitement-value').textContent = `喜欢: ${planCExcitement}%`;
-    document.getElementById('plan-c-confidence-value').textContent = `自信: ${planCConfidence}%`;
-    document.getElementById('plan-c-alignment-value').textContent = `一致: ${planCAlignment}%`;
     
     // 确定最令人兴奋的计划名称
     let excitingPlanName = '【未选择】';
@@ -447,6 +486,11 @@ function generateResults() {
             ${formatTextContent(actionSteps)}
         </div>
     `;
+    
+    // 隐藏仪表盘，使用进度条样式
+    document.querySelectorAll('.plan-gauges').forEach(gauge => {
+        gauge.style.display = 'none';
+    });
 }
 
 // 将文本内容转换为HTML段落格式
@@ -510,6 +554,14 @@ function setupExportImage() {
             resultsContainer.style.margin = '0 auto';
             resultsContainer.style.boxSizing = 'border-box';
             
+            // 添加日期
+            const dateElement = document.createElement('p');
+            dateElement.textContent = `生成日期: ${new Date().toLocaleDateString('zh-CN')}`;
+            dateElement.style.textAlign = 'center';
+            dateElement.style.color = '#666';
+            dateElement.style.marginBottom = '20px';
+            resultsContainer.querySelector('h2').after(dateElement);
+            
             // 获取用户称呼用于文件名
             const userName = formElements['user-name'].value || '我';
             
@@ -539,6 +591,11 @@ function setupExportImage() {
                     loadingMsg.style.background = 'rgba(220, 53, 69, 0.8)';
                     setTimeout(() => loadingMsg.remove(), 2000);
                 } finally {
+                    // 移除临时日期元素
+                    if (dateElement.parentNode) {
+                        dateElement.parentNode.removeChild(dateElement);
+                    }
+                    
                     // 恢复原始样式
                     if (btnGroup) btnGroup.style.display = '';
                     resultsContainer.style.backgroundColor = '';
@@ -553,6 +610,11 @@ function setupExportImage() {
                 }
             }).catch(function(error) {
                 console.error('html2canvas错误:', error);
+                
+                // 移除临时日期元素
+                if (dateElement.parentNode) {
+                    dateElement.parentNode.removeChild(dateElement);
+                }
                 
                 // 恢复原始样式
                 if (btnGroup) btnGroup.style.display = '';
