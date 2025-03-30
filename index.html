@@ -626,6 +626,61 @@
             margin-top: 2rem;
             padding: 1rem;
         }
+        
+        /* 添加联系方式样式 */
+        .contact-info {
+            text-align: center;
+            padding: 20px 0;
+            margin-top: 30px;
+            border-top: 1px solid #eee;
+            color: #666;
+            font-size: 14px;
+        }
+        
+        .contact-info .wechat-container {
+            display: inline-flex;
+            align-items: center;
+            margin-top: 10px;
+        }
+        
+        .contact-info .wechat-label {
+            margin-right: 10px;
+        }
+        
+        .contact-info .wechat-id {
+            background-color: #f5f5f5;
+            padding: 5px 10px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            font-family: monospace;
+            margin-right: 8px;
+        }
+        
+        .contact-info .copy-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.2s;
+        }
+        
+        .contact-info .copy-btn:hover {
+            background-color: var(--secondary);
+        }
+        
+        .contact-info .copy-success {
+            color: #28a745;
+            margin-left: 10px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .contact-info .copy-success.show {
+            opacity: 1;
+        }
     </style>
 </head>
 <body>
@@ -1018,9 +1073,46 @@
                 <button class="btn btn-secondary" id="back-to-evaluation">上一步</button>
                 <button class="btn" id="export-pdf">导出图片</button>
             </div>
+            
+            <!-- 添加联系方式区域 -->
+            <div class="contact-info">
+                <div class="wechat-container">
+                    <span class="wechat-label">WeChat：</span>
+                    <span class="wechat-id" id="wechat-id">largewind</span>
+                    <button class="copy-btn" id="copy-wechat">一键复制</button>
+                    <span class="copy-success" id="copy-success">✓ 已复制</span>
+                </div>
+            </div>
         </div>
     </div>
 
     <script src="script.js"></script>
+    
+    <!-- 添加复制功能的脚本 -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const copyBtn = document.getElementById('copy-wechat');
+            const wechatId = document.getElementById('wechat-id');
+            const copySuccess = document.getElementById('copy-success');
+            
+            copyBtn.addEventListener('click', function() {
+                const textToCopy = wechatId.textContent;
+                
+                // 创建一个临时输入框来实现复制功能
+                const tempInput = document.createElement('input');
+                tempInput.value = textToCopy;
+                document.body.appendChild(tempInput);
+                tempInput.select();
+                document.execCommand('copy');
+                document.body.removeChild(tempInput);
+                
+                // 显示复制成功提示
+                copySuccess.classList.add('show');
+                setTimeout(() => {
+                    copySuccess.classList.remove('show');
+                }, 2000);
+            });
+        });
+    </script>
 </body>
 </html>
