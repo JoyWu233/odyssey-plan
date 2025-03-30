@@ -314,13 +314,9 @@ function formatTextContent(text) {
 function setupExportImage() {
     document.getElementById('export-pdf').textContent = '导出图片';
     document.getElementById('export-pdf').addEventListener('click', function() {
-        // 确保数据已保存
+        // 确保数据已保存并刷新显示
         saveData();
-        
-        // 确保刷新结果显示
         generateResults();
-        
-        // 确保切换到结果页面
         switchTab('results');
         
         // 显示加载提示
@@ -346,232 +342,140 @@ function setupExportImage() {
         exportBtn.textContent = '生成中...';
         
         try {
-            // 获取结果容器
+            // 获取目标元素
             const resultsContainer = document.getElementById('results');
             
-            // 记录body原始样式
-            const originalBodyBg = document.body.style.background;
-            const originalBodyColor = document.body.style.color;
+            // 创建临时容器用于截图
+            const tempContainer = document.createElement('div');
+            tempContainer.style.cssText = `
+                position: absolute;
+                left: -9999px;
+                top: -9999px;
+                width: 800px;
+                background: #ffffff;
+                padding: 30px;
+                box-sizing: border-box;
+                font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+            `;
+            document.body.appendChild(tempContainer);
             
-            // 记录结果容器原始样式
-            const originalBg = resultsContainer.style.background;
-            const originalColor = resultsContainer.style.color;
-            const originalPadding = resultsContainer.style.padding;
-            
-            // 设置body为纯白色背景
-            document.body.style.background = '#ffffff';
-            document.body.style.color = '#000000';
-            
-            // 设置结果容器样式
-            resultsContainer.style.background = '#ffffff';
-            resultsContainer.style.color = '#000000';
-            resultsContainer.style.padding = '20px';
-            
-            // 查找并暂时隐藏按钮
-            const btnGroup = resultsContainer.querySelector('.btn-group');
-            const btnGroupDisplay = btnGroup.style.display;
-            btnGroup.style.display = 'none';
-            
-            // 添加标题和日期
-            const titleHeader = document.createElement('div');
+            // 创建标题部分
+            const titleSection = document.createElement('div');
             const date = new Date();
             const dateStr = `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`;
             
-            titleHeader.innerHTML = `
-                <div style="text-align: center; margin-bottom: 30px; padding-top: 20px;">
-                    <h2 style="color: #4361ee; font-size: 32px; margin-bottom: 8px; font-weight: bold;">我的奥德赛计划</h2>
+            titleSection.innerHTML = `
+                <div style="text-align: center; margin-bottom: 30px;">
+                    <h1 style="color: #1a46e5; font-size: 36px; margin-bottom: 10px; font-weight: bold;">我的奥德赛计划</h1>
                     <p style="color: #222222; font-size: 16px;">生成日期: ${dateStr}</p>
                 </div>
             `;
+            tempContainer.appendChild(titleSection);
             
-            resultsContainer.insertBefore(titleHeader, resultsContainer.firstChild);
-            
-            // 强制设置所有文本颜色，使用更深的颜色
-            const allTextElements = resultsContainer.querySelectorAll('p, h2, h3, h4');
-            const originalStyles = [];
-            
-            allTextElements.forEach(el => {
-                originalStyles.push({
-                    element: el,
-                    color: el.style.color,
-                    fontWeight: el.style.fontWeight
-                });
+            // 复制结果内容（不包含按钮）
+            const resultCards = resultsContainer.querySelectorAll('.result-card');
+            resultCards.forEach(card => {
+                const cardClone = card.cloneNode(true);
                 
-                if (el.tagName === 'H2') {
-                    el.style.color = '#1a46e5'; // 更深的蓝色
-                    el.style.fontWeight = 'bold';
-                } else if (el.tagName === 'H3') {
-                    el.style.color = '#1a46e5'; // 更深的蓝色
-                    el.style.fontWeight = 'bold';
-                } else if (el.tagName === 'H4') {
-                    el.style.color = '#202b8d'; // 深蓝色
-                    el.style.fontWeight = 'bold';
-                } else if (el.tagName === 'P') {
-                    el.style.color = '#000000'; // 纯黑色
-                    el.style.fontWeight = '500'; // 稍微加粗
+                // 删除所有按钮
+                const buttons = cardClone.querySelectorAll('button');
+                buttons.forEach(btn => btn.remove());
+                
+                // 设置卡片样式
+                cardClone.style.cssText = `
+                    background: #ffffff;
+                    border: 1px solid #e0e0e0;
+                    border-radius: 10px;
+                    padding: 25px;
+                    margin-bottom: 30px;
+                    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+                `;
+                
+                // 设置卡片标题样式
+                const cardTitle = cardClone.querySelector('h3');
+                if (cardTitle) {
+                    cardTitle.style.cssText = `
+                        color: #1a46e5;
+                        font-size: 24px;
+                        font-weight: bold;
+                        margin-bottom: 20px;
+                        padding-bottom: 10px;
+                        border-bottom: 2px solid #4361ee;
+                    `;
                 }
-            });
-            
-            // 设置所有卡片背景和边框
-            const allCards = resultsContainer.querySelectorAll('.result-card');
-            const originalCardStyles = [];
-            
-            allCards.forEach(card => {
-                originalCardStyles.push({
-                    element: card,
-                    background: card.style.background,
-                    boxShadow: card.style.boxShadow,
-                    border: card.style.border
+                
+                // 设置小标题样式
+                const subTitles = cardClone.querySelectorAll('h4');
+                subTitles.forEach(subtitle => {
+                    subtitle.style.cssText = `
+                        color: #202b8d;
+                        font-size: 20px;
+                        font-weight: bold;
+                        margin: 15px 0 10px 0;
+                    `;
                 });
                 
-                card.style.background = '#ffffff';
-                card.style.boxShadow = '0 3px 12px rgba(0,0,0,0.12)';
-                card.style.border = '1px solid #e0e0e0';
-                card.style.borderRadius = '10px';
-                card.style.marginBottom = '25px';
-                card.style.padding = '20px';
+                // 设置段落样式
+                const paragraphs = cardClone.querySelectorAll('p');
+                paragraphs.forEach(p => {
+                    p.style.cssText = `
+                        color: #000000;
+                        font-size: 16px;
+                        line-height: 1.6;
+                        margin-bottom: 10px;
+                        font-weight: 500;
+                    `;
+                });
+                
+                tempContainer.appendChild(cardClone);
             });
             
-            // 使用简单配置进行转换
-            setTimeout(() => {
-                html2canvas(resultsContainer, {
-                    backgroundColor: '#ffffff',
-                    scale: 3, // 使用3倍缩放获得更清晰的图像
-                    useCORS: true,
-                    allowTaint: true,
-                    logging: false,
-                    scrollX: 0,
-                    scrollY: 0,
-                    windowWidth: document.documentElement.offsetWidth,
-                    windowHeight: document.documentElement.offsetHeight,
-                    onclone: function(clonedDoc) {
-                        // 设置克隆文档的body为白色
-                        clonedDoc.body.style.background = '#ffffff';
-                        clonedDoc.body.style.margin = '0';
-                        clonedDoc.body.style.padding = '0';
-                        
-                        const clonedResults = clonedDoc.getElementById('results');
-                        if (clonedResults) {
-                            clonedResults.style.background = '#ffffff';
-                            clonedResults.style.padding = '20px';
-                            clonedResults.style.margin = '0';
-                            
-                            // 确保克隆中的所有文本颜色正确
-                            const clonedTexts = clonedResults.querySelectorAll('p, h2, h3, h4');
-                            clonedTexts.forEach(el => {
-                                if (el.tagName === 'H2') {
-                                    el.style.color = '#1a46e5';
-                                    el.style.fontWeight = 'bold';
-                                } else if (el.tagName === 'H3') {
-                                    el.style.color = '#1a46e5';
-                                    el.style.fontWeight = 'bold';
-                                } else if (el.tagName === 'H4') {
-                                    el.style.color = '#202b8d';
-                                    el.style.fontWeight = 'bold';
-                                } else if (el.tagName === 'P') {
-                                    el.style.color = '#000000';
-                                    el.style.fontWeight = '500';
-                                }
-                            });
-                            
-                            // 确保克隆中的所有卡片背景正确
-                            const clonedCards = clonedResults.querySelectorAll('.result-card');
-                            clonedCards.forEach(card => {
-                                card.style.background = '#ffffff';
-                                card.style.boxShadow = '0 3px 12px rgba(0,0,0,0.12)';
-                                card.style.border = '1px solid #e0e0e0';
-                                card.style.borderRadius = '10px';
-                                card.style.marginBottom = '25px';
-                                card.style.padding = '20px';
-                            });
-                        }
-                    }
-                }).then(canvas => {
-                    // 创建下载链接
-                    canvas.toBlob(function(blob) {
-                        const url = URL.createObjectURL(blob);
-                        const link = document.createElement('a');
-                        link.download = '我的奥德赛计划.png';
-                        link.href = url;
-                        link.click();
-                        URL.revokeObjectURL(url);
-                        
-                        // 恢复body原始样式
-                        document.body.style.background = originalBodyBg;
-                        document.body.style.color = originalBodyColor;
-                        
-                        // 恢复结果容器原始样式
-                        resultsContainer.style.background = originalBg;
-                        resultsContainer.style.color = originalColor;
-                        resultsContainer.style.padding = originalPadding;
-                        
-                        // 恢复按钮显示
-                        btnGroup.style.display = btnGroupDisplay;
-                        resultsContainer.removeChild(titleHeader);
-                        
-                        // 恢复所有文本元素的原始样式
-                        originalStyles.forEach(item => {
-                            item.element.style.color = item.color;
-                            item.element.style.fontWeight = item.fontWeight;
-                        });
-                        
-                        // 恢复所有卡片的原始样式
-                        originalCardStyles.forEach(item => {
-                            item.element.style.background = item.background;
-                            item.element.style.boxShadow = item.boxShadow;
-                            item.element.style.border = item.border;
-                        });
-                        
-                        // 显示成功消息
-                        loadingMsg.textContent = '导出成功！';
-                        loadingMsg.style.background = 'rgba(40, 167, 69, 0.8)';
-                        setTimeout(() => loadingMsg.remove(), 1500);
-                        
-                        // 恢复按钮
-                        exportBtn.disabled = false;
-                        exportBtn.textContent = '导出图片';
-                    }, 'image/png', 1.0);
-                }).catch(err => {
-                    console.error('生成图片出错:', err);
-                    
-                    // 恢复body原始样式
-                    document.body.style.background = originalBodyBg;
-                    document.body.style.color = originalBodyColor;
-                    
-                    // 恢复结果容器原始样式
-                    resultsContainer.style.background = originalBg;
-                    resultsContainer.style.color = originalColor;
-                    resultsContainer.style.padding = originalPadding;
-                    
-                    // 恢复按钮显示
-                    btnGroup.style.display = btnGroupDisplay;
-                    if (resultsContainer.contains(titleHeader)) {
-                        resultsContainer.removeChild(titleHeader);
-                    }
-                    
-                    // 恢复所有文本元素的原始样式
-                    originalStyles.forEach(item => {
-                        item.element.style.color = item.color;
-                        item.element.style.fontWeight = item.fontWeight;
-                    });
-                    
-                    // 恢复所有卡片的原始样式
-                    originalCardStyles.forEach(item => {
-                        item.element.style.background = item.background;
-                        item.element.style.boxShadow = item.boxShadow;
-                        item.element.style.border = item.border;
-                    });
-                    
-                    // 显示错误消息
-                    loadingMsg.textContent = '导出失败，请稍后重试';
-                    loadingMsg.style.background = 'rgba(220, 53, 69, 0.8)';
-                    setTimeout(() => loadingMsg.remove(), 2000);
-                    
-                    // 恢复按钮
-                    exportBtn.disabled = false;
-                    exportBtn.textContent = '导出图片';
-                });
-            }, 300);
+            // 使用dom-to-image生成图片
+            domtoimage.toPng(tempContainer, {
+                width: tempContainer.offsetWidth,
+                height: tempContainer.offsetHeight,
+                quality: 1.0,
+                style: {
+                    'background': '#ffffff'
+                }
+            })
+            .then(function(dataUrl) {
+                // 创建下载链接
+                const link = document.createElement('a');
+                link.download = '我的奥德赛计划.png';
+                link.href = dataUrl;
+                link.click();
+                
+                // 清理临时元素
+                document.body.removeChild(tempContainer);
+                
+                // 显示成功消息
+                loadingMsg.textContent = '导出成功！';
+                loadingMsg.style.background = 'rgba(40, 167, 69, 0.8)';
+                setTimeout(() => loadingMsg.remove(), 1500);
+                
+                // 恢复按钮
+                exportBtn.disabled = false;
+                exportBtn.textContent = '导出图片';
+            })
+            .catch(function(error) {
+                console.error('导出图片出错:', error);
+                
+                // 清理临时元素
+                if (document.body.contains(tempContainer)) {
+                    document.body.removeChild(tempContainer);
+                }
+                
+                // 显示错误消息
+                loadingMsg.textContent = '导出失败，请稍后重试';
+                loadingMsg.style.background = 'rgba(220, 53, 69, 0.8)';
+                setTimeout(() => loadingMsg.remove(), 2000);
+                
+                // 恢复按钮
+                exportBtn.disabled = false;
+                exportBtn.textContent = '导出图片';
+            });
+            
         } catch (error) {
             console.error('导出过程出错:', error);
             

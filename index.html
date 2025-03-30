@@ -6,6 +6,7 @@
     <title>奥德赛计划 - 设计你的三种未来</title>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
     <style>
         :root {
             --primary: #4361ee;
@@ -15,13 +16,15 @@
             --dark: #212529;
             --success: #4cc9f0;
             --warning: #f72585;
+            --text-color: #333333;
+            --background-color: #ffffff;
         }
         
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Segoe UI', 'Microsoft YaHei', Tahoma, Geneva, Verdana, sans-serif;
         }
         
         body {
@@ -216,7 +219,7 @@
         }
         
         .result-card {
-            background-color: white;
+            background-color: var(--background-color);
             border-radius: 8px;
             padding: 2rem;
             margin-bottom: 1.5rem;
@@ -247,7 +250,7 @@
         .result-section p {
             margin-bottom: 0.5rem;
             line-height: 1.6;
-            color: var(--dark);
+            color: var(--text-color) !important;
         }
         
         .result-section p:last-child {
@@ -260,6 +263,7 @@
         
         .result-card li {
             margin-bottom: 0.5rem;
+            color: var(--text-color);
         }
         
         .save-status {
@@ -284,11 +288,12 @@
         /* 结果页样式 */
         #results {
             padding: 20px;
-            background-color: #ffffff;
+            background-color: var(--background-color);
+            color: var(--text-color);
         }
         
         .result-card {
-            background-color: #ffffff;
+            background-color: var(--background-color);
             border-radius: 10px;
             padding: 20px;
             margin-bottom: 30px;
@@ -296,7 +301,7 @@
         }
         
         .result-card h3 {
-            color: #4361ee;
+            color: var(--primary);
             font-size: 22px;
             margin-bottom: 15px;
             padding-bottom: 10px;
@@ -312,13 +317,13 @@
         }
         
         .result-section h4 {
-            color: #3f37c9;
+            color: var(--secondary);
             font-size: 18px;
             margin-bottom: 10px;
         }
         
         .result-section p {
-            color: #333333;
+            color: var(--text-color) !important;
             font-size: 16px;
             line-height: 1.6;
             margin-bottom: 10px;
@@ -328,6 +333,18 @@
             display: flex;
             justify-content: space-between;
             margin-top: 20px;
+        }
+        
+        /* 特别强调结果文本颜色 */
+        #resources-result p, 
+        #plan-a-result p, 
+        #plan-b-result p, 
+        #plan-c-result p, 
+        #evaluation-result p {
+            color: var(--text-color) !important;
+            font-size: 16px;
+            line-height: 1.6;
+            margin-bottom: 10px;
         }
     </style>
 </head>
