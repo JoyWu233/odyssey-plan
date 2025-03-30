@@ -495,349 +495,33 @@ function setupExportImage() {
         exportBtn.disabled = true;
         exportBtn.textContent = '生成中...';
         
-        // 创建临时容器（A4纸张比例：210mm × 297mm = 1:1.414）
-        const container = document.createElement('div');
-        container.style.cssText = `
-            position: fixed;
-            left: -9999px;
-            top: -9999px;
-            width: 800px;
-            background: #FFFFFF;
-            padding: 40px;
-            box-sizing: border-box;
-            font-family: 'Microsoft YaHei', sans-serif;
-            overflow: hidden;
-        `;
-        document.body.appendChild(container);
-        
         try {
-            // 获取用户称呼
+            // 直接使用已有结果页面内容进行截图，这样确保UI一致性并提高速度
+            const resultsContainer = document.getElementById('results');
+            
+            // 临时隐藏按钮组
+            const btnGroup = resultsContainer.querySelector('.btn-group');
+            if (btnGroup) btnGroup.style.display = 'none';
+            
+            // 添加临时样式使截图更美观
+            resultsContainer.style.backgroundColor = '#ffffff';
+            resultsContainer.style.padding = '40px';
+            resultsContainer.style.width = '800px';
+            resultsContainer.style.margin = '0 auto';
+            resultsContainer.style.boxSizing = 'border-box';
+            
+            // 获取用户称呼用于文件名
             const userName = formElements['user-name'].value || '我';
             
-            // 获取内容文本
-            const whoAmI = formElements['who-am-i'].value || '【未填写】';
-            const whatIHave = formElements['what-i-have'].value || '【未填写】';
-            const energizers = formElements['energizers'].value || '【未填写】';
-            
-            const planATitle = formElements['plan-a-title'].value || '最现实路径';
-            const planADesc = formElements['plan-a-desc'].value || '【未填写】';
-            const planAMilestones = formElements['plan-a-milestones'].value || '【未填写】';
-            const planAResources = formElements['plan-a-resources'].value || 50;
-            const planAExcitement = formElements['plan-a-excitement'].value || 50;
-            const planAConfidence = formElements['plan-a-confidence'].value || 50;
-            const planAAlignment = formElements['plan-a-alignment'].value || 50;
-            
-            const planBTitle = formElements['plan-b-title'].value || '替代方案';
-            const planBDesc = formElements['plan-b-desc'].value || '【未填写】';
-            const planBMilestones = formElements['plan-b-milestones'].value || '【未填写】';
-            const planBResources = formElements['plan-b-resources'].value || 50;
-            const planBExcitement = formElements['plan-b-excitement'].value || 50;
-            const planBConfidence = formElements['plan-b-confidence'].value || 50;
-            const planBAlignment = formElements['plan-b-alignment'].value || 50;
-            
-            const planCTitle = formElements['plan-c-title'].value || '理想生活';
-            const planCDesc = formElements['plan-c-desc'].value || '【未填写】';
-            const planCMilestones = formElements['plan-c-milestones'].value || '【未填写】';
-            const planCResources = formElements['plan-c-resources'].value || 50;
-            const planCExcitement = formElements['plan-c-excitement'].value || 50;
-            const planCConfidence = formElements['plan-c-confidence'].value || 50;
-            const planCAlignment = formElements['plan-c-alignment'].value || 50;
-            
-            let excitingPlanName = '【未选择】';
-            
-            if (formElements['exciting-plan'].value === 'plan-a') {
-                excitingPlanName = `Plan A - ${planATitle}`;
-            } else if (formElements['exciting-plan'].value === 'plan-b') {
-                excitingPlanName = `Plan B - ${planBTitle}`;
-            } else if (formElements['exciting-plan'].value === 'plan-c') {
-                excitingPlanName = `Plan C - ${planCTitle}`;
-            }
-            
-            const feasibility = formElements['feasibility'].value || '【未填写】';
-            const actionSteps = formElements['action-steps'].value || '【未填写】';
-            
-            // 获取仪表盘图像URL - 修改为正确的格式
-            const smallGaugeTemplate = 'https://quickchart.io/gauge?value=${value}&max=100&theme=light&width=120&height=80&label=${label}';
-            
-            // 构建HTML内容
-            container.innerHTML = `
-                <style>
-                    * {
-                        margin: 0;
-                        padding: 0;
-                        box-sizing: border-box;
-                    }
-                    body {
-                        font-family: 'Microsoft YaHei', sans-serif;
-                        color: #000;
-                        line-height: 1.5;
-                    }
-                    .page-header {
-                        text-align: center;
-                        margin-bottom: 30px;
-                        padding-bottom: 20px;
-                        border-bottom: 2px solid #4361ee;
-                    }
-                    .main-title {
-                        font-size: 32px;
-                        color: #1a46e5;
-                        margin-bottom: 10px;
-                        font-weight: bold;
-                    }
-                    .date {
-                        font-size: 14px;
-                        color: #666;
-                    }
-                    .description {
-                        font-size: 14px;
-                        color: #555;
-                        margin-bottom: 20px;
-                    }
-                    .gauge-row {
-                        display: flex;
-                        justify-content: space-between;
-                        margin: 15px 0;
-                        background-color: #f9f9f9;
-                        padding: 15px;
-                        border-radius: 8px;
-                    }
-                    .gauge-item {
-                        text-align: center;
-                        width: 23%;
-                    }
-                    .gauge-title {
-                        font-size: 14px;
-                        color: #444;
-                        margin-top: 5px;
-                        font-weight: bold;
-                    }
-                    .gauge-img {
-                        width: 100%;
-                        max-width: 120px;
-                        height: auto;
-                    }
-                    .card {
-                        margin-bottom: 30px;
-                        border: 1px solid #e0e0e0;
-                        border-radius: 10px;
-                        overflow: hidden;
-                    }
-                    .card-header {
-                        padding: 15px 20px;
-                        color: white;
-                        font-weight: bold;
-                        font-size: 18px;
-                    }
-                    .resources-header {
-                        background-color: #4361ee;
-                    }
-                    .plan-a-header {
-                        background-color: #4361ee;
-                    }
-                    .plan-b-header {
-                        background-color: #4895ef;
-                    }
-                    .plan-c-header {
-                        background-color: #f72585;
-                    }
-                    .evaluation-header {
-                        background-color: #3f37c9;
-                    }
-                    .card-body {
-                        padding: 20px;
-                        background-color: #fff;
-                    }
-                    .section {
-                        margin-bottom: 15px;
-                    }
-                    .section-title {
-                        font-size: 16px;
-                        font-weight: bold;
-                        color: #202b8d;
-                        margin-bottom: 10px;
-                    }
-                    .section-content {
-                        font-size: 14px;
-                        color: #333;
-                        white-space: pre-line;
-                    }
-                    .empty {
-                        color: #999;
-                        font-style: italic;
-                    }
-                    .footer {
-                        text-align: center;
-                        margin-top: 30px;
-                        font-size: 12px;
-                        color: #999;
-                    }
-                </style>
-                
-                <div class="page-header">
-                    <h1 class="main-title">${userName}的奥德赛计划</h1>
-                    <p class="date">生成日期: ${new Date().toLocaleDateString('zh-CN')}</p>
-                </div>
-                
-                <p class="description">以下是为你生成的三种未来可能性。</p>
-                
-                <div class="card">
-                    <div class="card-header resources-header">资源盘点</div>
-                    <div class="card-body">
-                        <div class="section">
-                            <div class="section-title">我是谁？</div>
-                            <div class="section-content ${whoAmI === '【未填写】' ? 'empty' : ''}">${whoAmI}</div>
-                        </div>
-                        <div class="section">
-                            <div class="section-title">我拥有什么？</div>
-                            <div class="section-content ${whatIHave === '【未填写】' ? 'empty' : ''}">${whatIHave}</div>
-                        </div>
-                        <div class="section">
-                            <div class="section-title">能量来源</div>
-                            <div class="section-content ${energizers === '【未填写】' ? 'empty' : ''}">${energizers}</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="card">
-                    <div class="card-header plan-a-header">Plan A - ${planATitle}</div>
-                    <div class="card-body">
-                        <div class="section">
-                            <div class="section-title">5年后的状态</div>
-                            <div class="section-content ${planADesc === '【未填写】' ? 'empty' : ''}">${planADesc}</div>
-                        </div>
-                        <div class="section">
-                            <div class="section-title">关键里程碑</div>
-                            <div class="section-content ${planAMilestones === '【未填写】' ? 'empty' : ''}">${planAMilestones}</div>
-                        </div>
-                        <div class="gauge-row">
-                            <div class="gauge-item">
-                                <img class="gauge-img" src="${smallGaugeTemplate.replace('${value}', planAResources).replace('${label}', '资源')}" alt="Plan A资源仪表盘">
-                                <div class="gauge-title">资源: ${planAResources}%</div>
-                            </div>
-                            <div class="gauge-item">
-                                <img class="gauge-img" src="${smallGaugeTemplate.replace('${value}', planAExcitement).replace('${label}', '喜欢程度')}" alt="Plan A喜欢程度仪表盘">
-                                <div class="gauge-title">喜欢: ${planAExcitement}%</div>
-                            </div>
-                            <div class="gauge-item">
-                                <img class="gauge-img" src="${smallGaugeTemplate.replace('${value}', planAConfidence).replace('${label}', '自信心')}" alt="Plan A自信心仪表盘">
-                                <div class="gauge-title">自信: ${planAConfidence}%</div>
-                            </div>
-                            <div class="gauge-item">
-                                <img class="gauge-img" src="${smallGaugeTemplate.replace('${value}', planAAlignment).replace('${label}', '一致性')}" alt="Plan A一致性仪表盘">
-                                <div class="gauge-title">一致: ${planAAlignment}%</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="card">
-                    <div class="card-header plan-b-header">Plan B - ${planBTitle}</div>
-                    <div class="card-body">
-                        <div class="section">
-                            <div class="section-title">5年后的状态</div>
-                            <div class="section-content ${planBDesc === '【未填写】' ? 'empty' : ''}">${planBDesc}</div>
-                        </div>
-                        <div class="section">
-                            <div class="section-title">关键里程碑</div>
-                            <div class="section-content ${planBMilestones === '【未填写】' ? 'empty' : ''}">${planBMilestones}</div>
-                        </div>
-                        <div class="gauge-row">
-                            <div class="gauge-item">
-                                <img class="gauge-img" src="${smallGaugeTemplate.replace('${value}', planBResources).replace('${label}', '资源')}" alt="Plan B资源仪表盘">
-                                <div class="gauge-title">资源: ${planBResources}%</div>
-                            </div>
-                            <div class="gauge-item">
-                                <img class="gauge-img" src="${smallGaugeTemplate.replace('${value}', planBExcitement).replace('${label}', '喜欢程度')}" alt="Plan B喜欢程度仪表盘">
-                                <div class="gauge-title">喜欢: ${planBExcitement}%</div>
-                            </div>
-                            <div class="gauge-item">
-                                <img class="gauge-img" src="${smallGaugeTemplate.replace('${value}', planBConfidence).replace('${label}', '自信心')}" alt="Plan B自信心仪表盘">
-                                <div class="gauge-title">自信: ${planBConfidence}%</div>
-                            </div>
-                            <div class="gauge-item">
-                                <img class="gauge-img" src="${smallGaugeTemplate.replace('${value}', planBAlignment).replace('${label}', '一致性')}" alt="Plan B一致性仪表盘">
-                                <div class="gauge-title">一致: ${planBAlignment}%</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="card">
-                    <div class="card-header plan-c-header">Plan C - ${planCTitle}</div>
-                    <div class="card-body">
-                        <div class="section">
-                            <div class="section-title">5年后的状态</div>
-                            <div class="section-content ${planCDesc === '【未填写】' ? 'empty' : ''}">${planCDesc}</div>
-                        </div>
-                        <div class="section">
-                            <div class="section-title">关键里程碑</div>
-                            <div class="section-content ${planCMilestones === '【未填写】' ? 'empty' : ''}">${planCMilestones}</div>
-                        </div>
-                        <div class="gauge-row">
-                            <div class="gauge-item">
-                                <img class="gauge-img" src="${smallGaugeTemplate.replace('${value}', planCResources).replace('${label}', '资源')}" alt="Plan C资源仪表盘">
-                                <div class="gauge-title">资源: ${planCResources}%</div>
-                            </div>
-                            <div class="gauge-item">
-                                <img class="gauge-img" src="${smallGaugeTemplate.replace('${value}', planCExcitement).replace('${label}', '喜欢程度')}" alt="Plan C喜欢程度仪表盘">
-                                <div class="gauge-title">喜欢: ${planCExcitement}%</div>
-                            </div>
-                            <div class="gauge-item">
-                                <img class="gauge-img" src="${smallGaugeTemplate.replace('${value}', planCConfidence).replace('${label}', '自信心')}" alt="Plan C自信心仪表盘">
-                                <div class="gauge-title">自信: ${planCConfidence}%</div>
-                            </div>
-                            <div class="gauge-item">
-                                <img class="gauge-img" src="${smallGaugeTemplate.replace('${value}', planCAlignment).replace('${label}', '一致性')}" alt="Plan C一致性仪表盘">
-                                <div class="gauge-title">一致: ${planCAlignment}%</div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="card">
-                    <div class="card-header evaluation-header">评估与行动计划</div>
-                    <div class="card-body">
-                        <div class="section">
-                            <div class="section-title">最令人兴奋的计划</div>
-                            <div class="section-content ${excitingPlanName === '【未选择】' ? 'empty' : ''}">${excitingPlanName}</div>
-                        </div>
-                        <div class="section">
-                            <div class="section-title">可行性分析</div>
-                            <div class="section-content ${feasibility === '【未填写】' ? 'empty' : ''}">${feasibility}</div>
-                        </div>
-                        <div class="section">
-                            <div class="section-title">行动计划</div>
-                            <div class="section-content ${actionSteps === '【未填写】' ? 'empty' : ''}">${actionSteps}</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="footer">
-                    奥德赛计划生成器 · odyssey-plan.com
-                </div>
-            `;
-            
             // 使用html2canvas截图
-            html2canvas(container, {
-                scale: 2,
+            html2canvas(resultsContainer, {
+                scale: 2, // 提高清晰度
                 backgroundColor: '#FFFFFF',
                 logging: false,
                 useCORS: true,
-                allowTaint: true,
-                onclone: function(clone) {
-                    // 确保克隆元素样式正确应用
-                    const cloneContainer = clone.querySelector('div');
-                    if (cloneContainer) {
-                        cloneContainer.style.position = 'static';
-                        cloneContainer.style.left = '0';
-                        cloneContainer.style.top = '0';
-                    }
-                }
+                allowTaint: true
             }).then(function(canvas) {
                 try {
-                    // 获取用户称呼用于文件名
-                    const userName = formElements['user-name'].value || '我';
-                    
                     // 导出为PNG图片
                     const dataUrl = canvas.toDataURL('image/png');
                     const link = document.createElement('a');
@@ -855,8 +539,13 @@ function setupExportImage() {
                     loadingMsg.style.background = 'rgba(220, 53, 69, 0.8)';
                     setTimeout(() => loadingMsg.remove(), 2000);
                 } finally {
-                    // 清理临时元素
-                    document.body.removeChild(container);
+                    // 恢复原始样式
+                    if (btnGroup) btnGroup.style.display = '';
+                    resultsContainer.style.backgroundColor = '';
+                    resultsContainer.style.padding = '';
+                    resultsContainer.style.width = '';
+                    resultsContainer.style.margin = '';
+                    resultsContainer.style.boxSizing = '';
                     
                     // 恢复按钮
                     exportBtn.disabled = false;
@@ -865,8 +554,13 @@ function setupExportImage() {
             }).catch(function(error) {
                 console.error('html2canvas错误:', error);
                 
-                // 清理临时元素
-                document.body.removeChild(container);
+                // 恢复原始样式
+                if (btnGroup) btnGroup.style.display = '';
+                resultsContainer.style.backgroundColor = '';
+                resultsContainer.style.padding = '';
+                resultsContainer.style.width = '';
+                resultsContainer.style.margin = '';
+                resultsContainer.style.boxSizing = '';
                 
                 // 显示错误消息
                 loadingMsg.textContent = '导出失败，请稍后重试';
@@ -879,11 +573,6 @@ function setupExportImage() {
             });
         } catch (error) {
             console.error('导出过程出错:', error);
-            
-            // 清理临时元素
-            if (document.body.contains(container)) {
-                document.body.removeChild(container);
-            }
             
             // 显示错误消息
             loadingMsg.textContent = '导出失败，请稍后重试';
