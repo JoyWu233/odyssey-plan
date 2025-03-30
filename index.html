@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>奥德赛计划 - 设计你的三种未来</title>
-    <script src="https://cdn.bootcdn.net/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    <script src="https://cdn.bootcdn.net/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
-    <script src="https://cdn.bootcdn.net/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dom-to-image/2.6.0/dom-to-image.min.js"></script>
     <style>
         :root {
             --primary: #4361ee;
@@ -404,59 +404,10 @@
         }
         
         .gauge-indicator {
-            background-color: #4895ef;
             height: 100%;
-            min-width: 35px;
-            padding: 0 5px;
-            box-sizing: border-box;
-            position: relative;
-            color: white;
-            font-size: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            transition: width 0.3s ease;
+            background-color: var(--primary);
             border-radius: 10px;
-        }
-        
-        .gauge-indicator span {
-            z-index: 1;
-            text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
-            white-space: nowrap;
             position: relative;
-        }
-        
-        /* 当百分比较小时的特殊处理 */
-        .gauge-indicator[style*="width: 10%"] span,
-        .gauge-indicator[style*="width: 9%"] span,
-        .gauge-indicator[style*="width: 8%"] span,
-        .gauge-indicator[style*="width: 7%"] span,
-        .gauge-indicator[style*="width: 6%"] span,
-        .gauge-indicator[style*="width: 5%"] span,
-        .gauge-indicator[style*="width: 4%"] span,
-        .gauge-indicator[style*="width: 3%"] span,
-        .gauge-indicator[style*="width: 2%"] span,
-        .gauge-indicator[style*="width: 1%"] span {
-            position: absolute;
-            left: 0;
-            min-width: 40px;
-            background-color: #4895ef;
-            padding: 0 5px;
-            border-radius: 5px;
-            color: white;
-            text-align: center;
-        }
-        
-        /* 更完整的百分比显示支持 */
-        .gauge-indicator[style*="width: 15%"] span,
-        .gauge-indicator[style*="width: 14%"] span,
-        .gauge-indicator[style*="width: 13%"] span,
-        .gauge-indicator[style*="width: 12%"] span,
-        .gauge-indicator[style*="width: 11%"] span {
-            position: relative;
-            min-width: 40px;
-            text-align: center;
-            display: block;
         }
         
         .plan-a-card .gauge-indicator {
@@ -469,6 +420,14 @@
         
         .plan-c-card .gauge-indicator {
             background-color: var(--warning);
+        }
+        
+        .gauge-indicator span {
+            position: absolute;
+            right: 10px;
+            color: white;
+            font-size: 12px;
+            line-height: 20px;
         }
         
         /* 增强可视化效果 */
@@ -626,432 +585,314 @@
             margin-top: 2rem;
             padding: 1rem;
         }
-        
-        /* 联系方式和指导区域的共享样式 */
-        .contact-section {
-            margin-top: 30px;
-            padding: 15px 20px;
-            background-color: #f8f9fa;
-            border-radius: 10px;
-            border-left: 4px solid var(--primary);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
-        }
-        
-        .contact-title {
-            font-size: 16px;
-            color: var(--primary);
-            margin-bottom: 10px;
-            font-weight: 600;
-        }
-        
-        .contact-description {
-            font-size: 14px;
-            color: #555;
-            margin-bottom: 15px;
-            line-height: 1.5;
-        }
-        
-        .contact-info {
-            display: flex;
-            flex-wrap: wrap;
-            align-items: center;
-            margin-top: 10px;
-            padding-top: 10px;
-            border-top: 1px dashed #ddd;
-        }
-        
-        .contact-info .wechat-container {
-            display: flex;
-            align-items: center;
-            margin-right: 20px;
-            margin-bottom: 10px;
-        }
-        
-        .contact-info .wechat-label {
-            font-weight: 600;
-            color: #333;
-            margin-right: 8px;
-        }
-        
-        .contact-info .wechat-id {
-            background-color: #ffffff;
-            padding: 6px 12px;
-            border-radius: 4px;
-            border: 1px solid #ddd;
-            font-family: monospace;
-            margin-right: 8px;
-            color: var(--primary);
-            font-weight: 500;
-        }
-        
-        .contact-info .copy-btn {
-            background-color: var(--primary);
-            color: white;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 13px;
-            transition: all 0.2s;
-        }
-        
-        .contact-info .copy-btn:hover {
-            background-color: var(--secondary);
-            transform: translateY(-2px);
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        }
-        
-        .contact-info .copy-success {
-            color: #28a745;
-            margin-left: 10px;
-            font-weight: 500;
-            opacity: 0;
-            transition: opacity 0.3s;
-        }
-        
-        .contact-info .copy-success.show {
-            opacity: 1;
-        }
-        
-        /* 在页面底部固定的提示 */
-        .floating-contact {
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            background-color: white;
-            padding: 10px 15px;
-            border-radius: 50px;
-            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
-            display: flex;
-            align-items: center;
-            z-index: 1000;
-            transition: all 0.3s;
-            border: 1px solid var(--primary);
-        }
-        
-        .floating-contact:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
-        }
-        
-        .floating-contact .wechat-label {
-            color: var(--primary);
-            font-weight: 600;
-            margin-right: 8px;
-        }
-        
-        .floating-contact .wechat-id {
-            font-weight: 500;
-        }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
             <h1>奥德赛计划</h1>
-            <p class="subtitle">设计你的三种未来，探索人生可能性</p>
+            <p class="subtitle">设计你的三种未来人生版本</p>
         </header>
         
         <div class="tabs">
-            <button class="tab-btn active" data-tab="resources">资源盘点</button>
-            <button class="tab-btn" data-tab="plans">计划</button>
-            <button class="tab-btn" data-tab="evaluation">评估</button>
-            <button class="tab-btn" data-tab="results">结果</button>
+            <button class="tab-btn active" data-tab="resources">1. 资源盘点</button>
+            <button class="tab-btn" data-tab="plans">2. 设计计划</button>
+            <button class="tab-btn" data-tab="evaluation">3. 评估选择</button>
+            <button class="tab-btn" data-tab="results">4. 生成结果</button>
         </div>
         
         <div id="resources" class="tab-content active">
             <h2>资源盘点</h2>
-            <p class="intro">在开始规划前，先了解自己拥有的资源和能量来源。</p>
+            <p>在开始设计你的未来之前，先了解自己拥有的资源。</p>
             
             <div class="form-group">
                 <label for="user-name">你的称呼</label>
-                <input type="text" id="user-name" placeholder="输入你的名字或昵称">
-                <div class="save-status" id="user-name-status">未保存</div>
+                <p class="form-hint">请输入你的姓名或昵称，将显示在最终生成的结果中。</p>
+                <input type="text" id="user-name" placeholder="例如：王小明">
+                <div class="save-status" id="user-name-status"></div>
             </div>
             
             <div class="form-group">
                 <label for="who-am-i">我是谁？</label>
-                <p class="form-hint">思考你的身份、价值观、优势和天赋等。考虑你是什么样的人，你的人格特质和核心价值观是什么。</p>
-                <textarea id="who-am-i" placeholder="描述你的身份、价值观、优势和特长..."></textarea>
-                <div class="save-status" id="who-am-i-status">未保存</div>
+                <p class="form-hint">思考你的价值观、兴趣、擅长技能、性格特点等，这些构成了你的核心身份。</p>
+                <textarea id="who-am-i" placeholder="你的价值观、兴趣、擅长技能、性格特点..."></textarea>
+                <div class="save-status" id="who-am-i-status"></div>
             </div>
             
             <div class="form-group">
                 <label for="what-i-have">我拥有什么？</label>
-                <p class="form-hint">列出你拥有的资源，如技能、知识、人脉关系、资金、时间等。这些是实现目标的基础。</p>
-                <textarea id="what-i-have" placeholder="列出你拥有的资源、技能、知识、关系网络等..."></textarea>
-                <div class="save-status" id="what-i-have-status">未保存</div>
+                <p class="form-hint">列出你的知识、人脉、物质资源（如存款、工具等），这些是你实现计划的基础。</p>
+                <textarea id="what-i-have" placeholder="知识、人脉、物质资源（存款、工具等）..."></textarea>
+                <div class="save-status" id="what-i-have-status"></div>
             </div>
             
             <div class="form-group">
-                <label for="energizers">能量来源</label>
-                <p class="form-hint">什么活动能给你带来能量和热情？思考那些让你感到充满活力、投入和满足的事情。</p>
-                <textarea id="energizers" placeholder="列出能给你带来能量和热情的活动、兴趣爱好等..."></textarea>
-                <div class="save-status" id="energizers-status">未保存</div>
+                <label for="energizers">哪些事能给我能量？</label>
+                <p class="form-hint">记录那些让你感到充实、有成就感或充满能量的活动，它们将帮助你保持动力。</p>
+                <textarea id="energizers" placeholder="让你感到充实、有成就感的活动..."></textarea>
+                <div class="save-status" id="energizers-status"></div>
             </div>
             
             <div class="btn-group">
-                <button class="btn" id="next-to-plans">下一步：计划</button>
-            </div>
-            
-            <!-- 添加联系方式区域 -->
-            <div class="contact-section">
-                <h3 class="contact-title">需要帮助或咨询？</h3>
-                <p class="contact-description">如果您在制定奥德赛计划过程中遇到困难，或者想了解更多关于职业规划的信息，欢迎随时联系我们的人生设计教练。我们提供专业的一对一指导服务，帮助您更好地规划未来。</p>
-                <div class="contact-info">
-                    <div class="wechat-container">
-                        <span class="wechat-label">微信咨询：</span>
-                        <span class="wechat-id" id="wechat-id-resources">largewind</span>
-                        <button class="copy-btn" onclick="copyWechat('wechat-id-resources')">一键复制</button>
-                        <span class="copy-success" id="copy-success-resources">✓ 已复制</span>
-                    </div>
-                </div>
+                <button class="btn" id="next-to-plans">下一步：设计计划</button>
             </div>
         </div>
         
         <div id="plans" class="tab-content">
-            <h2>制定计划</h2>
-            <p class="intro">设计三种不同的人生路径，每一种都是可能的未来。</p>
+            <h2>设计三种5年计划</h2>
+            <p>为你的未来设计三种不同的可能性。</p>
             
             <div class="plan-cards">
                 <div class="plan-card plan-a">
-                    <h3>Plan A - 最现实路径</h3>
-                    <p class="form-hint">这是最可能实现的计划，基于你当前的资源和环境。</p>
-                    
+                    <h3>Plan A（最现实路径）</h3>
                     <div class="form-group">
-                        <label for="plan-a-title">标题</label>
-                        <input type="text" id="plan-a-title" placeholder="给这个计划起个名字">
-                        <div class="save-status" id="plan-a-title-status">未保存</div>
+                        <label for="plan-a-title">计划名称</label>
+                        <p class="form-hint">为你的计划起一个有意义的名称，它代表了这条路径的核心方向。</p>
+                        <input type="text" id="plan-a-title" placeholder="例如：职场晋升计划">
+                        <div class="save-status" id="plan-a-title-status"></div>
                     </div>
-                    
                     <div class="form-group">
                         <label for="plan-a-desc">5年后的状态</label>
-                        <textarea id="plan-a-desc" placeholder="描述5年后按照这个计划，你的生活会是什么样子..."></textarea>
-                        <div class="save-status" id="plan-a-desc-status">未保存</div>
+                        <p class="form-hint">描述5年后你希望达到的工作、生活和关系状态，越具体越好。</p>
+                        <textarea id="plan-a-desc" placeholder="工作、生活、人际关系..."></textarea>
+                        <div class="save-status" id="plan-a-desc-status"></div>
                     </div>
-                    
                     <div class="form-group">
                         <label for="plan-a-milestones">关键里程碑</label>
-                        <textarea id="plan-a-milestones" placeholder="列出实现这个计划的关键里程碑和时间节点..."></textarea>
-                        <div class="save-status" id="plan-a-milestones-status">未保存</div>
+                        <p class="form-hint">列出实现这个计划的关键节点，可以按年度或阶段划分。</p>
+                        <textarea id="plan-a-milestones" placeholder="每年目标..."></textarea>
+                        <div class="save-status" id="plan-a-milestones-status"></div>
                     </div>
                     
+                    <!-- 为Plan A添加评估仪表盘 -->
                     <div class="form-group">
-                        <label for="plan-a-resources">资源充足度 <span id="plan-a-resources-value">50%</span></label>
-                        <div class="progress-container">
-                            <input type="range" id="plan-a-resources" min="0" max="100" value="50">
-                            <div class="progress-bar" id="plan-a-resources-bar"><span class="progress-text">50%</span></div>
+                        <label>计划评估</label>
+                        <p class="form-hint">拖动滑块评估此计划的各个方面（0-100）</p>
+                        
+                        <div class="form-group">
+                            <label for="plan-a-resources">资源充足度</label>
+                            <input type="range" id="plan-a-resources" min="0" max="100" value="50" class="slider">
+                            <div class="progress-container">
+                                <div class="progress-bar" id="plan-a-resources-bar" style="width: 50%">
+                                    <span class="progress-text">50%</span>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="plan-a-excitement">喜欢程度 <span id="plan-a-excitement-value">50%</span></label>
-                        <div class="progress-container">
-                            <input type="range" id="plan-a-excitement" min="0" max="100" value="50">
-                            <div class="progress-bar" id="plan-a-excitement-bar"><span class="progress-text">50%</span></div>
+                        
+                        <div class="form-group">
+                            <label for="plan-a-excitement">喜欢程度</label>
+                            <input type="range" id="plan-a-excitement" min="0" max="100" value="50" class="slider">
+                            <div class="progress-container">
+                                <div class="progress-bar" id="plan-a-excitement-bar" style="width: 50%">
+                                    <span class="progress-text">50%</span>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="plan-a-confidence">自信程度 <span id="plan-a-confidence-value">50%</span></label>
-                        <div class="progress-container">
-                            <input type="range" id="plan-a-confidence" min="0" max="100" value="50">
-                            <div class="progress-bar" id="plan-a-confidence-bar"><span class="progress-text">50%</span></div>
+                        
+                        <div class="form-group">
+                            <label for="plan-a-confidence">自信心</label>
+                            <input type="range" id="plan-a-confidence" min="0" max="100" value="50" class="slider">
+                            <div class="progress-container">
+                                <div class="progress-bar" id="plan-a-confidence-bar" style="width: 50%">
+                                    <span class="progress-text">50%</span>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="plan-a-alignment">与价值观一致性 <span id="plan-a-alignment-value">50%</span></label>
-                        <div class="progress-container">
-                            <input type="range" id="plan-a-alignment" min="0" max="100" value="50">
-                            <div class="progress-bar" id="plan-a-alignment-bar"><span class="progress-text">50%</span></div>
+                        
+                        <div class="form-group">
+                            <label for="plan-a-alignment">一致性</label>
+                            <input type="range" id="plan-a-alignment" min="0" max="100" value="50" class="slider">
+                            <div class="progress-container">
+                                <div class="progress-bar" id="plan-a-alignment-bar" style="width: 50%">
+                                    <span class="progress-text">50%</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
                 
                 <div class="plan-card plan-b">
-                    <h3>Plan B - 替代方案</h3>
-                    <p class="form-hint">如果Plan A不可行，这是你的备选方案，可能需要一些调整或转变。</p>
-                    
+                    <h3>Plan B（替代方案）</h3>
                     <div class="form-group">
-                        <label for="plan-b-title">标题</label>
-                        <input type="text" id="plan-b-title" placeholder="给这个计划起个名字">
-                        <div class="save-status" id="plan-b-title-status">未保存</div>
+                        <label for="plan-b-title">计划名称</label>
+                        <p class="form-hint">为你的替代计划起一个有意义的名称，它代表了这条路径的核心方向。</p>
+                        <input type="text" id="plan-b-title" placeholder="例如：自由职业计划">
+                        <div class="save-status" id="plan-b-title-status"></div>
                     </div>
-                    
                     <div class="form-group">
                         <label for="plan-b-desc">5年后的状态</label>
-                        <textarea id="plan-b-desc" placeholder="描述5年后按照这个计划，你的生活会是什么样子..."></textarea>
-                        <div class="save-status" id="plan-b-desc-status">未保存</div>
+                        <p class="form-hint">描述5年后你希望达到的工作、生活和关系状态，越具体越好。</p>
+                        <textarea id="plan-b-desc" placeholder="工作、生活、人际关系..."></textarea>
+                        <div class="save-status" id="plan-b-desc-status"></div>
                     </div>
-                    
                     <div class="form-group">
                         <label for="plan-b-milestones">关键里程碑</label>
-                        <textarea id="plan-b-milestones" placeholder="列出实现这个计划的关键里程碑和时间节点..."></textarea>
-                        <div class="save-status" id="plan-b-milestones-status">未保存</div>
+                        <p class="form-hint">列出实现这个计划的关键节点，可以按年度或阶段划分。</p>
+                        <textarea id="plan-b-milestones" placeholder="每年目标..."></textarea>
+                        <div class="save-status" id="plan-b-milestones-status"></div>
                     </div>
                     
+                    <!-- 为Plan B添加评估仪表盘 -->
                     <div class="form-group">
-                        <label for="plan-b-resources">资源充足度 <span id="plan-b-resources-value">50%</span></label>
-                        <div class="progress-container">
-                            <input type="range" id="plan-b-resources" min="0" max="100" value="50">
-                            <div class="progress-bar" id="plan-b-resources-bar"><span class="progress-text">50%</span></div>
+                        <label>计划评估</label>
+                        <p class="form-hint">拖动滑块评估此计划的各个方面（0-100）</p>
+                        
+                        <div class="form-group">
+                            <label for="plan-b-resources">资源充足度</label>
+                            <input type="range" id="plan-b-resources" min="0" max="100" value="50" class="slider">
+                            <div class="progress-container">
+                                <div class="progress-bar" id="plan-b-resources-bar" style="width: 50%">
+                                    <span class="progress-text">50%</span>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="plan-b-excitement">喜欢程度 <span id="plan-b-excitement-value">50%</span></label>
-                        <div class="progress-container">
-                            <input type="range" id="plan-b-excitement" min="0" max="100" value="50">
-                            <div class="progress-bar" id="plan-b-excitement-bar"><span class="progress-text">50%</span></div>
+                        
+                        <div class="form-group">
+                            <label for="plan-b-excitement">喜欢程度</label>
+                            <input type="range" id="plan-b-excitement" min="0" max="100" value="50" class="slider">
+                            <div class="progress-container">
+                                <div class="progress-bar" id="plan-b-excitement-bar" style="width: 50%">
+                                    <span class="progress-text">50%</span>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="plan-b-confidence">自信程度 <span id="plan-b-confidence-value">50%</span></label>
-                        <div class="progress-container">
-                            <input type="range" id="plan-b-confidence" min="0" max="100" value="50">
-                            <div class="progress-bar" id="plan-b-confidence-bar"><span class="progress-text">50%</span></div>
+                        
+                        <div class="form-group">
+                            <label for="plan-b-confidence">自信心</label>
+                            <input type="range" id="plan-b-confidence" min="0" max="100" value="50" class="slider">
+                            <div class="progress-container">
+                                <div class="progress-bar" id="plan-b-confidence-bar" style="width: 50%">
+                                    <span class="progress-text">50%</span>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="plan-b-alignment">与价值观一致性 <span id="plan-b-alignment-value">50%</span></label>
-                        <div class="progress-container">
-                            <input type="range" id="plan-b-alignment" min="0" max="100" value="50">
-                            <div class="progress-bar" id="plan-b-alignment-bar"><span class="progress-text">50%</span></div>
+                        
+                        <div class="form-group">
+                            <label for="plan-b-alignment">一致性</label>
+                            <input type="range" id="plan-b-alignment" min="0" max="100" value="50" class="slider">
+                            <div class="progress-container">
+                                <div class="progress-bar" id="plan-b-alignment-bar" style="width: 50%">
+                                    <span class="progress-text">50%</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
                 
                 <div class="plan-card plan-c">
-                    <h3>Plan C - 理想生活</h3>
-                    <p class="form-hint">这是你最理想的生活方式，不考虑任何限制，完全根据内心渴望设计。</p>
-                    
+                    <h3>Plan C（理想生活）</h3>
                     <div class="form-group">
-                        <label for="plan-c-title">标题</label>
-                        <input type="text" id="plan-c-title" placeholder="给这个计划起个名字">
-                        <div class="save-status" id="plan-c-title-status">未保存</div>
+                        <label for="plan-c-title">计划名称</label>
+                        <p class="form-hint">为你的理想计划起一个有意义的名称，它代表了这条路径的核心方向。</p>
+                        <input type="text" id="plan-c-title" placeholder="例如：数字游民计划">
+                        <div class="save-status" id="plan-c-title-status"></div>
                     </div>
-                    
                     <div class="form-group">
                         <label for="plan-c-desc">5年后的状态</label>
-                        <textarea id="plan-c-desc" placeholder="描述5年后按照这个计划，你的生活会是什么样子..."></textarea>
-                        <div class="save-status" id="plan-c-desc-status">未保存</div>
+                        <p class="form-hint">描述5年后你希望达到的工作、生活和关系状态，越具体越好。</p>
+                        <textarea id="plan-c-desc" placeholder="工作、生活、人际关系..."></textarea>
+                        <div class="save-status" id="plan-c-desc-status"></div>
                     </div>
-                    
                     <div class="form-group">
                         <label for="plan-c-milestones">关键里程碑</label>
-                        <textarea id="plan-c-milestones" placeholder="列出实现这个计划的关键里程碑和时间节点..."></textarea>
-                        <div class="save-status" id="plan-c-milestones-status">未保存</div>
+                        <p class="form-hint">列出实现这个计划的关键节点，可以按年度或阶段划分。</p>
+                        <textarea id="plan-c-milestones" placeholder="每年目标..."></textarea>
+                        <div class="save-status" id="plan-c-milestones-status"></div>
                     </div>
                     
+                    <!-- 为Plan C添加评估仪表盘 -->
                     <div class="form-group">
-                        <label for="plan-c-resources">资源充足度 <span id="plan-c-resources-value">50%</span></label>
-                        <div class="progress-container">
-                            <input type="range" id="plan-c-resources" min="0" max="100" value="50">
-                            <div class="progress-bar" id="plan-c-resources-bar"><span class="progress-text">50%</span></div>
+                        <label>计划评估</label>
+                        <p class="form-hint">拖动滑块评估此计划的各个方面（0-100）</p>
+                        
+                        <div class="form-group">
+                            <label for="plan-c-resources">资源充足度</label>
+                            <input type="range" id="plan-c-resources" min="0" max="100" value="50" class="slider">
+                            <div class="progress-container">
+                                <div class="progress-bar" id="plan-c-resources-bar" style="width: 50%">
+                                    <span class="progress-text">50%</span>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="plan-c-excitement">喜欢程度 <span id="plan-c-excitement-value">50%</span></label>
-                        <div class="progress-container">
-                            <input type="range" id="plan-c-excitement" min="0" max="100" value="50">
-                            <div class="progress-bar" id="plan-c-excitement-bar"><span class="progress-text">50%</span></div>
+                        
+                        <div class="form-group">
+                            <label for="plan-c-excitement">喜欢程度</label>
+                            <input type="range" id="plan-c-excitement" min="0" max="100" value="50" class="slider">
+                            <div class="progress-container">
+                                <div class="progress-bar" id="plan-c-excitement-bar" style="width: 50%">
+                                    <span class="progress-text">50%</span>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="plan-c-confidence">自信程度 <span id="plan-c-confidence-value">50%</span></label>
-                        <div class="progress-container">
-                            <input type="range" id="plan-c-confidence" min="0" max="100" value="50">
-                            <div class="progress-bar" id="plan-c-confidence-bar"><span class="progress-text">50%</span></div>
+                        
+                        <div class="form-group">
+                            <label for="plan-c-confidence">自信心</label>
+                            <input type="range" id="plan-c-confidence" min="0" max="100" value="50" class="slider">
+                            <div class="progress-container">
+                                <div class="progress-bar" id="plan-c-confidence-bar" style="width: 50%">
+                                    <span class="progress-text">50%</span>
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                    
-                    <div class="form-group">
-                        <label for="plan-c-alignment">与价值观一致性 <span id="plan-c-alignment-value">50%</span></label>
-                        <div class="progress-container">
-                            <input type="range" id="plan-c-alignment" min="0" max="100" value="50">
-                            <div class="progress-bar" id="plan-c-alignment-bar"><span class="progress-text">50%</span></div>
+                        
+                        <div class="form-group">
+                            <label for="plan-c-alignment">一致性</label>
+                            <input type="range" id="plan-c-alignment" min="0" max="100" value="50" class="slider">
+                            <div class="progress-container">
+                                <div class="progress-bar" id="plan-c-alignment-bar" style="width: 50%">
+                                    <span class="progress-text">50%</span>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
             
             <div class="btn-group">
-                <button class="btn btn-secondary" id="back-to-resources">返回资源盘点</button>
-                <button class="btn" id="next-to-evaluation">下一步：评估</button>
-            </div>
-            
-            <!-- 添加联系方式区域 -->
-            <div class="contact-section">
-                <h3 class="contact-title">遇到规划困难？获取专业指导</h3>
-                <p class="contact-description">制定三种计划并不容易，尤其是在面临人生转折点时。我们的人生设计教练可以帮助您突破思维局限，探索更多可能性，并提供专业的建议和反馈。</p>
-                <div class="contact-info">
-                    <div class="wechat-container">
-                        <span class="wechat-label">微信咨询：</span>
-                        <span class="wechat-id" id="wechat-id-plans">largewind</span>
-                        <button class="copy-btn" onclick="copyWechat('wechat-id-plans')">一键复制</button>
-                        <span class="copy-success" id="copy-success-plans">✓ 已复制</span>
-                    </div>
-                </div>
+                <button class="btn btn-secondary" id="back-to-resources">上一步</button>
+                <button class="btn" id="next-to-evaluation">下一步：评估选择</button>
             </div>
         </div>
         
         <div id="evaluation" class="tab-content">
-            <h2>评估与行动</h2>
-            <p class="intro">分析三个计划，确定最佳路径并制定具体行动步骤。</p>
+            <h2>评估与选择</h2>
+            <p>分析每个计划的可行性和吸引力。</p>
             
             <div class="form-group">
-                <label for="exciting-plan">最令你兴奋的计划</label>
-                <p class="form-hint">哪个计划最能激发你的热情和动力？</p>
-                <select id="exciting-plan">
+                <label for="exciting-plan">哪个计划让你最兴奋？</label>
+                <p class="form-hint">选择让你最有激情和动力去实现的计划。</p>
+                <select id="exciting-plan" class="form-control">
                     <option value="">-- 请选择 --</option>
-                    <option value="plan-a">Plan A - 最现实路径</option>
-                    <option value="plan-b">Plan B - 替代方案</option>
-                    <option value="plan-c">Plan C - 理想生活</option>
+                    <option value="plan-a">Plan A</option>
+                    <option value="plan-b">Plan B</option>
+                    <option value="plan-c">Plan C</option>
                 </select>
-                <div class="save-status" id="exciting-plan-status">未保存</div>
+                <div class="save-status" id="exciting-plan-status"></div>
             </div>
             
             <div class="form-group">
                 <label for="feasibility">可行性分析</label>
-                <p class="form-hint">分析选择的计划优缺点、潜在障碍和如何克服。</p>
-                <textarea id="feasibility" placeholder="分析该计划的优势、挑战和可行性..."></textarea>
-                <div class="save-status" id="feasibility-status">未保存</div>
+                <p class="form-hint">详细分析各计划所需资源、可能的风险以及如何应对这些挑战。</p>
+                <textarea id="feasibility" placeholder="每个计划需要哪些资源？可能的风险？如何应对？"></textarea>
+                <div class="save-status" id="feasibility-status"></div>
             </div>
             
             <div class="form-group">
-                <label for="action-steps">行动计划</label>
-                <p class="form-hint">列出具体的行动步骤，包括时间表和里程碑。</p>
-                <textarea id="action-steps" placeholder="列出未来3-6个月内的具体行动步骤..."></textarea>
-                <div class="save-status" id="action-steps-status">未保存</div>
+                <label for="action-steps">接下来3个月可以采取的行动</label>
+                <p class="form-hint">列出具体、可执行的小步骤，帮助你开始行动并获得反馈。</p>
+                <textarea id="action-steps" placeholder="小步试错的行动步骤..."></textarea>
+                <div class="save-status" id="action-steps-status"></div>
             </div>
             
             <div class="btn-group">
-                <button class="btn btn-secondary" id="back-to-plans">返回计划</button>
-                <button class="btn" id="generate-results">生成结果</button>
-            </div>
-            
-            <!-- 添加联系方式区域 -->
-            <div class="contact-section">
-                <h3 class="contact-title">需要专业的评估与建议？</h3>
-                <p class="contact-description">选择最佳路径并不总是那么容易。我们的人生设计教练可以帮助您客观评估每个计划的可行性，分析潜在风险，并提供专业的行动建议，确保您走上最适合自己的道路。</p>
-                <div class="contact-info">
-                    <div class="wechat-container">
-                        <span class="wechat-label">微信咨询：</span>
-                        <span class="wechat-id" id="wechat-id-evaluation">largewind</span>
-                        <button class="copy-btn" onclick="copyWechat('wechat-id-evaluation')">一键复制</button>
-                        <span class="copy-success" id="copy-success-evaluation">✓ 已复制</span>
-                    </div>
-                </div>
+                <button class="btn btn-secondary" id="back-to-plans">上一步</button>
+                <button class="btn" id="generate-results">生成我的奥德赛计划</button>
             </div>
         </div>
         
         <div id="results" class="tab-content">
-            <h2>生成结果</h2>
+            <h2>你的奥德赛计划</h2>
+            <p>以下是为你生成的三种未来可能性。</p>
             
             <div class="result-card">
                 <h3>资源盘点</h3>
@@ -1059,97 +900,86 @@
             </div>
             
             <div class="result-card plan-a-card">
-                <h3 id="plan-a-result-title">Plan A - 最现实路径</h3>
+                <h3 id="plan-a-result-title">Plan A</h3>
                 <div id="plan-a-result"></div>
+                <div class="plan-gauges">
+                    <div class="plan-gauge-container">
+                        <img src="https://quickchart.io/gauge?value=50&max=100&theme=light&width=120&height=80&label=资源" alt="资源充足度仪表盘" class="plan-gauge" id="plan-a-resources-gauge">
+                        <div class="plan-gauge-title" id="plan-a-resources-value">资源: 50%</div>
+                    </div>
+                    <div class="plan-gauge-container">
+                        <img src="https://quickchart.io/gauge?value=50&max=100&theme=light&width=120&height=80&label=喜欢程度" alt="喜欢程度仪表盘" class="plan-gauge" id="plan-a-excitement-gauge">
+                        <div class="plan-gauge-title" id="plan-a-excitement-value">喜欢: 50%</div>
+                    </div>
+                    <div class="plan-gauge-container">
+                        <img src="https://quickchart.io/gauge?value=50&max=100&theme=light&width=120&height=80&label=自信心" alt="自信心仪表盘" class="plan-gauge" id="plan-a-confidence-gauge">
+                        <div class="plan-gauge-title" id="plan-a-confidence-value">自信: 50%</div>
+                    </div>
+                    <div class="plan-gauge-container">
+                        <img src="https://quickchart.io/gauge?value=50&max=100&theme=light&width=120&height=80&label=一致性" alt="一致性仪表盘" class="plan-gauge" id="plan-a-alignment-gauge">
+                        <div class="plan-gauge-title" id="plan-a-alignment-value">一致: 50%</div>
+                    </div>
+                </div>
             </div>
             
             <div class="result-card plan-b-card">
-                <h3 id="plan-b-result-title">Plan B - 替代方案</h3>
+                <h3 id="plan-b-result-title">Plan B</h3>
                 <div id="plan-b-result"></div>
+                <div class="plan-gauges">
+                    <div class="plan-gauge-container">
+                        <img src="https://quickchart.io/gauge?value=50&max=100&theme=light&width=120&height=80&label=资源" alt="资源充足度仪表盘" class="plan-gauge" id="plan-b-resources-gauge">
+                        <div class="plan-gauge-title" id="plan-b-resources-value">资源: 50%</div>
+                    </div>
+                    <div class="plan-gauge-container">
+                        <img src="https://quickchart.io/gauge?value=50&max=100&theme=light&width=120&height=80&label=喜欢程度" alt="喜欢程度仪表盘" class="plan-gauge" id="plan-b-excitement-gauge">
+                        <div class="plan-gauge-title" id="plan-b-excitement-value">喜欢: 50%</div>
+                    </div>
+                    <div class="plan-gauge-container">
+                        <img src="https://quickchart.io/gauge?value=50&max=100&theme=light&width=120&height=80&label=自信心" alt="自信心仪表盘" class="plan-gauge" id="plan-b-confidence-gauge">
+                        <div class="plan-gauge-title" id="plan-b-confidence-value">自信: 50%</div>
+                    </div>
+                    <div class="plan-gauge-container">
+                        <img src="https://quickchart.io/gauge?value=50&max=100&theme=light&width=120&height=80&label=一致性" alt="一致性仪表盘" class="plan-gauge" id="plan-b-alignment-gauge">
+                        <div class="plan-gauge-title" id="plan-b-alignment-value">一致: 50%</div>
+                    </div>
+                </div>
             </div>
             
             <div class="result-card plan-c-card">
-                <h3 id="plan-c-result-title">Plan C - 理想生活</h3>
+                <h3 id="plan-c-result-title">Plan C</h3>
                 <div id="plan-c-result"></div>
+                <div class="plan-gauges">
+                    <div class="plan-gauge-container">
+                        <img src="https://quickchart.io/gauge?value=50&max=100&theme=light&width=120&height=80&label=资源" alt="资源充足度仪表盘" class="plan-gauge" id="plan-c-resources-gauge">
+                        <div class="plan-gauge-title" id="plan-c-resources-value">资源: 50%</div>
+                    </div>
+                    <div class="plan-gauge-container">
+                        <img src="https://quickchart.io/gauge?value=50&max=100&theme=light&width=120&height=80&label=喜欢程度" alt="喜欢程度仪表盘" class="plan-gauge" id="plan-c-excitement-gauge">
+                        <div class="plan-gauge-title" id="plan-c-excitement-value">喜欢: 50%</div>
+                    </div>
+                    <div class="plan-gauge-container">
+                        <img src="https://quickchart.io/gauge?value=50&max=100&theme=light&width=120&height=80&label=自信心" alt="自信心仪表盘" class="plan-gauge" id="plan-c-confidence-gauge">
+                        <div class="plan-gauge-title" id="plan-c-confidence-value">自信: 50%</div>
+                    </div>
+                    <div class="plan-gauge-container">
+                        <img src="https://quickchart.io/gauge?value=50&max=100&theme=light&width=120&height=80&label=一致性" alt="一致性仪表盘" class="plan-gauge" id="plan-c-alignment-gauge">
+                        <div class="plan-gauge-title" id="plan-c-alignment-value">一致: 50%</div>
+                    </div>
+                </div>
             </div>
             
             <div class="result-card">
-                <h3>评估结果</h3>
+                <h3>评估与行动计划</h3>
                 <div id="evaluation-result"></div>
             </div>
             
             <div class="btn-group">
-                <button class="btn btn-secondary" id="back-to-evaluation">返回评估</button>
+                <button class="btn btn-secondary" id="back-to-evaluation">上一步</button>
                 <button class="btn" id="export-pdf">导出图片</button>
-            </div>
-            
-            <!-- 添加联系方式区域 -->
-            <div class="contact-section">
-                <h3 class="contact-title">想要更详细的个人职业规划？</h3>
-                <p class="contact-description">恭喜您完成了奥德赛计划！如果您想获得更深入的个性化指导，我们的人生设计教练可以提供一对一咨询服务，帮助您进一步细化行动计划，并在实施过程中提供持续支持和调整建议。</p>
-                <div class="contact-info">
-                    <div class="wechat-container">
-                        <span class="wechat-label">微信咨询：</span>
-                        <span class="wechat-id" id="wechat-id-results">largewind</span>
-                        <button class="copy-btn" onclick="copyWechat('wechat-id-results')">一键复制</button>
-                        <span class="copy-success" id="copy-success-results">✓ 已复制</span>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
-    
-    <!-- 浮动联系方式 -->
-    <div class="floating-contact">
-        <span class="wechat-label">微信咨询：</span>
-        <span class="wechat-id">largewind</span>
-    </div>
-    
+
     <script src="script.js"></script>
-    
-    <!-- 添加复制功能的脚本 -->
-    <script>
-        function copyWechat(elementId) {
-            const wechatId = document.getElementById(elementId).textContent;
-            const successId = 'copy-success-' + elementId.split('-').pop();
-            const copySuccess = document.getElementById(successId);
-            
-            // 创建一个临时输入框来实现复制功能
-            const tempInput = document.createElement('input');
-            tempInput.value = wechatId;
-            document.body.appendChild(tempInput);
-            tempInput.select();
-            document.execCommand('copy');
-            document.body.removeChild(tempInput);
-            
-            // 显示复制成功提示
-            copySuccess.classList.add('show');
-            setTimeout(() => {
-                copySuccess.classList.remove('show');
-            }, 2000);
-        }
-        
-        // 浮动联系方式点击自动复制
-        document.addEventListener('DOMContentLoaded', function() {
-            const floatingContact = document.querySelector('.floating-contact');
-            floatingContact.addEventListener('click', function() {
-                const wechatId = this.querySelector('.wechat-id').textContent;
-                
-                const tempInput = document.createElement('input');
-                tempInput.value = wechatId;
-                document.body.appendChild(tempInput);
-                tempInput.select();
-                document.execCommand('copy');
-                document.body.removeChild(tempInput);
-                
-                // 显示复制成功的视觉反馈
-                const originalText = this.innerHTML;
-                this.innerHTML = '<span style="color: #28a745;">✓ 微信号已复制</span>';
-                setTimeout(() => {
-                    this.innerHTML = originalText;
-                }, 2000);
-            });
-        });
-    </script>
 </body>
 </html>
