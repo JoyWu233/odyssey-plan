@@ -386,16 +386,33 @@ function generateResults() {
         </div>
     `;
     
-    // 更新计划A的水平仪表盘
+    // 更新计划A的水平仪表盘，确保值只显示一次，且保持颜色一致性
     document.getElementById('plan-a-resources-display').textContent = planAResources + '%';
     let resourcesBar = document.getElementById('plan-a-resources-progress');
     resourcesBar.parentNode.removeChild(resourcesBar);
     resourcesBar = document.createElement('div');
     resourcesBar.className = 'progress-bar resource-progress-bar';
     resourcesBar.id = 'plan-a-resources-progress';
-    resourcesBar.style.width = planAResources + '%';
+    resourcesBar.style.width = Math.max(planAResources, 5) + '%'; // 确保小于5%的值也有显示宽度
     resourcesBar.style.backgroundColor = '#4361ee'; // 直接设置A计划蓝色
-    document.querySelector('.plan-a-metrics .resource-metric .progress').appendChild(resourcesBar);
+    resourcesBar.style.color = '#ffffff'; // 确保文字可见
+    resourcesBar.style.minWidth = '40px'; // 确保小值时有足够宽度显示百分比
+    if (planAResources < 20) {
+        // 对于小百分比值，不在进度条内显示，而是在右侧显示
+        resourcesBar.innerHTML = '';
+        let container = document.querySelector('.plan-a-metrics .resource-metric .progress');
+        container.appendChild(resourcesBar);
+        // 添加一个额外的文字标记
+        let textSpan = document.createElement('span');
+        textSpan.style.marginLeft = '5px';
+        textSpan.style.color = '#4361ee';
+        textSpan.style.fontWeight = 'bold';
+        textSpan.textContent = planAResources + '%';
+        container.appendChild(textSpan);
+    } else {
+        resourcesBar.innerHTML = `<span class="progress-text">${planAResources}%</span>`;
+        document.querySelector('.plan-a-metrics .resource-metric .progress').appendChild(resourcesBar);
+    }
 
     document.getElementById('plan-a-excitement-display').textContent = planAExcitement + '%';
     let excitementBar = document.getElementById('plan-a-excitement-progress');
@@ -403,9 +420,26 @@ function generateResults() {
     excitementBar = document.createElement('div');
     excitementBar.className = 'progress-bar excitement-progress-bar';
     excitementBar.id = 'plan-a-excitement-progress';
-    excitementBar.style.width = planAExcitement + '%';
+    excitementBar.style.width = Math.max(planAExcitement, 5) + '%'; // 确保小于5%的值也有显示宽度
     excitementBar.style.backgroundColor = '#4361ee'; // 直接设置A计划蓝色
-    document.querySelector('.plan-a-metrics .excitement-metric .progress').appendChild(excitementBar);
+    excitementBar.style.color = '#ffffff'; // 确保文字可见
+    excitementBar.style.minWidth = '40px'; // 确保小值时有足够宽度显示百分比
+    if (planAExcitement < 20) {
+        // 对于小百分比值，不在进度条内显示，而是在右侧显示
+        excitementBar.innerHTML = '';
+        let container = document.querySelector('.plan-a-metrics .excitement-metric .progress');
+        container.appendChild(excitementBar);
+        // 添加一个额外的文字标记
+        let textSpan = document.createElement('span');
+        textSpan.style.marginLeft = '5px';
+        textSpan.style.color = '#4361ee';
+        textSpan.style.fontWeight = 'bold';
+        textSpan.textContent = planAExcitement + '%';
+        container.appendChild(textSpan);
+    } else {
+        excitementBar.innerHTML = `<span class="progress-text">${planAExcitement}%</span>`;
+        document.querySelector('.plan-a-metrics .excitement-metric .progress').appendChild(excitementBar);
+    }
 
     document.getElementById('plan-a-confidence-display').textContent = planAConfidence + '%';
     let confidenceBar = document.getElementById('plan-a-confidence-progress');
@@ -413,9 +447,26 @@ function generateResults() {
     confidenceBar = document.createElement('div');
     confidenceBar.className = 'progress-bar confidence-progress-bar';
     confidenceBar.id = 'plan-a-confidence-progress';
-    confidenceBar.style.width = planAConfidence + '%';
+    confidenceBar.style.width = Math.max(planAConfidence, 5) + '%'; // 确保小于5%的值也有显示宽度
     confidenceBar.style.backgroundColor = '#4361ee'; // 直接设置A计划蓝色
-    document.querySelector('.plan-a-metrics .confidence-metric .progress').appendChild(confidenceBar);
+    confidenceBar.style.color = '#ffffff'; // 确保文字可见
+    confidenceBar.style.minWidth = '40px'; // 确保小值时有足够宽度显示百分比
+    if (planAConfidence < 20) {
+        // 对于小百分比值，不在进度条内显示，而是在右侧显示
+        confidenceBar.innerHTML = '';
+        let container = document.querySelector('.plan-a-metrics .confidence-metric .progress');
+        container.appendChild(confidenceBar);
+        // 添加一个额外的文字标记
+        let textSpan = document.createElement('span');
+        textSpan.style.marginLeft = '5px';
+        textSpan.style.color = '#4361ee';
+        textSpan.style.fontWeight = 'bold';
+        textSpan.textContent = planAConfidence + '%';
+        container.appendChild(textSpan);
+    } else {
+        confidenceBar.innerHTML = `<span class="progress-text">${planAConfidence}%</span>`;
+        document.querySelector('.plan-a-metrics .confidence-metric .progress').appendChild(confidenceBar);
+    }
 
     document.getElementById('plan-a-alignment-display').textContent = planAAlignment + '%';
     let alignmentBar = document.getElementById('plan-a-alignment-progress');
@@ -423,9 +474,26 @@ function generateResults() {
     alignmentBar = document.createElement('div');
     alignmentBar.className = 'progress-bar alignment-progress-bar';
     alignmentBar.id = 'plan-a-alignment-progress';
-    alignmentBar.style.width = planAAlignment + '%';
+    alignmentBar.style.width = Math.max(planAAlignment, 5) + '%'; // 确保小于5%的值也有显示宽度
     alignmentBar.style.backgroundColor = '#4361ee'; // 直接设置A计划蓝色
-    document.querySelector('.plan-a-metrics .alignment-metric .progress').appendChild(alignmentBar);
+    alignmentBar.style.color = '#ffffff'; // 确保文字可见
+    alignmentBar.style.minWidth = '40px'; // 确保小值时有足够宽度显示百分比
+    if (planAAlignment < 20) {
+        // 对于小百分比值，不在进度条内显示，而是在右侧显示
+        alignmentBar.innerHTML = '';
+        let container = document.querySelector('.plan-a-metrics .alignment-metric .progress');
+        container.appendChild(alignmentBar);
+        // 添加一个额外的文字标记
+        let textSpan = document.createElement('span');
+        textSpan.style.marginLeft = '5px';
+        textSpan.style.color = '#4361ee';
+        textSpan.style.fontWeight = 'bold';
+        textSpan.textContent = planAAlignment + '%';
+        container.appendChild(textSpan);
+    } else {
+        alignmentBar.innerHTML = `<span class="progress-text">${planAAlignment}%</span>`;
+        document.querySelector('.plan-a-metrics .alignment-metric .progress').appendChild(alignmentBar);
+    }
     
     // 更新计划B结果
     const planBDesc = formElements['plan-b-desc'].value || '【未填写】';
@@ -1098,39 +1166,47 @@ function generateMetricHTML(label, value, planType) {
         mainColor = '#f72585'; // Plan C的粉色
     }
     
-    // 使用水平进度条样式，标签和数值在同一行，一律使用计划的标准颜色
+    // 确保百分比值在导出图片中正确显示
+    // 对于小值，确保有足够的显示空间
+    const displayWidth = Math.max(value, 5) + '%';
+    const shouldShowOutside = value < 20; // 小于20%的值显示在进度条外部
+    
+    // 使用flexbox布局，使标签和值在同一行
     return `
-        <div style="width: 23%; text-align: center;">
+        <div style="
+            flex: 1;
+            margin: 0 5px;
+            text-align: left;
+        ">
             <div style="
                 display: flex;
                 justify-content: space-between;
                 align-items: center;
                 margin-bottom: 5px;
             ">
-                <div style="
-                    font-size: 14px;
-                    font-weight: bold;
-                    color: #333;
-                ">${label}</div>
-                <div style="
-                    font-size: 16px;
+                <span style="
                     font-weight: bold;
                     color: ${mainColor};
-                ">${value}%</div>
+                    margin-right: 5px;
+                ">${label}</span>
+                <span style="
+                    font-weight: bold;
+                    color: ${mainColor};
+                ">${value}%</span>
             </div>
             <div style="
-                background: #e9ecef;
-                border-radius: 20px;
-                height: 16px;
-                position: relative;
+                background-color: #e9ecef;
+                border-radius: 4px;
+                height: 8px;
                 overflow: hidden;
-                box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+                position: relative;
             ">
                 <div style="
-                    background: ${mainColor};
-                    width: ${value}%;
+                    background-color: ${mainColor};
                     height: 100%;
-                    border-radius: 20px;
+                    width: ${displayWidth};
+                    border-radius: 4px;
+                    position: relative;
                 "></div>
             </div>
         </div>
