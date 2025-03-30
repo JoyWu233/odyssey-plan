@@ -38,4 +38,4 @@
 
 ## 在线访问
 
-访问 [https://[你的GitHub用户名].github.io/odyssey-plan](https://[你的GitHub用户名].github.io/odyssey-plan) 即可使用应用。 
+访问 [https://JoyWu233.github.io/odyssey-plan](https://JoyWu233.github.io/odyssey-plan) 即可使用应用。
