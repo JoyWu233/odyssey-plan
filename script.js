@@ -361,21 +361,31 @@ function generateResults() {
         </div>
         <div class="result-section">
             <h4>计划评估</h4>
-            <div class="gauge-row">
-                <div class="gauge-label">资源:</div>
-                <div class="gauge-indicator" style="width: ${planAResources}%"><span>${planAResources}%</span></div>
-            </div>
-            <div class="gauge-row">
-                <div class="gauge-label">喜欢:</div>
-                <div class="gauge-indicator" style="width: ${planAExcitement}%"><span>${planAExcitement}%</span></div>
-            </div>
-            <div class="gauge-row">
-                <div class="gauge-label">自信:</div>
-                <div class="gauge-indicator" style="width: ${planAConfidence}%"><span>${planAConfidence}%</span></div>
-            </div>
-            <div class="gauge-row">
-                <div class="gauge-label">一致:</div>
-                <div class="gauge-indicator" style="width: ${planAAlignment}%"><span>${planAAlignment}%</span></div>
+            <div class="gauge-container">
+                <div class="gauge-row">
+                    <div class="gauge-label">资源:</div>
+                    <div class="gauge-wrap">
+                        <div class="gauge-indicator" style="width: ${planAResources}%"><span>${planAResources}%</span></div>
+                    </div>
+                </div>
+                <div class="gauge-row">
+                    <div class="gauge-label">喜欢:</div>
+                    <div class="gauge-wrap">
+                        <div class="gauge-indicator" style="width: ${planAExcitement}%"><span>${planAExcitement}%</span></div>
+                    </div>
+                </div>
+                <div class="gauge-row">
+                    <div class="gauge-label">自信:</div>
+                    <div class="gauge-wrap">
+                        <div class="gauge-indicator" style="width: ${planAConfidence}%"><span>${planAConfidence}%</span></div>
+                    </div>
+                </div>
+                <div class="gauge-row">
+                    <div class="gauge-label">一致:</div>
+                    <div class="gauge-wrap">
+                        <div class="gauge-indicator" style="width: ${planAAlignment}%"><span>${planAAlignment}%</span></div>
+                    </div>
+                </div>
             </div>
         </div>
     `;
@@ -400,21 +410,31 @@ function generateResults() {
         </div>
         <div class="result-section">
             <h4>计划评估</h4>
-            <div class="gauge-row">
-                <div class="gauge-label">资源:</div>
-                <div class="gauge-indicator" style="width: ${planBResources}%"><span>${planBResources}%</span></div>
-            </div>
-            <div class="gauge-row">
-                <div class="gauge-label">喜欢:</div>
-                <div class="gauge-indicator" style="width: ${planBExcitement}%"><span>${planBExcitement}%</span></div>
-            </div>
-            <div class="gauge-row">
-                <div class="gauge-label">自信:</div>
-                <div class="gauge-indicator" style="width: ${planBConfidence}%"><span>${planBConfidence}%</span></div>
-            </div>
-            <div class="gauge-row">
-                <div class="gauge-label">一致:</div>
-                <div class="gauge-indicator" style="width: ${planBAlignment}%"><span>${planBAlignment}%</span></div>
+            <div class="gauge-container">
+                <div class="gauge-row">
+                    <div class="gauge-label">资源:</div>
+                    <div class="gauge-wrap">
+                        <div class="gauge-indicator" style="width: ${planBResources}%"><span>${planBResources}%</span></div>
+                    </div>
+                </div>
+                <div class="gauge-row">
+                    <div class="gauge-label">喜欢:</div>
+                    <div class="gauge-wrap">
+                        <div class="gauge-indicator" style="width: ${planBExcitement}%"><span>${planBExcitement}%</span></div>
+                    </div>
+                </div>
+                <div class="gauge-row">
+                    <div class="gauge-label">自信:</div>
+                    <div class="gauge-wrap">
+                        <div class="gauge-indicator" style="width: ${planBConfidence}%"><span>${planBConfidence}%</span></div>
+                    </div>
+                </div>
+                <div class="gauge-row">
+                    <div class="gauge-label">一致:</div>
+                    <div class="gauge-wrap">
+                        <div class="gauge-indicator" style="width: ${planBAlignment}%"><span>${planBAlignment}%</span></div>
+                    </div>
+                </div>
             </div>
         </div>
     `;
@@ -439,21 +459,31 @@ function generateResults() {
         </div>
         <div class="result-section">
             <h4>计划评估</h4>
-            <div class="gauge-row">
-                <div class="gauge-label">资源:</div>
-                <div class="gauge-indicator" style="width: ${planCResources}%"><span>${planCResources}%</span></div>
-            </div>
-            <div class="gauge-row">
-                <div class="gauge-label">喜欢:</div>
-                <div class="gauge-indicator" style="width: ${planCExcitement}%"><span>${planCExcitement}%</span></div>
-            </div>
-            <div class="gauge-row">
-                <div class="gauge-label">自信:</div>
-                <div class="gauge-indicator" style="width: ${planCConfidence}%"><span>${planCConfidence}%</span></div>
-            </div>
-            <div class="gauge-row">
-                <div class="gauge-label">一致:</div>
-                <div class="gauge-indicator" style="width: ${planCAlignment}%"><span>${planCAlignment}%</span></div>
+            <div class="gauge-container">
+                <div class="gauge-row">
+                    <div class="gauge-label">资源:</div>
+                    <div class="gauge-wrap">
+                        <div class="gauge-indicator" style="width: ${planCResources}%"><span>${planCResources}%</span></div>
+                    </div>
+                </div>
+                <div class="gauge-row">
+                    <div class="gauge-label">喜欢:</div>
+                    <div class="gauge-wrap">
+                        <div class="gauge-indicator" style="width: ${planCExcitement}%"><span>${planCExcitement}%</span></div>
+                    </div>
+                </div>
+                <div class="gauge-row">
+                    <div class="gauge-label">自信:</div>
+                    <div class="gauge-wrap">
+                        <div class="gauge-indicator" style="width: ${planCConfidence}%"><span>${planCConfidence}%</span></div>
+                    </div>
+                </div>
+                <div class="gauge-row">
+                    <div class="gauge-label">一致:</div>
+                    <div class="gauge-wrap">
+                        <div class="gauge-indicator" style="width: ${planCAlignment}%"><span>${planCAlignment}%</span></div>
+                    </div>
+                </div>
             </div>
         </div>
     `;
