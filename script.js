@@ -366,7 +366,7 @@ function generateResults() {
     let resourcesBar = document.getElementById('plan-a-resources-progress');
     resourcesBar.parentNode.removeChild(resourcesBar);
     resourcesBar = document.createElement('div');
-    resourcesBar.className = 'progress-bar';
+    resourcesBar.className = 'progress-bar resource-progress-bar';
     resourcesBar.id = 'plan-a-resources-progress';
     resourcesBar.style.width = planAResources + '%';
     document.querySelector('.plan-a-metrics .resource-metric .progress').appendChild(resourcesBar);
@@ -375,7 +375,7 @@ function generateResults() {
     let excitementBar = document.getElementById('plan-a-excitement-progress');
     excitementBar.parentNode.removeChild(excitementBar);
     excitementBar = document.createElement('div');
-    excitementBar.className = 'progress-bar';
+    excitementBar.className = 'progress-bar excitement-progress-bar';
     excitementBar.id = 'plan-a-excitement-progress';
     excitementBar.style.width = planAExcitement + '%';
     document.querySelector('.plan-a-metrics .excitement-metric .progress').appendChild(excitementBar);
@@ -384,7 +384,7 @@ function generateResults() {
     let confidenceBar = document.getElementById('plan-a-confidence-progress');
     confidenceBar.parentNode.removeChild(confidenceBar);
     confidenceBar = document.createElement('div');
-    confidenceBar.className = 'progress-bar';
+    confidenceBar.className = 'progress-bar confidence-progress-bar';
     confidenceBar.id = 'plan-a-confidence-progress';
     confidenceBar.style.width = planAConfidence + '%';
     document.querySelector('.plan-a-metrics .confidence-metric .progress').appendChild(confidenceBar);
@@ -393,7 +393,7 @@ function generateResults() {
     let alignmentBar = document.getElementById('plan-a-alignment-progress');
     alignmentBar.parentNode.removeChild(alignmentBar);
     alignmentBar = document.createElement('div');
-    alignmentBar.className = 'progress-bar';
+    alignmentBar.className = 'progress-bar alignment-progress-bar';
     alignmentBar.id = 'plan-a-alignment-progress';
     alignmentBar.style.width = planAAlignment + '%';
     document.querySelector('.plan-a-metrics .alignment-metric .progress').appendChild(alignmentBar);
@@ -423,7 +423,7 @@ function generateResults() {
     resourcesBar = document.getElementById('plan-b-resources-progress');
     resourcesBar.parentNode.removeChild(resourcesBar);
     resourcesBar = document.createElement('div');
-    resourcesBar.className = 'progress-bar';
+    resourcesBar.className = 'progress-bar resource-progress-bar';
     resourcesBar.id = 'plan-b-resources-progress';
     resourcesBar.style.width = planBResources + '%';
     document.querySelector('.plan-b-metrics .resource-metric .progress').appendChild(resourcesBar);
@@ -432,7 +432,7 @@ function generateResults() {
     excitementBar = document.getElementById('plan-b-excitement-progress');
     excitementBar.parentNode.removeChild(excitementBar);
     excitementBar = document.createElement('div');
-    excitementBar.className = 'progress-bar';
+    excitementBar.className = 'progress-bar excitement-progress-bar';
     excitementBar.id = 'plan-b-excitement-progress';
     excitementBar.style.width = planBExcitement + '%';
     document.querySelector('.plan-b-metrics .excitement-metric .progress').appendChild(excitementBar);
@@ -441,7 +441,7 @@ function generateResults() {
     confidenceBar = document.getElementById('plan-b-confidence-progress');
     confidenceBar.parentNode.removeChild(confidenceBar);
     confidenceBar = document.createElement('div');
-    confidenceBar.className = 'progress-bar';
+    confidenceBar.className = 'progress-bar confidence-progress-bar';
     confidenceBar.id = 'plan-b-confidence-progress';
     confidenceBar.style.width = planBConfidence + '%';
     document.querySelector('.plan-b-metrics .confidence-metric .progress').appendChild(confidenceBar);
@@ -450,7 +450,7 @@ function generateResults() {
     alignmentBar = document.getElementById('plan-b-alignment-progress');
     alignmentBar.parentNode.removeChild(alignmentBar);
     alignmentBar = document.createElement('div');
-    alignmentBar.className = 'progress-bar';
+    alignmentBar.className = 'progress-bar alignment-progress-bar';
     alignmentBar.id = 'plan-b-alignment-progress';
     alignmentBar.style.width = planBAlignment + '%';
     document.querySelector('.plan-b-metrics .alignment-metric .progress').appendChild(alignmentBar);
@@ -480,7 +480,7 @@ function generateResults() {
     resourcesBar = document.getElementById('plan-c-resources-progress');
     resourcesBar.parentNode.removeChild(resourcesBar);
     resourcesBar = document.createElement('div');
-    resourcesBar.className = 'progress-bar';
+    resourcesBar.className = 'progress-bar resource-progress-bar';
     resourcesBar.id = 'plan-c-resources-progress';
     resourcesBar.style.width = planCResources + '%';
     document.querySelector('.plan-c-metrics .resource-metric .progress').appendChild(resourcesBar);
@@ -489,7 +489,7 @@ function generateResults() {
     excitementBar = document.getElementById('plan-c-excitement-progress');
     excitementBar.parentNode.removeChild(excitementBar);
     excitementBar = document.createElement('div');
-    excitementBar.className = 'progress-bar';
+    excitementBar.className = 'progress-bar excitement-progress-bar';
     excitementBar.id = 'plan-c-excitement-progress';
     excitementBar.style.width = planCExcitement + '%';
     document.querySelector('.plan-c-metrics .excitement-metric .progress').appendChild(excitementBar);
@@ -498,7 +498,7 @@ function generateResults() {
     confidenceBar = document.getElementById('plan-c-confidence-progress');
     confidenceBar.parentNode.removeChild(confidenceBar);
     confidenceBar = document.createElement('div');
-    confidenceBar.className = 'progress-bar';
+    confidenceBar.className = 'progress-bar confidence-progress-bar';
     confidenceBar.id = 'plan-c-confidence-progress';
     confidenceBar.style.width = planCConfidence + '%';
     document.querySelector('.plan-c-metrics .confidence-metric .progress').appendChild(confidenceBar);
@@ -507,7 +507,7 @@ function generateResults() {
     alignmentBar = document.getElementById('plan-c-alignment-progress');
     alignmentBar.parentNode.removeChild(alignmentBar);
     alignmentBar = document.createElement('div');
-    alignmentBar.className = 'progress-bar';
+    alignmentBar.className = 'progress-bar alignment-progress-bar';
     alignmentBar.id = 'plan-c-alignment-progress';
     alignmentBar.style.width = planCAlignment + '%';
     document.querySelector('.plan-c-metrics .alignment-metric .progress').appendChild(alignmentBar);
@@ -1050,8 +1050,8 @@ function setupExportImage() {
 
 // 生成指标HTML
 function generateMetricHTML(label, value, planType) {
-    // 根据计划类型设置主色调
-    let mainColor = '#4361ee'; // 默认Plan A的蓝色
+    // 根据计划类型设置固定的主色调，不再使用不同指标不同颜色
+    let mainColor = '#4361ee'; // Plan A的蓝色
     
     if (planType === 'b') {
         mainColor = '#4895ef'; // Plan B的青色

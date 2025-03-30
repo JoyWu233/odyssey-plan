@@ -1023,28 +1023,44 @@
             color: #f72585;
         }
         
-        .plan-a-metrics .progress-bar {
-            background-color: #4361ee;
+        /* 强制设置计划A的进度条为蓝色 */
+        .plan-a-metrics .progress-bar,
+        .plan-a-metrics .resource-progress-bar,
+        .plan-a-metrics .excitement-progress-bar,
+        .plan-a-metrics .confidence-progress-bar,
+        .plan-a-metrics .alignment-progress-bar {
+            background-color: #4361ee !important;
         }
         
-        .plan-b-metrics .progress-bar {
-            background-color: #4895ef;
+        /* 强制设置计划B的进度条为青色 */
+        .plan-b-metrics .progress-bar,
+        .plan-b-metrics .resource-progress-bar,
+        .plan-b-metrics .excitement-progress-bar,
+        .plan-b-metrics .confidence-progress-bar,
+        .plan-b-metrics .alignment-progress-bar {
+            background-color: #4895ef !important;
         }
         
-        .plan-c-metrics .progress-bar {
-            background-color: #f72585;
+        /* 强制设置计划C的进度条为粉色 */
+        .plan-c-metrics .progress-bar,
+        .plan-c-metrics .resource-progress-bar,
+        .plan-c-metrics .excitement-progress-bar,
+        .plan-c-metrics .confidence-progress-bar,
+        .plan-c-metrics .alignment-progress-bar {
+            background-color: #f72585 !important;
         }
         
+        /* 强制设置各计划指标数值颜色 */
         .plan-a-metrics .metric-value {
-            color: #4361ee;
+            color: #4361ee !important;
         }
         
         .plan-b-metrics .metric-value {
-            color: #4895ef;
+            color: #4895ef !important;
         }
         
         .plan-c-metrics .metric-value {
-            color: #f72585;
+            color: #f72585 !important;
         }
     </style>
 </head>
