@@ -266,7 +266,7 @@ function setupExportPDF() {
     document.getElementById('export-pdf').addEventListener('click', function() {
         // 显示加载提示
         const loadingMsg = document.createElement('div');
-        loadingMsg.textContent = '正在生成图片...';
+        loadingMsg.textContent = '正在生成高清图片...';
         loadingMsg.style.cssText = `
             position: fixed;
             top: 50%;
@@ -300,18 +300,22 @@ function setupExportPDF() {
             btn.style.display = 'none';
         });
         
+        // 获取设备像素比
+        const pixelRatio = window.devicePixelRatio || 1;
+        
         // 使用简单的延时确保DOM更新
         setTimeout(function() {
-            // 使用dom-to-image生成图片
+            // 使用dom-to-image生成图片，设置更高的scale值
             domtoimage.toPng(resultsContainer, {
                 bgcolor: '#ffffff',
-                quality: 0.95,
+                quality: 1.0, // 最高质量
                 width: resultsContainer.offsetWidth,
                 height: resultsContainer.offsetHeight,
                 style: {
                     'background': 'white',
                     'transform': 'none'
-                }
+                },
+                scale: Math.max(2, pixelRatio) // 使用更高的缩放比例，确保至少2倍
             })
             .then(function(dataUrl) {
                 // 创建下载链接
@@ -353,7 +357,7 @@ function setupExportPDF() {
                 exportBtn.disabled = false;
                 exportBtn.textContent = '导出图片';
             });
-        }, 200);
+        }, 300); // 增加延时，确保DOM完全渲染
     });
 }
 
