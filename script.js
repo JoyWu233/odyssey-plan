@@ -342,128 +342,65 @@ function setupExportImage() {
         exportBtn.textContent = '生成中...';
         
         try {
-            // 获取目标元素
+            // 获取结果容器
             const resultsContainer = document.getElementById('results');
             
-            // 创建临时容器用于截图
-            const tempContainer = document.createElement('div');
-            tempContainer.style.cssText = `
-                position: absolute;
-                left: -9999px;
-                top: -9999px;
-                width: 800px;
-                background: #ffffff;
-                padding: 30px;
-                box-sizing: border-box;
-                font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
-            `;
-            document.body.appendChild(tempContainer);
+            // 隐藏按钮组
+            const btnGroup = resultsContainer.querySelector('.btn-group');
+            const btnGroupDisplay = btnGroup.style.display;
+            btnGroup.style.display = 'none';
             
-            // 创建标题部分
-            const titleSection = document.createElement('div');
+            // 添加临时标题
+            const title = document.createElement('div');
             const date = new Date();
             const dateStr = `${date.getFullYear()}年${date.getMonth() + 1}月${date.getDate()}日`;
             
-            titleSection.innerHTML = `
-                <div style="text-align: center; margin-bottom: 30px;">
-                    <h1 style="color: #1a46e5; font-size: 36px; margin-bottom: 10px; font-weight: bold;">我的奥德赛计划</h1>
-                    <p style="color: #222222; font-size: 16px;">生成日期: ${dateStr}</p>
+            title.innerHTML = `
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <h2 style="color: #000; font-size: 28px; margin-bottom: 8px; font-weight: bold;">我的奥德赛计划</h2>
+                    <p style="color: #333; font-size: 16px;">生成日期: ${dateStr}</p>
                 </div>
             `;
-            tempContainer.appendChild(titleSection);
             
-            // 复制结果内容（不包含按钮）
-            const resultCards = resultsContainer.querySelectorAll('.result-card');
-            resultCards.forEach(card => {
-                const cardClone = card.cloneNode(true);
-                
-                // 删除所有按钮
-                const buttons = cardClone.querySelectorAll('button');
-                buttons.forEach(btn => btn.remove());
-                
-                // 设置卡片样式
-                cardClone.style.cssText = `
-                    background: #ffffff;
-                    border: 1px solid #e0e0e0;
-                    border-radius: 10px;
-                    padding: 25px;
-                    margin-bottom: 30px;
-                    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-                `;
-                
-                // 设置卡片标题样式
-                const cardTitle = cardClone.querySelector('h3');
-                if (cardTitle) {
-                    cardTitle.style.cssText = `
-                        color: #1a46e5;
-                        font-size: 24px;
-                        font-weight: bold;
-                        margin-bottom: 20px;
-                        padding-bottom: 10px;
-                        border-bottom: 2px solid #4361ee;
-                    `;
-                }
-                
-                // 设置小标题样式
-                const subTitles = cardClone.querySelectorAll('h4');
-                subTitles.forEach(subtitle => {
-                    subtitle.style.cssText = `
-                        color: #202b8d;
-                        font-size: 20px;
-                        font-weight: bold;
-                        margin: 15px 0 10px 0;
-                    `;
-                });
-                
-                // 设置段落样式
-                const paragraphs = cardClone.querySelectorAll('p');
-                paragraphs.forEach(p => {
-                    p.style.cssText = `
-                        color: #000000;
-                        font-size: 16px;
-                        line-height: 1.6;
-                        margin-bottom: 10px;
-                        font-weight: 500;
-                    `;
-                });
-                
-                tempContainer.appendChild(cardClone);
-            });
+            resultsContainer.insertBefore(title, resultsContainer.firstChild);
             
-            // 使用dom-to-image生成图片
-            domtoimage.toPng(tempContainer, {
-                width: tempContainer.offsetWidth,
-                height: tempContainer.offsetHeight,
-                quality: 1.0,
-                style: {
-                    'background': '#ffffff'
-                }
-            })
-            .then(function(dataUrl) {
+            // 直接截图结果页面，不做任何额外样式修改
+            html2canvas(resultsContainer, {
+                scale: 2,
+                backgroundColor: '#ffffff',
+                logging: false,
+                useCORS: true,
+                allowTaint: true
+            }).then(function(canvas) {
                 // 创建下载链接
-                const link = document.createElement('a');
-                link.download = '我的奥德赛计划.png';
-                link.href = dataUrl;
-                link.click();
-                
-                // 清理临时元素
-                document.body.removeChild(tempContainer);
-                
-                // 显示成功消息
-                loadingMsg.textContent = '导出成功！';
-                loadingMsg.style.background = 'rgba(40, 167, 69, 0.8)';
-                setTimeout(() => loadingMsg.remove(), 1500);
-                
-                // 恢复按钮
-                exportBtn.disabled = false;
-                exportBtn.textContent = '导出图片';
-            })
-            .catch(function(error) {
+                canvas.toBlob(function(blob) {
+                    const url = URL.createObjectURL(blob);
+                    const link = document.createElement('a');
+                    link.download = '我的奥德赛计划.png';
+                    link.href = url;
+                    link.click();
+                    URL.revokeObjectURL(url);
+                    
+                    // 恢复原始状态
+                    btnGroup.style.display = btnGroupDisplay;
+                    resultsContainer.removeChild(title);
+                    
+                    // 显示成功消息
+                    loadingMsg.textContent = '导出成功！';
+                    loadingMsg.style.background = 'rgba(40, 167, 69, 0.8)';
+                    setTimeout(() => loadingMsg.remove(), 1500);
+                    
+                    // 恢复按钮
+                    exportBtn.disabled = false;
+                    exportBtn.textContent = '导出图片';
+                }, 'image/png', 1.0);
+            }).catch(function(error) {
                 console.error('导出图片出错:', error);
                 
-                // 清理临时元素
-                if (document.body.contains(tempContainer)) {
-                    document.body.removeChild(tempContainer);
+                // 恢复原始状态
+                btnGroup.style.display = btnGroupDisplay;
+                if (resultsContainer.contains(title)) {
+                    resultsContainer.removeChild(title);
                 }
                 
                 // 显示错误消息
@@ -475,7 +412,6 @@ function setupExportImage() {
                 exportBtn.disabled = false;
                 exportBtn.textContent = '导出图片';
             });
-            
         } catch (error) {
             console.error('导出过程出错:', error);
             
