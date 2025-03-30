@@ -68,7 +68,7 @@ function init() {
     // 设置导航按钮事件
     setupNavigationButtons();
     
-    // 设置导出PDF按钮事件
+    // 设置导出按钮事件
     setupExportPDF();
 }
 
@@ -173,45 +173,187 @@ function setupNavigationButtons() {
 function generateResults() {
     // 更新资源盘点结果
     document.getElementById('resources-result').innerHTML = `
-        <p><strong>我是谁：</strong>${formElements['who-am-i'].value}</p>
-        <p><strong>我拥有什么：</strong>${formElements['what-i-have'].value}</p>
-        <p><strong>能量来源：</strong>${formElements['energizers'].value}</p>
+        <div class="result-section">
+            <h4>我是谁？</h4>
+            <p>${formElements['who-am-i'].value.split('\n').map(line => `<p>${line}</p>`).join('')}</p>
+        </div>
+        <div class="result-section">
+            <h4>我拥有什么？</h4>
+            <p>${formElements['what-i-have'].value.split('\n').map(line => `<p>${line}</p>`).join('')}</p>
+        </div>
+        <div class="result-section">
+            <h4>能量来源</h4>
+            <p>${formElements['energizers'].value.split('\n').map(line => `<p>${line}</p>`).join('')}</p>
+        </div>
     `;
     
+    // 获取计划标题
+    const planATitle = formElements['plan-a-title'].value || '最现实路径';
+    const planBTitle = formElements['plan-b-title'].value || '替代方案';
+    const planCTitle = formElements['plan-c-title'].value || '理想生活';
+    
     // 更新计划A结果
-    document.getElementById('plan-a-result-title').textContent = formElements['plan-a-title'].value || 'Plan A';
+    document.getElementById('plan-a-result-title').textContent = `Plan A - ${planATitle}`;
     document.getElementById('plan-a-result').innerHTML = `
-        <p><strong>5年后的状态：</strong>${formElements['plan-a-desc'].value}</p>
-        <p><strong>关键里程碑：</strong>${formElements['plan-a-milestones'].value}</p>
+        <div class="result-section">
+            <h4>5年后的状态</h4>
+            <p>${formElements['plan-a-desc'].value.split('\n').map(line => `<p>${line}</p>`).join('')}</p>
+        </div>
+        <div class="result-section">
+            <h4>关键里程碑</h4>
+            <p>${formElements['plan-a-milestones'].value.split('\n').map(line => `<p>${line}</p>`).join('')}</p>
+        </div>
     `;
     
     // 更新计划B结果
-    document.getElementById('plan-b-result-title').textContent = formElements['plan-b-title'].value || 'Plan B';
+    document.getElementById('plan-b-result-title').textContent = `Plan B - ${planBTitle}`;
     document.getElementById('plan-b-result').innerHTML = `
-        <p><strong>5年后的状态：</strong>${formElements['plan-b-desc'].value}</p>
-        <p><strong>关键里程碑：</strong>${formElements['plan-b-milestones'].value}</p>
+        <div class="result-section">
+            <h4>5年后的状态</h4>
+            <p>${formElements['plan-b-desc'].value.split('\n').map(line => `<p>${line}</p>`).join('')}</p>
+        </div>
+        <div class="result-section">
+            <h4>关键里程碑</h4>
+            <p>${formElements['plan-b-milestones'].value.split('\n').map(line => `<p>${line}</p>`).join('')}</p>
+        </div>
     `;
     
     // 更新计划C结果
-    document.getElementById('plan-c-result-title').textContent = formElements['plan-c-title'].value || 'Plan C';
+    document.getElementById('plan-c-result-title').textContent = `Plan C - ${planCTitle}`;
     document.getElementById('plan-c-result').innerHTML = `
-        <p><strong>5年后的状态：</strong>${formElements['plan-c-desc'].value}</p>
-        <p><strong>关键里程碑：</strong>${formElements['plan-c-milestones'].value}</p>
+        <div class="result-section">
+            <h4>5年后的状态</h4>
+            <p>${formElements['plan-c-desc'].value.split('\n').map(line => `<p>${line}</p>`).join('')}</p>
+        </div>
+        <div class="result-section">
+            <h4>关键里程碑</h4>
+            <p>${formElements['plan-c-milestones'].value.split('\n').map(line => `<p>${line}</p>`).join('')}</p>
+        </div>
     `;
+    
+    // 确定最令人兴奋的计划名称
+    let excitingPlanName = '';
+    if (formElements['exciting-plan'].value === 'plan-a') {
+        excitingPlanName = `Plan A - ${planATitle}`;
+    } else if (formElements['exciting-plan'].value === 'plan-b') {
+        excitingPlanName = `Plan B - ${planBTitle}`;
+    } else if (formElements['exciting-plan'].value === 'plan-c') {
+        excitingPlanName = `Plan C - ${planCTitle}`;
+    } else {
+        excitingPlanName = formElements['exciting-plan'].value;
+    }
     
     // 更新评估结果
     document.getElementById('evaluation-result').innerHTML = `
-        <p><strong>最令人兴奋的计划：</strong>${formElements['exciting-plan'].value}</p>
-        <p><strong>可行性分析：</strong>${formElements['feasibility'].value}</p>
-        <p><strong>行动计划：</strong>${formElements['action-steps'].value}</p>
+        <div class="result-section">
+            <h4>最令人兴奋的计划</h4>
+            <p>${excitingPlanName}</p>
+        </div>
+        <div class="result-section">
+            <h4>可行性分析</h4>
+            <p>${formElements['feasibility'].value.split('\n').map(line => `<p>${line}</p>`).join('')}</p>
+        </div>
+        <div class="result-section">
+            <h4>行动计划</h4>
+            <p>${formElements['action-steps'].value.split('\n').map(line => `<p>${line}</p>`).join('')}</p>
+        </div>
     `;
 }
 
-// 设置导出PDF按钮事件
+// 设置导出按钮事件
 function setupExportPDF() {
-    document.getElementById('export-pdf').addEventListener('click', () => {
-        // 这里可以添加导出PDF的功能
-        alert('PDF导出功能正在开发中...');
+    document.getElementById('export-pdf').textContent = '导出图片';
+    document.getElementById('export-pdf').addEventListener('click', function() {
+        // 显示加载提示
+        const loadingMsg = document.createElement('div');
+        loadingMsg.textContent = '正在生成图片...';
+        loadingMsg.style.cssText = `
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 15px 30px;
+            border-radius: 5px;
+            z-index: 10000;
+            font-size: 16px;
+        `;
+        document.body.appendChild(loadingMsg);
+        
+        // 禁用按钮
+        const exportBtn = document.getElementById('export-pdf');
+        exportBtn.disabled = true;
+        exportBtn.textContent = '生成中...';
+        
+        // 确保切换到结果页面
+        switchTab('results');
+        
+        // 获取结果容器
+        const resultsContainer = document.getElementById('results');
+        
+        // 隐藏按钮等不需要导出的元素
+        const buttons = resultsContainer.querySelectorAll('.btn-group');
+        const originalButtonDisplay = [];
+        buttons.forEach((btn, index) => {
+            originalButtonDisplay[index] = btn.style.display;
+            btn.style.display = 'none';
+        });
+        
+        // 使用简单的延时确保DOM更新
+        setTimeout(function() {
+            // 使用dom-to-image生成图片
+            domtoimage.toPng(resultsContainer, {
+                bgcolor: '#ffffff',
+                quality: 0.95,
+                width: resultsContainer.offsetWidth,
+                height: resultsContainer.offsetHeight,
+                style: {
+                    'background': 'white',
+                    'transform': 'none'
+                }
+            })
+            .then(function(dataUrl) {
+                // 创建下载链接
+                const link = document.createElement('a');
+                link.download = '我的奥德赛计划.png';
+                link.href = dataUrl;
+                link.click();
+                
+                // 恢复按钮状态
+                buttons.forEach((btn, index) => {
+                    btn.style.display = originalButtonDisplay[index];
+                });
+                
+                // 移除加载提示
+                loadingMsg.textContent = '导出成功！';
+                setTimeout(function() {
+                    loadingMsg.remove();
+                }, 1500);
+                
+                // 恢复按钮
+                exportBtn.disabled = false;
+                exportBtn.textContent = '导出图片';
+            })
+            .catch(function(error) {
+                console.error('图片生成失败:', error);
+                
+                // 恢复按钮状态
+                buttons.forEach((btn, index) => {
+                    btn.style.display = originalButtonDisplay[index];
+                });
+                
+                // 修改加载提示
+                loadingMsg.textContent = '导出失败，请稍后重试';
+                setTimeout(function() {
+                    loadingMsg.remove();
+                }, 2000);
+                
+                // 恢复按钮
+                exportBtn.disabled = false;
+                exportBtn.textContent = '导出图片';
+            });
+        }, 200);
     });
 }
 
