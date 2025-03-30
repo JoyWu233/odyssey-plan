@@ -297,7 +297,10 @@ function setupExportPDF() {
             
             // 备份原始样式
             const originalStyle = resultsContainer.getAttribute('style') || '';
-            const originalWidth = resultsContainer.style.width;
+            const originalBackground = document.body.style.background;
+            
+            // 临时设置body背景为纯白
+            document.body.style.background = '#ffffff';
             
             // 临时隐藏按钮
             const buttons = resultsContainer.querySelectorAll('.btn-group');
@@ -307,19 +310,31 @@ function setupExportPDF() {
             resultsContainer.style.width = '800px';
             resultsContainer.style.margin = '0 auto';
             resultsContainer.style.padding = '40px';
-            resultsContainer.style.background = 'white';
+            resultsContainer.style.background = '#ffffff';
             resultsContainer.style.boxShadow = 'none';
+            resultsContainer.style.color = '#333333';
             
             // 临时增强文本样式以提高清晰度
+            const cardElements = resultsContainer.querySelectorAll('.result-card');
+            const originalCardStyles = [];
+            cardElements.forEach((card, i) => {
+                originalCardStyles[i] = card.getAttribute('style') || '';
+                card.style.boxShadow = '0 2px 8px rgba(0,0,0,0.1)';
+                card.style.marginBottom = '30px';
+                card.style.backgroundColor = '#ffffff';
+                card.style.borderRadius = '8px';
+                card.style.padding = '25px';
+            });
+            
             const headings = resultsContainer.querySelectorAll('h3');
             const originalHeadingStyles = [];
             headings.forEach((h, i) => {
                 originalHeadingStyles[i] = h.getAttribute('style') || '';
                 h.style.fontSize = '28px';
-                h.style.color = '#3f37c9';
+                h.style.color = '#4361ee';
                 h.style.fontWeight = 'bold';
                 h.style.marginBottom = '20px';
-                h.style.borderBottom = '2px solid #4361ee';
+                h.style.borderBottom = '2px solid #4895ef';
                 h.style.paddingBottom = '10px';
             });
             
@@ -328,7 +343,7 @@ function setupExportPDF() {
             subHeadings.forEach((h, i) => {
                 originalSubHeadingStyles[i] = h.getAttribute('style') || '';
                 h.style.fontSize = '22px';
-                h.style.color = '#4361ee';
+                h.style.color = '#3f37c9';
                 h.style.fontWeight = 'bold';
                 h.style.marginBottom = '15px';
             });
@@ -338,16 +353,28 @@ function setupExportPDF() {
             paragraphs.forEach((p, i) => {
                 originalParagraphStyles[i] = p.getAttribute('style') || '';
                 p.style.fontSize = '16px';
-                p.style.color = '#333';
+                p.style.color = '#333333';
                 p.style.lineHeight = '1.8';
                 p.style.marginBottom = '12px';
             });
+            
+            // 增加顶部标题
+            const titleDiv = document.createElement('div');
+            titleDiv.style.cssText = `
+                text-align: center;
+                margin-bottom: 30px;
+            `;
+            titleDiv.innerHTML = `
+                <h1 style="color: #4361ee; font-size: 32px; margin-bottom: 10px; font-weight: bold;">奥德赛计划</h1>
+                <p style="color: #666; font-size: 16px;">生成日期：${new Date().toLocaleDateString('zh-CN')}</p>
+            `;
+            resultsContainer.insertBefore(titleDiv, resultsContainer.firstChild);
             
             loadingMsg.textContent = '正在生成超清图片...';
             
             // 获取设备像素比
             const pixelRatio = window.devicePixelRatio || 1;
-            const scale = Math.max(3, pixelRatio); // 至少3倍缩放
+            const scale = Math.max(2.5, pixelRatio); // 适中的缩放
             
             setTimeout(() => {
                 html2canvas(resultsContainer, {
@@ -356,15 +383,8 @@ function setupExportPDF() {
                     allowTaint: true,
                     backgroundColor: '#ffffff',
                     logging: false,
-                    onclone: function(documentClone) {
-                        const clonedElement = documentClone.getElementById('results');
-                        if (clonedElement) {
-                            clonedElement.style.transform = 'none';
-                            clonedElement.style.width = '800px';
-                            const clonedButtons = clonedElement.querySelectorAll('.btn-group');
-                            clonedButtons.forEach(btn => btn.style.display = 'none');
-                        }
-                    }
+                    letterRendering: true,
+                    removeContainer: false
                 }).then(canvas => {
                     loadingMsg.textContent = '正在保存图片...';
                     
@@ -405,10 +425,17 @@ function setupExportPDF() {
                         }
                     }
                     
+                    // 移除临时添加的标题
+                    if (titleDiv && titleDiv.parentNode) {
+                        titleDiv.parentNode.removeChild(titleDiv);
+                    }
+                    
                     // 恢复原始样式
                     resultsContainer.setAttribute('style', originalStyle);
-                    resultsContainer.style.width = originalWidth;
+                    document.body.style.background = originalBackground;
                     
+                    // 恢复所有元素的原始样式
+                    cardElements.forEach((card, i) => card.setAttribute('style', originalCardStyles[i]));
                     headings.forEach((h, i) => h.setAttribute('style', originalHeadingStyles[i]));
                     subHeadings.forEach((h, i) => h.setAttribute('style', originalSubHeadingStyles[i]));
                     paragraphs.forEach((p, i) => p.setAttribute('style', originalParagraphStyles[i]));
@@ -423,10 +450,17 @@ function setupExportPDF() {
                     loadingMsg.textContent = '导出失败，请稍后重试';
                     setTimeout(() => loadingMsg.remove(), 2000);
                     
+                    // 移除临时添加的标题
+                    if (titleDiv && titleDiv.parentNode) {
+                        titleDiv.parentNode.removeChild(titleDiv);
+                    }
+                    
                     // 恢复原始样式
                     resultsContainer.setAttribute('style', originalStyle);
-                    resultsContainer.style.width = originalWidth;
+                    document.body.style.background = originalBackground;
                     
+                    // 恢复所有元素的原始样式
+                    cardElements.forEach((card, i) => card.setAttribute('style', originalCardStyles[i]));
                     headings.forEach((h, i) => h.setAttribute('style', originalHeadingStyles[i]));
                     subHeadings.forEach((h, i) => h.setAttribute('style', originalSubHeadingStyles[i]));
                     paragraphs.forEach((p, i) => p.setAttribute('style', originalParagraphStyles[i]));
