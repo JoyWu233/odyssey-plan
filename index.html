@@ -575,15 +575,18 @@
             flex-wrap: wrap;
             justify-content: space-around;
             margin: 1rem 0;
-            padding: 0.8rem;
+            padding: 1rem;
             background-color: #f8f9fa;
             border-radius: 8px;
+            gap: 1rem;
         }
         
         .plan-gauge-container {
             text-align: center;
-            width: calc(25% - 0.8rem);
+            width: calc(25% - 1rem);
             min-width: 100px;
+            position: relative;
+            margin-bottom: 0.5rem;
         }
         
         .plan-gauge {
@@ -594,9 +597,87 @@
         }
         
         .plan-gauge-title {
-            font-size: 0.8rem;
-            color: #666;
-            margin-top: 0.3rem;
+            font-size: 0.9rem;
+            color: #333;
+            margin-top: 0.5rem;
+            font-weight: 600;
+            background-color: #fff;
+            border: 1px solid #e9ecef;
+            border-radius: 15px;
+            padding: 4px 10px;
+            display: inline-block;
+            min-width: 80px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        /* 结果页面指标展示 */
+        .result-metrics {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 15px 0;
+            box-shadow: inset 0 0 5px rgba(0,0,0,0.05);
+        }
+        
+        .result-metric {
+            flex: 1;
+            min-width: 120px;
+            margin: 8px;
+            text-align: center;
+            position: relative;
+        }
+        
+        .result-metric-label {
+            font-weight: 600;
+            color: #555;
+            font-size: 14px;
+            margin-bottom: 5px;
+        }
+        
+        .result-metric-value {
+            background-color: var(--primary);
+            color: white;
+            font-weight: bold;
+            padding: 5px 12px;
+            border-radius: 20px;
+            display: inline-block;
+            min-width: 70px;
+            font-size: 16px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.15);
+        }
+        
+        .result-metric-bar {
+            height: 8px;
+            background-color: #e9ecef;
+            border-radius: 4px;
+            margin-top: 8px;
+            overflow: hidden;
+            box-shadow: inset 0 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        .result-metric-progress {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+        
+        .plan-a-card .result-metric-value,
+        .plan-a-card .result-metric-progress {
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+        }
+        
+        .plan-b-card .result-metric-value,
+        .plan-b-card .result-metric-progress {
+            background: linear-gradient(90deg, var(--accent), var(--success));
+        }
+        
+        .plan-c-card .result-metric-value,
+        .plan-c-card .result-metric-progress {
+            background: linear-gradient(90deg, var(--warning), #ff9e80);
         }
         
         /* 结果页面样式 */
@@ -1175,22 +1256,36 @@
             <div class="result-card plan-a-card">
                 <h3 id="plan-a-result-title">Plan A</h3>
                 <div id="plan-a-result"></div>
-                <div class="plan-gauges">
-                    <div class="plan-gauge-container">
-                        <img src="https://quickchart.io/gauge?value=50&max=100&theme=light&width=120&height=80&label=资源" alt="资源充足度仪表盘" class="plan-gauge" id="plan-a-resources-gauge">
-                        <div class="plan-gauge-title" id="plan-a-resources-value">资源: 50%</div>
+                
+                <!-- 使用新的结果指标布局替换仪表盘 -->
+                <div class="result-metrics">
+                    <div class="result-metric">
+                        <div class="result-metric-label">资源充足度</div>
+                        <div class="result-metric-value" id="plan-a-resources-display">50%</div>
+                        <div class="result-metric-bar">
+                            <div class="result-metric-progress" id="plan-a-resources-progress" style="width: 50%"></div>
+                        </div>
                     </div>
-                    <div class="plan-gauge-container">
-                        <img src="https://quickchart.io/gauge?value=50&max=100&theme=light&width=120&height=80&label=喜欢程度" alt="喜欢程度仪表盘" class="plan-gauge" id="plan-a-excitement-gauge">
-                        <div class="plan-gauge-title" id="plan-a-excitement-value">喜欢: 50%</div>
+                    <div class="result-metric">
+                        <div class="result-metric-label">喜欢程度</div>
+                        <div class="result-metric-value" id="plan-a-excitement-display">50%</div>
+                        <div class="result-metric-bar">
+                            <div class="result-metric-progress" id="plan-a-excitement-progress" style="width: 50%"></div>
+                        </div>
                     </div>
-                    <div class="plan-gauge-container">
-                        <img src="https://quickchart.io/gauge?value=50&max=100&theme=light&width=120&height=80&label=自信心" alt="自信心仪表盘" class="plan-gauge" id="plan-a-confidence-gauge">
-                        <div class="plan-gauge-title" id="plan-a-confidence-value">自信: 50%</div>
+                    <div class="result-metric">
+                        <div class="result-metric-label">自信心</div>
+                        <div class="result-metric-value" id="plan-a-confidence-display">50%</div>
+                        <div class="result-metric-bar">
+                            <div class="result-metric-progress" id="plan-a-confidence-progress" style="width: 50%"></div>
+                        </div>
                     </div>
-                    <div class="plan-gauge-container">
-                        <img src="https://quickchart.io/gauge?value=50&max=100&theme=light&width=120&height=80&label=一致性" alt="一致性仪表盘" class="plan-gauge" id="plan-a-alignment-gauge">
-                        <div class="plan-gauge-title" id="plan-a-alignment-value">一致: 50%</div>
+                    <div class="result-metric">
+                        <div class="result-metric-label">一致性</div>
+                        <div class="result-metric-value" id="plan-a-alignment-display">50%</div>
+                        <div class="result-metric-bar">
+                            <div class="result-metric-progress" id="plan-a-alignment-progress" style="width: 50%"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1198,22 +1293,36 @@
             <div class="result-card plan-b-card">
                 <h3 id="plan-b-result-title">Plan B</h3>
                 <div id="plan-b-result"></div>
-                <div class="plan-gauges">
-                    <div class="plan-gauge-container">
-                        <img src="https://quickchart.io/gauge?value=50&max=100&theme=light&width=120&height=80&label=资源" alt="资源充足度仪表盘" class="plan-gauge" id="plan-b-resources-gauge">
-                        <div class="plan-gauge-title" id="plan-b-resources-value">资源: 50%</div>
+                
+                <!-- 使用新的结果指标布局替换仪表盘 -->
+                <div class="result-metrics">
+                    <div class="result-metric">
+                        <div class="result-metric-label">资源充足度</div>
+                        <div class="result-metric-value" id="plan-b-resources-display">50%</div>
+                        <div class="result-metric-bar">
+                            <div class="result-metric-progress" id="plan-b-resources-progress" style="width: 50%"></div>
+                        </div>
                     </div>
-                    <div class="plan-gauge-container">
-                        <img src="https://quickchart.io/gauge?value=50&max=100&theme=light&width=120&height=80&label=喜欢程度" alt="喜欢程度仪表盘" class="plan-gauge" id="plan-b-excitement-gauge">
-                        <div class="plan-gauge-title" id="plan-b-excitement-value">喜欢: 50%</div>
+                    <div class="result-metric">
+                        <div class="result-metric-label">喜欢程度</div>
+                        <div class="result-metric-value" id="plan-b-excitement-display">50%</div>
+                        <div class="result-metric-bar">
+                            <div class="result-metric-progress" id="plan-b-excitement-progress" style="width: 50%"></div>
+                        </div>
                     </div>
-                    <div class="plan-gauge-container">
-                        <img src="https://quickchart.io/gauge?value=50&max=100&theme=light&width=120&height=80&label=自信心" alt="自信心仪表盘" class="plan-gauge" id="plan-b-confidence-gauge">
-                        <div class="plan-gauge-title" id="plan-b-confidence-value">自信: 50%</div>
+                    <div class="result-metric">
+                        <div class="result-metric-label">自信心</div>
+                        <div class="result-metric-value" id="plan-b-confidence-display">50%</div>
+                        <div class="result-metric-bar">
+                            <div class="result-metric-progress" id="plan-b-confidence-progress" style="width: 50%"></div>
+                        </div>
                     </div>
-                    <div class="plan-gauge-container">
-                        <img src="https://quickchart.io/gauge?value=50&max=100&theme=light&width=120&height=80&label=一致性" alt="一致性仪表盘" class="plan-gauge" id="plan-b-alignment-gauge">
-                        <div class="plan-gauge-title" id="plan-b-alignment-value">一致: 50%</div>
+                    <div class="result-metric">
+                        <div class="result-metric-label">一致性</div>
+                        <div class="result-metric-value" id="plan-b-alignment-display">50%</div>
+                        <div class="result-metric-bar">
+                            <div class="result-metric-progress" id="plan-b-alignment-progress" style="width: 50%"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1221,22 +1330,36 @@
             <div class="result-card plan-c-card">
                 <h3 id="plan-c-result-title">Plan C</h3>
                 <div id="plan-c-result"></div>
-                <div class="plan-gauges">
-                    <div class="plan-gauge-container">
-                        <img src="https://quickchart.io/gauge?value=50&max=100&theme=light&width=120&height=80&label=资源" alt="资源充足度仪表盘" class="plan-gauge" id="plan-c-resources-gauge">
-                        <div class="plan-gauge-title" id="plan-c-resources-value">资源: 50%</div>
+                
+                <!-- 使用新的结果指标布局替换仪表盘 -->
+                <div class="result-metrics">
+                    <div class="result-metric">
+                        <div class="result-metric-label">资源充足度</div>
+                        <div class="result-metric-value" id="plan-c-resources-display">50%</div>
+                        <div class="result-metric-bar">
+                            <div class="result-metric-progress" id="plan-c-resources-progress" style="width: 50%"></div>
+                        </div>
                     </div>
-                    <div class="plan-gauge-container">
-                        <img src="https://quickchart.io/gauge?value=50&max=100&theme=light&width=120&height=80&label=喜欢程度" alt="喜欢程度仪表盘" class="plan-gauge" id="plan-c-excitement-gauge">
-                        <div class="plan-gauge-title" id="plan-c-excitement-value">喜欢: 50%</div>
+                    <div class="result-metric">
+                        <div class="result-metric-label">喜欢程度</div>
+                        <div class="result-metric-value" id="plan-c-excitement-display">50%</div>
+                        <div class="result-metric-bar">
+                            <div class="result-metric-progress" id="plan-c-excitement-progress" style="width: 50%"></div>
+                        </div>
                     </div>
-                    <div class="plan-gauge-container">
-                        <img src="https://quickchart.io/gauge?value=50&max=100&theme=light&width=120&height=80&label=自信心" alt="自信心仪表盘" class="plan-gauge" id="plan-c-confidence-gauge">
-                        <div class="plan-gauge-title" id="plan-c-confidence-value">自信: 50%</div>
+                    <div class="result-metric">
+                        <div class="result-metric-label">自信心</div>
+                        <div class="result-metric-value" id="plan-c-confidence-display">50%</div>
+                        <div class="result-metric-bar">
+                            <div class="result-metric-progress" id="plan-c-confidence-progress" style="width: 50%"></div>
+                        </div>
                     </div>
-                    <div class="plan-gauge-container">
-                        <img src="https://quickchart.io/gauge?value=50&max=100&theme=light&width=120&height=80&label=一致性" alt="一致性仪表盘" class="plan-gauge" id="plan-c-alignment-gauge">
-                        <div class="plan-gauge-title" id="plan-c-alignment-value">一致: 50%</div>
+                    <div class="result-metric">
+                        <div class="result-metric-label">一致性</div>
+                        <div class="result-metric-value" id="plan-c-alignment-display">50%</div>
+                        <div class="result-metric-bar">
+                            <div class="result-metric-progress" id="plan-c-alignment-progress" style="width: 50%"></div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -1384,7 +1507,19 @@
                     progressText.textContent = value + '%';
                 }
                 
-                // 如果在结果页中也有对应的仪表盘，也更新它
+                // 更新结果页中的新指标显示
+                const metricDisplay = document.getElementById(sliderId + '-display');
+                if (metricDisplay) {
+                    metricDisplay.textContent = value + '%';
+                }
+                
+                // 更新结果页中的新进度条
+                const metricProgress = document.getElementById(sliderId + '-progress');
+                if (metricProgress) {
+                    metricProgress.style.width = value + '%';
+                }
+                
+                // 保留对旧仪表盘的支持
                 const resultGauge = document.getElementById(sliderId + '-gauge');
                 if (resultGauge && resultGauge.src) {
                     resultGauge.src = `https://quickchart.io/gauge?value=${value}&max=100&theme=light&width=120&height=80&label=${encodeURIComponent(sliderId.split('-')[1])}`;
