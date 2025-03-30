@@ -266,7 +266,7 @@ function setupExportPDF() {
     document.getElementById('export-pdf').addEventListener('click', function() {
         // 显示加载提示
         const loadingMsg = document.createElement('div');
-        loadingMsg.textContent = '正在生成图片...';
+        loadingMsg.textContent = '正在生成高清图片...';
         loadingMsg.style.cssText = `
             position: fixed;
             top: 50%;
@@ -292,26 +292,61 @@ function setupExportPDF() {
         // 获取结果容器
         const resultsContainer = document.getElementById('results');
         
+        // 创建克隆容器用于导出，避免修改原始DOM
+        const cloneContainer = resultsContainer.cloneNode(true);
+        cloneContainer.style.cssText = `
+            position: absolute;
+            left: -9999px;
+            top: 0;
+            width: 1200px; // 更大的尺寸以提高清晰度
+            background: white;
+            padding: 40px;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        `;
+        
+        // 增强文本清晰度和间距
+        const headings = cloneContainer.querySelectorAll('h3, h4');
+        headings.forEach(heading => {
+            heading.style.fontSize = heading.tagName === 'H3' ? '28px' : '22px';
+            heading.style.marginBottom = '16px';
+            heading.style.color = '#333';
+            heading.style.fontWeight = 'bold';
+        });
+        
+        const paragraphs = cloneContainer.querySelectorAll('p');
+        paragraphs.forEach(p => {
+            p.style.fontSize = '18px';
+            p.style.lineHeight = '1.8';
+            p.style.marginBottom = '12px';
+            p.style.color = '#333';
+        });
+        
         // 隐藏按钮等不需要导出的元素
-        const buttons = resultsContainer.querySelectorAll('.btn-group');
-        const originalButtonDisplay = [];
-        buttons.forEach((btn, index) => {
-            originalButtonDisplay[index] = btn.style.display;
+        const buttons = cloneContainer.querySelectorAll('.btn-group');
+        buttons.forEach(btn => {
             btn.style.display = 'none';
         });
         
-        // 使用简单的延时确保DOM更新
+        // 添加到DOM以便计算尺寸
+        document.body.appendChild(cloneContainer);
+        
+        // 获取设备像素比
+        const pixelRatio = window.devicePixelRatio || 1;
+        loadingMsg.textContent = `正在生成高清图片 (${pixelRatio}x 设备像素比)...`;
+        
+        // 延时确保DOM渲染完成
         setTimeout(function() {
-            // 使用dom-to-image生成图片
-            domtoimage.toPng(resultsContainer, {
+            // 使用dom-to-image生成图片，设置高像素比
+            domtoimage.toPng(cloneContainer, {
                 bgcolor: '#ffffff',
-                quality: 0.95,
-                width: resultsContainer.offsetWidth,
-                height: resultsContainer.offsetHeight,
+                quality: 1.0, // 最高质量
+                width: cloneContainer.offsetWidth,
+                height: cloneContainer.offsetHeight,
                 style: {
-                    'background': 'white',
                     'transform': 'none'
-                }
+                },
+                scale: Math.max(2, pixelRatio) // 使用更高的缩放比例
             })
             .then(function(dataUrl) {
                 // 创建下载链接
@@ -320,10 +355,8 @@ function setupExportPDF() {
                 link.href = dataUrl;
                 link.click();
                 
-                // 恢复按钮状态
-                buttons.forEach((btn, index) => {
-                    btn.style.display = originalButtonDisplay[index];
-                });
+                // 移除克隆容器
+                cloneContainer.remove();
                 
                 // 移除加载提示
                 loadingMsg.textContent = '导出成功！';
@@ -337,11 +370,7 @@ function setupExportPDF() {
             })
             .catch(function(error) {
                 console.error('图片生成失败:', error);
-                
-                // 恢复按钮状态
-                buttons.forEach((btn, index) => {
-                    btn.style.display = originalButtonDisplay[index];
-                });
+                cloneContainer.remove();
                 
                 // 修改加载提示
                 loadingMsg.textContent = '导出失败，请稍后重试';
@@ -353,7 +382,7 @@ function setupExportPDF() {
                 exportBtn.disabled = false;
                 exportBtn.textContent = '导出图片';
             });
-        }, 200);
+        }, 300); // 增加延时，确保DOM完全渲染
     });
 }
 
