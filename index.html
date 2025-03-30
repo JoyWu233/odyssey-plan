@@ -585,6 +585,123 @@
             margin-top: 2rem;
             padding: 1rem;
         }
+        
+        /* 联系方式和指导区域的共享样式 */
+        .contact-section {
+            margin-top: 30px;
+            padding: 15px 20px;
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            border-left: 4px solid var(--primary);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+        }
+        
+        .contact-title {
+            font-size: 16px;
+            color: var(--primary);
+            margin-bottom: 10px;
+            font-weight: 600;
+        }
+        
+        .contact-description {
+            font-size: 14px;
+            color: #555;
+            margin-bottom: 15px;
+            line-height: 1.5;
+        }
+        
+        .contact-info {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px dashed #ddd;
+        }
+        
+        .contact-info .wechat-container {
+            display: flex;
+            align-items: center;
+            margin-right: 20px;
+            margin-bottom: 10px;
+        }
+        
+        .contact-info .wechat-label {
+            font-weight: 600;
+            color: #333;
+            margin-right: 8px;
+        }
+        
+        .contact-info .wechat-id {
+            background-color: #ffffff;
+            padding: 6px 12px;
+            border-radius: 4px;
+            border: 1px solid #ddd;
+            font-family: monospace;
+            margin-right: 8px;
+            color: var(--primary);
+            font-weight: 500;
+        }
+        
+        .contact-info .copy-btn {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 13px;
+            transition: all 0.2s;
+        }
+        
+        .contact-info .copy-btn:hover {
+            background-color: var(--secondary);
+            transform: translateY(-2px);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .contact-info .copy-success {
+            color: #28a745;
+            margin-left: 10px;
+            font-weight: 500;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .contact-info .copy-success.show {
+            opacity: 1;
+        }
+        
+        /* 在页面底部固定的提示 */
+        .floating-contact {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: white;
+            padding: 10px 15px;
+            border-radius: 50px;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            z-index: 1000;
+            transition: all 0.3s;
+            border: 1px solid var(--primary);
+        }
+        
+        .floating-contact:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        
+        .floating-contact .wechat-label {
+            color: var(--primary);
+            font-weight: 600;
+            margin-right: 8px;
+        }
+        
+        .floating-contact .wechat-id {
+            font-weight: 500;
+        }
     </style>
 </head>
 <body>
@@ -635,6 +752,20 @@
             
             <div class="btn-group">
                 <button class="btn" id="next-to-plans">下一步：设计计划</button>
+            </div>
+            
+            <!-- 添加联系方式区域 -->
+            <div class="contact-section">
+                <h3 class="contact-title">需要帮助或咨询？</h3>
+                <p class="contact-description">如果您在制定奥德赛计划过程中遇到困难，或者想了解更多关于职业规划的信息，欢迎随时联系我们的人生设计教练。我们提供专业的一对一指导服务，帮助您更好地规划未来。</p>
+                <div class="contact-info">
+                    <div class="wechat-container">
+                        <span class="wechat-label">微信咨询：</span>
+                        <span class="wechat-id" id="wechat-id-resources">largewind</span>
+                        <button class="copy-btn" onclick="copyWechat('wechat-id-resources')">一键复制</button>
+                        <span class="copy-success" id="copy-success-resources">✓ 已复制</span>
+                    </div>
+                </div>
             </div>
         </div>
         
@@ -852,6 +983,20 @@
                 <button class="btn btn-secondary" id="back-to-resources">上一步</button>
                 <button class="btn" id="next-to-evaluation">下一步：评估选择</button>
             </div>
+            
+            <!-- 添加联系方式区域 -->
+            <div class="contact-section">
+                <h3 class="contact-title">遇到规划困难？获取专业指导</h3>
+                <p class="contact-description">制定三种计划并不容易，尤其是在面临人生转折点时。我们的人生设计教练可以帮助您突破思维局限，探索更多可能性，并提供专业的建议和反馈。</p>
+                <div class="contact-info">
+                    <div class="wechat-container">
+                        <span class="wechat-label">微信咨询：</span>
+                        <span class="wechat-id" id="wechat-id-plans">largewind</span>
+                        <button class="copy-btn" onclick="copyWechat('wechat-id-plans')">一键复制</button>
+                        <span class="copy-success" id="copy-success-plans">✓ 已复制</span>
+                    </div>
+                </div>
+            </div>
         </div>
         
         <div id="evaluation" class="tab-content">
@@ -887,6 +1032,20 @@
             <div class="btn-group">
                 <button class="btn btn-secondary" id="back-to-plans">上一步</button>
                 <button class="btn" id="generate-results">生成我的奥德赛计划</button>
+            </div>
+            
+            <!-- 添加联系方式区域 -->
+            <div class="contact-section">
+                <h3 class="contact-title">需要专业的评估与建议？</h3>
+                <p class="contact-description">选择最佳路径并不总是那么容易。我们的人生设计教练可以帮助您客观评估每个计划的可行性，分析潜在风险，并提供专业的行动建议，确保您走上最适合自己的道路。</p>
+                <div class="contact-info">
+                    <div class="wechat-container">
+                        <span class="wechat-label">微信咨询：</span>
+                        <span class="wechat-id" id="wechat-id-evaluation">largewind</span>
+                        <button class="copy-btn" onclick="copyWechat('wechat-id-evaluation')">一键复制</button>
+                        <span class="copy-success" id="copy-success-evaluation">✓ 已复制</span>
+                    </div>
+                </div>
             </div>
         </div>
         
@@ -977,9 +1136,74 @@
                 <button class="btn btn-secondary" id="back-to-evaluation">上一步</button>
                 <button class="btn" id="export-pdf">导出图片</button>
             </div>
+            
+            <!-- 添加联系方式区域 -->
+            <div class="contact-section">
+                <h3 class="contact-title">想要更详细的个人职业规划？</h3>
+                <p class="contact-description">恭喜您完成了奥德赛计划！如果您想获得更深入的个性化指导，我们的人生设计教练可以提供一对一咨询服务，帮助您进一步细化行动计划，并在实施过程中提供持续支持和调整建议。</p>
+                <div class="contact-info">
+                    <div class="wechat-container">
+                        <span class="wechat-label">微信咨询：</span>
+                        <span class="wechat-id" id="wechat-id-results">largewind</span>
+                        <button class="copy-btn" onclick="copyWechat('wechat-id-results')">一键复制</button>
+                        <span class="copy-success" id="copy-success-results">✓ 已复制</span>
+                    </div>
+                </div>
+            </div>
         </div>
+    </div>
+    
+    <!-- 浮动联系方式 -->
+    <div class="floating-contact">
+        <span class="wechat-label">微信咨询：</span>
+        <span class="wechat-id">largewind</span>
     </div>
 
     <script src="script.js"></script>
+    
+    <!-- 添加复制功能的脚本 -->
+    <script>
+        function copyWechat(elementId) {
+            const wechatId = document.getElementById(elementId).textContent;
+            const successId = 'copy-success-' + elementId.split('-').pop();
+            const copySuccess = document.getElementById(successId);
+            
+            // 创建一个临时输入框来实现复制功能
+            const tempInput = document.createElement('input');
+            tempInput.value = wechatId;
+            document.body.appendChild(tempInput);
+            tempInput.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempInput);
+            
+            // 显示复制成功提示
+            copySuccess.classList.add('show');
+            setTimeout(() => {
+                copySuccess.classList.remove('show');
+            }, 2000);
+        }
+        
+        // 浮动联系方式点击自动复制
+        document.addEventListener('DOMContentLoaded', function() {
+            const floatingContact = document.querySelector('.floating-contact');
+            floatingContact.addEventListener('click', function() {
+                const wechatId = this.querySelector('.wechat-id').textContent;
+                
+                const tempInput = document.createElement('input');
+                tempInput.value = wechatId;
+                document.body.appendChild(tempInput);
+                tempInput.select();
+                document.execCommand('copy');
+                document.body.removeChild(tempInput);
+                
+                // 显示复制成功的视觉反馈
+                const originalText = this.innerHTML;
+                this.innerHTML = '<span style="color: #28a745;">✓ 微信号已复制</span>';
+                setTimeout(() => {
+                    this.innerHTML = originalText;
+                }, 2000);
+            });
+        });
+    </script>
 </body>
 </html>
