@@ -266,7 +266,7 @@ function setupExportPDF() {
     document.getElementById('export-pdf').addEventListener('click', function() {
         // 显示加载提示
         const loadingMsg = document.createElement('div');
-        loadingMsg.textContent = '正在生成高清图片...';
+        loadingMsg.textContent = '正在生成超清图片...';
         loadingMsg.style.cssText = `
             position: fixed;
             top: 50%;
@@ -292,30 +292,94 @@ function setupExportPDF() {
         // 获取结果容器
         const resultsContainer = document.getElementById('results');
         
-        // 隐藏按钮等不需要导出的元素
-        const buttons = resultsContainer.querySelectorAll('.btn-group');
-        const originalButtonDisplay = [];
-        buttons.forEach((btn, index) => {
-            originalButtonDisplay[index] = btn.style.display;
+        // 创建临时增强版容器
+        const tempContainer = document.createElement('div');
+        tempContainer.innerHTML = resultsContainer.innerHTML;
+        tempContainer.style.cssText = `
+            position: absolute;
+            left: -9999px;
+            width: 1200px;
+            background: white;
+            padding: 40px;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+        `;
+        
+        // 增强临时容器中的文本样式
+        tempContainer.querySelectorAll('h3').forEach(h => {
+            h.style.cssText = `
+                color: #3f37c9;
+                font-size: 26px;
+                margin-bottom: 16px;
+                font-weight: bold;
+                padding-bottom: 8px;
+                border-bottom: 2px solid #4361ee;
+            `;
+        });
+        
+        tempContainer.querySelectorAll('h4').forEach(h => {
+            h.style.cssText = `
+                color: #4361ee;
+                font-size: 20px;
+                margin-bottom: 12px;
+                font-weight: bold;
+            `;
+        });
+        
+        tempContainer.querySelectorAll('p').forEach(p => {
+            p.style.cssText = `
+                font-size: 16px;
+                line-height: 1.8;
+                margin-bottom: 10px;
+                color: #333;
+                text-rendering: optimizeLegibility;
+                -webkit-font-smoothing: antialiased;
+            `;
+        });
+        
+        tempContainer.querySelectorAll('.result-card').forEach(card => {
+            card.style.cssText = `
+                margin-bottom: 30px;
+                background: white;
+                border-radius: 8px;
+                box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+                padding: 25px;
+            `;
+        });
+        
+        tempContainer.querySelectorAll('.result-section').forEach(section => {
+            section.style.cssText = `
+                margin-bottom: 20px;
+                padding-bottom: 15px;
+            `;
+        });
+        
+        // 隐藏按钮
+        tempContainer.querySelectorAll('.btn-group').forEach(btn => {
             btn.style.display = 'none';
         });
         
+        // 添加到页面
+        document.body.appendChild(tempContainer);
+        
         // 获取设备像素比
         const pixelRatio = window.devicePixelRatio || 1;
+        const scale = Math.max(3, pixelRatio); // 提高到至少3倍缩放比例
         
-        // 使用简单的延时确保DOM更新
+        loadingMsg.textContent = `正在生成超清图片 (${scale}x 缩放)...`;
+        
+        // 延时确保DOM渲染
         setTimeout(function() {
-            // 使用dom-to-image生成图片，设置更高的scale值
-            domtoimage.toPng(resultsContainer, {
+            // 使用dom-to-image生成图片
+            domtoimage.toPng(tempContainer, {
                 bgcolor: '#ffffff',
-                quality: 1.0, // 最高质量
-                width: resultsContainer.offsetWidth,
-                height: resultsContainer.offsetHeight,
+                quality: 1.0,
+                width: tempContainer.offsetWidth,
+                height: tempContainer.offsetHeight,
                 style: {
-                    'background': 'white',
                     'transform': 'none'
                 },
-                scale: Math.max(2, pixelRatio) // 使用更高的缩放比例，确保至少2倍
+                scale: scale // 使用更高的缩放比例
             })
             .then(function(dataUrl) {
                 // 创建下载链接
@@ -324,10 +388,8 @@ function setupExportPDF() {
                 link.href = dataUrl;
                 link.click();
                 
-                // 恢复按钮状态
-                buttons.forEach((btn, index) => {
-                    btn.style.display = originalButtonDisplay[index];
-                });
+                // 移除临时容器
+                tempContainer.remove();
                 
                 // 移除加载提示
                 loadingMsg.textContent = '导出成功！';
@@ -342,10 +404,8 @@ function setupExportPDF() {
             .catch(function(error) {
                 console.error('图片生成失败:', error);
                 
-                // 恢复按钮状态
-                buttons.forEach((btn, index) => {
-                    btn.style.display = originalButtonDisplay[index];
-                });
+                // 移除临时容器
+                tempContainer.remove();
                 
                 // 修改加载提示
                 loadingMsg.textContent = '导出失败，请稍后重试';
@@ -357,7 +417,7 @@ function setupExportPDF() {
                 exportBtn.disabled = false;
                 exportBtn.textContent = '导出图片';
             });
-        }, 300); // 增加延时，确保DOM完全渲染
+        }, 500); // 增加更长的延时
     });
 }
 
